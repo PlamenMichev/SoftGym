@@ -25,6 +25,22 @@
 
         public DbSet<Setting> Settings { get; set; }
 
+        public DbSet<Card> Cards { get; set; }
+
+        public DbSet<ClientTrainer> ClientsTrainers { get; set; }
+
+        public DbSet<EatingPlan> EatingPlans { get; set; }
+
+        public DbSet<Meal> Meals { get; set; }
+
+        public DbSet<MealPlan> MealsPlans { get; set; }
+
+        public DbSet<WorkoutExercise> WorkoutsExercises { get; set; }
+
+        public DbSet<WorkoutPlan> WorkoutPlans { get; set; }
+
+        public DbSet<Facility> Facilities { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -52,6 +68,69 @@
             this.ConfigureUserIdentityRelations(builder);
 
             EntityIndexesConfiguration.Configure(builder);
+
+            // Configure table relations
+            builder
+                .Entity<Card>()
+                .HasOne(c => c.User)
+                .WithOne(u => u.Card)
+                .HasForeignKey<ApplicationUser>(u => u.CardId);
+
+            builder
+               .Entity<ClientTrainer>()
+               .HasKey(x => new { x.ClientId, x.TrainerId });
+
+            builder
+                .Entity<ClientTrainer>()
+                .HasOne(ct => ct.Client)
+                .WithMany(c => c.Trainers)
+                .HasForeignKey(ct => ct.ClientId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .Entity<ClientTrainer>()
+                .HasOne(ct => ct.Trainer)
+                .WithMany(t => t.Clients)
+                .HasForeignKey(ct => ct.TrainerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .Entity<EatingPlan>()
+                .HasOne(ep => ep.User)
+                .WithMany(u => u.EatingPlans)
+                .HasForeignKey(ep => ep.UserId);
+
+            builder
+                .Entity<MealPlan>()
+                .HasKey(mp => new { mp.MealId, mp.EatingPlanId });
+
+            builder
+                .Entity<MealPlan>()
+                .HasOne(mp => mp.EatingPlan)
+                .WithMany(ep => ep.Meals)
+                .HasForeignKey(mp => mp.EatingPlanId);
+
+            builder
+                .Entity<MealPlan>()
+                .HasOne(mp => mp.Meal)
+                .WithMany(m => m.Plans)
+                .HasForeignKey(mp => mp.MealId);
+
+            builder
+                .Entity<WorkoutExercise>()
+                .HasKey(x => new { x.WorkoutPlanId, x.ExerciseId });
+
+            builder
+                .Entity<WorkoutExercise>()
+                .HasOne(we => we.WorkoutPlan)
+                .WithMany(wp => wp.Exercises)
+                .HasForeignKey(we => we.WorkoutPlanId);
+
+            builder
+                .Entity<WorkoutExercise>()
+                .HasOne(we => we.Exercise)
+                .WithMany(e => e.WorkoutPlans)
+                .HasForeignKey(we => we.ExerciseId);
 
             var entityTypes = builder.Model.GetEntityTypes().ToList();
 

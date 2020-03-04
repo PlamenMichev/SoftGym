@@ -3,6 +3,7 @@ namespace SoftGym.Data.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     using Microsoft.AspNetCore.Identity;
     using SoftGym.Data.Common.Models;
@@ -15,6 +16,10 @@ namespace SoftGym.Data.Models
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
+            this.Trainers = new HashSet<ClientTrainer>();
+            this.Clients = new HashSet<ClientTrainer>();
+            this.EatingPlans = new HashSet<EatingPlan>();
+            this.WorkoutPlans = new HashSet<WorkoutPlan>();
         }
 
         // Audit info
@@ -27,10 +32,32 @@ namespace SoftGym.Data.Models
 
         public DateTime? DeletedOn { get; set; }
 
+        [Required]
+        [MaxLength(25)]
+        public string FirstName { get; set; }
+
+        [Required]
+        [MaxLength(25)]
+        public string LastName { get; set; }
+
+        public string CardId { get; set; }
+
+        public virtual Card Card { get; set; }
+
+        public string Description { get; set; }
+
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
 
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+
+        public virtual ICollection<ClientTrainer> Trainers { get; set; }
+
+        public virtual ICollection<ClientTrainer> Clients { get; set; }
+
+        public virtual ICollection<EatingPlan> EatingPlans { get; set; }
+
+        public virtual ICollection<WorkoutPlan> WorkoutPlans { get; set; }
     }
 }
