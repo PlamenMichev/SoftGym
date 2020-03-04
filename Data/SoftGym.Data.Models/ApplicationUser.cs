@@ -46,6 +46,8 @@ namespace SoftGym.Data.Models
 
         public string Description { get; set; }
 
+        public string ProfilePictureUrl { get; set; }
+
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }

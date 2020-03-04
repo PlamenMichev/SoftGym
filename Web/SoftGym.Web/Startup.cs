@@ -1,7 +1,7 @@
 ﻿namespace SoftGym.Web
 {
     using System.Reflection;
-
+    using CloudinaryDotNet;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -15,6 +15,8 @@
     using SoftGym.Data.Models;
     using SoftGym.Data.Repositories;
     using SoftGym.Data.Seeding;
+    using SoftGym.Services;
+    using SoftGym.Services.Contracts;
     using SoftGym.Services.Data;
     using SoftGym.Services.Mapping;
     using SoftGym.Services.Messaging;
@@ -48,7 +50,16 @@
             services.AddControllersWithViews();
             services.AddRazorPages();
 
+
             services.AddSingleton(this.configuration);
+            // Add clodinary
+            var cloudinary = new Cloudinary(new Account()
+            {
+                Cloud = this.configuration["Cloudinary:CloudName"],
+                ApiKey = this.configuration["Cloudinary:ApiKey"],
+                ApiSecret = this.configuration["Cloudinary:ApiSecret"],
+            });
+            services.AddSingleton(cloudinary);
 
             // Data repositories
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
@@ -58,6 +69,7 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<ICloudinaryService, CloudinaryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
