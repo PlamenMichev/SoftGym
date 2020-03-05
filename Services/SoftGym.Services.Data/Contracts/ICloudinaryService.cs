@@ -1,4 +1,4 @@
-﻿namespace SoftGym.Services.Contracts
+﻿namespace SoftGym.Services.Data.Contracts
 {
     using System.Threading.Tasks;
 
@@ -9,5 +9,7 @@
         bool IsFileValid(IFormFile photoFile);
 
         Task<string> UploudAsync(IFormFile file);
+
+        Task<string> UploudAsync(byte[] file);
     }
 }

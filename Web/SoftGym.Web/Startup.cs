@@ -15,9 +15,8 @@
     using SoftGym.Data.Models;
     using SoftGym.Data.Repositories;
     using SoftGym.Data.Seeding;
-    using SoftGym.Services;
-    using SoftGym.Services.Contracts;
     using SoftGym.Services.Data;
+    using SoftGym.Services.Data.Contracts;
     using SoftGym.Services.Mapping;
     using SoftGym.Services.Messaging;
     using SoftGym.Web.ViewModels;
@@ -70,6 +69,8 @@
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<ICloudinaryService, CloudinaryService>();
+            services.AddTransient<IQrCodeService, QrCodeService>();
+            services.AddTransient<ICardService, CardService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using SoftGym.Data.Models;
-using SoftGym.Services.Contracts;
+using SoftGym.Services.Data.Contracts;
 
 namespace SoftGym.Web.Areas.Identity.Pages.Account
 {
@@ -27,19 +27,22 @@ namespace SoftGym.Web.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly ICloudinaryService cloudinaryService;
+        private readonly ICardService cardService;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            ICloudinaryService cloudinaryService)
+            ICloudinaryService cloudinaryService, 
+            ICardService cardService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
             this.cloudinaryService = cloudinaryService;
+            this.cardService = cardService;
         }
 
         [BindProperty]
@@ -92,11 +95,7 @@ namespace SoftGym.Web.Areas.Identity.Pages.Account
             this.ExternalLogins = (await this._signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (this.ModelState.IsValid)
             {
-                string profilePicUrl = " ";
-                if (this.Input.PictureFile != null && this.cloudinaryService.IsFileValid(this.Input.PictureFile) == true)
-                {
-                    profilePicUrl = await this.cloudinaryService.UploudAsync(this.Input.PictureFile);
-                }
+                string profilePicUrl = await this.cloudinaryService.UploudAsync(this.Input.PictureFile);
 
                 var user = new ApplicationUser
                 {
@@ -106,6 +105,10 @@ namespace SoftGym.Web.Areas.Identity.Pages.Account
                     FirstName = this.Input.FirstName,
                     LastName = this.Input.LastName,
                 };
+                var card = await this.cardService.GenerateCardAsync(user);
+                user.Card = card;
+                user.CardId = card.Id;
+
                 var result = await this._userManager.CreateAsync(user, this.Input.Password);
                 if (result.Succeeded)
                 {
