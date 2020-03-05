@@ -1,0 +1,45 @@
+﻿@model SoftGym.Web.ViewModels.Users.ChangeProfilePhotoInputModel
+
+@{
+    ViewData["Title"] = "_ChangePhotoPartial";
+}
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal">
+    Change Profile Picture
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Change Profile Picture</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="form-control-file" asp-area="" asp-controller="Users" asp-action="UpdateProfilePicture" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <input asp-for="UserId" value="@Model.UserId" hidden/>
+                    <div class="custom-file">
+                        <input type="file" accept="image/*" asp-for="ProfilePictureFile" class="custom-file-input" id="inputGroupFile01"
+                               aria-describedby="inputGroupFileAddon01">
+                        <label class="custom-file-label" for="inputGroupFile01">Choose picture</label>
+                        <span asp-validation-for="ProfilePictureFile" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -4,7 +4,7 @@
 
     using SoftGym.Data.Models;
 
-    public interface ICardService
+    public interface ICardsService
     {
         Task<Card> GenerateCardAsync(ApplicationUser user);
     }

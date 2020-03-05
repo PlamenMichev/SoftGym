@@ -5,12 +5,12 @@
     using SoftGym.Services.Data.Contracts;
     using System.Threading.Tasks;
 
-    public class CardService : ICardService
+    public class CardsService : ICardsService
     {
         private readonly IDeletableEntityRepository<Card> cardRepository;
         private readonly IQrCodeService qrCodeService;
 
-        public CardService(
+        public CardsService(
             IDeletableEntityRepository<Card> cardRepository,
             IQrCodeService qrCodeService)
         {

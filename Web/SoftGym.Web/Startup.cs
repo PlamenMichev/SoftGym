@@ -70,7 +70,8 @@
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<ICloudinaryService, CloudinaryService>();
             services.AddTransient<IQrCodeService, QrCodeService>();
-            services.AddTransient<ICardService, CardService>();
+            services.AddTransient<ICardsService, CardsService>();
+            services.AddTransient<IUsersService, UsersService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
