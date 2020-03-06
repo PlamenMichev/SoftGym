@@ -7,6 +7,7 @@
     using SoftGym.Data.Common.Repositories;
     using SoftGym.Data.Models;
     using SoftGym.Services.Data.Contracts;
+    using SoftGym.Web.ViewModels.Users;
 
     public class UsersService : IUsersService
     {
@@ -98,6 +99,20 @@
                    .FirstOrDefaultAsync(x => x.Id == id);
 
             return user.LastName;
+        }
+
+        public async Task<MyCardViewModel> GetMyCardViewModelAsync(string id)
+        {
+            var result = await this.userRepository
+                .All()
+                .Select(x => new MyCardViewModel
+                {
+                    PictureUrl = x.Card.PictureUrl,
+                    Visits = x.Card.Visits,
+                })
+                .FirstOrDefaultAsync();
+
+            return result;
         }
 
         public async Task<string> GetProfilePictureUrlAsync(string id)

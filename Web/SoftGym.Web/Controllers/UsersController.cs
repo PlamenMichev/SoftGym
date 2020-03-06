@@ -1,8 +1,8 @@
 ﻿namespace SoftGym.Web.Controllers
 {
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using SoftGym.Services.Data.Contracts;
     using SoftGym.Web.ViewModels.Users;
@@ -12,11 +12,23 @@
         private readonly IUsersService usersService;
         private readonly ICloudinaryService cloudinaryService;
 
-        public UsersController(IUsersService usersService,
+        public UsersController(
+            IUsersService usersService,
             ICloudinaryService cloudinaryService)
         {
             this.usersService = usersService;
             this.cloudinaryService = cloudinaryService;
+        }
+
+        public async Task<IActionResult> MyCard()
+        {
+            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            var userId = claim.Value;
+
+            var model = await this.usersService.GetMyCardViewModelAsync(userId);
+
+            return this.View(model);
         }
 
         [HttpPost]

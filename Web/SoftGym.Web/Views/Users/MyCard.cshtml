@@ -1,0 +1,30 @@
+﻿@model SoftGym.Web.ViewModels.Users.MyCardViewModel
+
+@{
+    ViewData["Title"] = "MyCardView";
+}
+<h2>Manage your account</h2>
+
+<h4>Change your account settings</h4>
+<hr />
+<div class="row">
+    <div class="col-md-3">
+        <ul class="nav nav-pills flex-column">
+            <li class="nav-item"><a class="nav-link" id="profile" href="/Identity/Account/Manage">Profile</a></li>
+            <li class="nav-item"><a class="nav-link active" href="/Users/MyCard" id="profile">My Card</a></li>
+            <li class="nav-item"><a class="nav-link" id="email" href="/Identity/Account/Manage/Email">Email</a></li>
+            <li class="nav-item"><a class="nav-link" id="change-password" href="/Identity/Account/Manage/ChangePassword">Password</a></li>
+            <li class="nav-item"><a class="nav-link" id="personal-data" href="/Identity/Account/Manage/PersonalData">Personal data</a></li>
+        </ul>
+    </div>
+    <div class="col-md-7">
+        <h2 class="text-center">My Card</h2>
+        <div class="row">
+            <img src="@Model.PictureUrl" alt="Alternate Text" class="w-100 col-md-8 mx-auto" />
+            <div class="col-md-12 text-center">
+                <h5 class="d-inline">Avaiable Visits: @Model.Visits</h5>
+                <button type="button" class="btn btn-primary ml-3">Buy Visits</button>
+            </div>
+        </div>
+    </div>
+</div>

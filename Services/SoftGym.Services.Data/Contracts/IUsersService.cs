@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using SoftGym.Data.Models;
+    using SoftGym.Web.ViewModels.Users;
 
     public interface IUsersService
     {
@@ -24,5 +25,7 @@
         public Task<ApplicationUser> ChangeEmailAsync(string userId, string newEmail);
 
         public Task<IEnumerable<string>> GetAllEmailsAsync();
+
+        public Task<MyCardViewModel> GetMyCardViewModelAsync(string id);
     }
 }
