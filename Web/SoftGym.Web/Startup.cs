@@ -74,6 +74,7 @@
             services.AddTransient<IQrCodeService, QrCodeService>();
             services.AddTransient<ICardsService, CardsService>();
             services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<IRolesService, RolesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -27,5 +27,7 @@
         public Task<IEnumerable<string>> GetAllEmailsAsync();
 
         public Task<IEnumerable<T>> GetAllUsersAsync<T>();
+
+        public Task<ApplicationUser> GetUserByIdAsync(string id);
     }
 }

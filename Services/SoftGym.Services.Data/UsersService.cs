@@ -117,5 +117,12 @@
 
             return user.ProfilePictureUrl;
         }
+
+        public async Task<ApplicationUser> GetUserByIdAsync(string id)
+        {
+            return await this.userRepository
+                .All()
+                .FirstAsync(x => x.Id == id);
+        }
     }
 }

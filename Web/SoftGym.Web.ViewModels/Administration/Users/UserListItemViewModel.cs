@@ -15,7 +15,5 @@
         public string LastName { get; set; }
 
         public string ProfilePictureUrl { get; set; }
-
-        public IEnumerable<IdentityUserRole<string>> Roles { get; set; }
     }
 }

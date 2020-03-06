@@ -1,7 +1,11 @@
 ﻿@model SoftGym.Web.ViewModels.Administration.Users.AllUsersViewModel
 
 @using SoftGym.Common
-@using System.Web
+@using Microsoft.AspNetCore.Identity
+@using SoftGym.Data.Models
+
+@inject UserManager<ApplicationUser> UserManager
+
 @{
     ViewData["Title"] = "Admin dashboard";
 }
@@ -13,6 +17,7 @@
     </div>
     <div class="col-md-7">
         <h3 class="text-center">All Users</h3>
+        <h4 class="text-center">(@Model.Users.Count() Total Users)</h4>
         <ul class="list-group">
             @foreach (var user in Model.Users)
             {
@@ -21,17 +26,48 @@
                     <img src="@user.ProfilePictureUrl" class="img-fluid rounded-circle avatar" alt="quixote">
                 </div>
                 @user.FirstName @user.LastName
-                @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                @{ApplicationUser currentUser = await this.UserManager.FindByIdAsync(user.Id);}
+                @{IList<string> currentUserRoles = await this.UserManager.GetRolesAsync(currentUser);}
+                @if (this.User.Identity.Name != currentUser.UserName)
                 {
-                    if (user.Roles.Any(x => x.RoleId == GlobalConstants.AdministratorRoleName))
+                    if (currentUserRoles.Contains(GlobalConstants.AdministratorRoleName))
                     {
-                        <button type="button" class="btn btn-primary m-3">Remove Admin</button>
+                        <a class="text-white btn btn-primary m-2" href="/Administration/Roles/Remove?userId=@user.Id&roleName=@GlobalConstants.AdministratorRoleName">
+                            Remove Admin
+                        </a>
                     }
                     else
                     {
-                        <button type="button" class="btn btn-primary m-3">Make Admin</button>
+                        <a class="text-white btn btn-primary m-2"
+                           href="/Administration/Roles/Add?userId=@user.Id&roleName=@GlobalConstants.AdministratorRoleName">
+                            Make Admin
+                        </a>
                     }
-                    <button type="button" class="btn btn-primary m-3">Make Trainer</button>
+                    if (currentUserRoles.Contains(GlobalConstants.TrainerRoleName))
+                    {
+                        <a class="text-white btn btn-primary m-2" href="/Administration/Roles/Remove?userId=@user.Id&roleName=@GlobalConstants.TrainerRoleName">
+                            Remove Trainer
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="text-white btn btn-primary m-2" href="/Administration/Roles/Add?userId=@user.Id&roleName=@GlobalConstants.TrainerRoleName">
+                            Make Trainer
+                        </a>
+                    }
+                }
+                else
+                {
+                    <span> (ME)</span>
+                }
+
+                @if (currentUserRoles.Contains(GlobalConstants.AdministratorRoleName))
+                {
+                    <span title="The User Is Admin" class="m-2"><i class="fas fa-user-cog"></i> </span>
+                }
+                @if (currentUserRoles.Contains(GlobalConstants.TrainerRoleName))
+                {
+                    <span title="The User Is Trainer" class="m-2"><i class="fas fa-dumbbell"></i></span>
                 }
             </li>
             }
