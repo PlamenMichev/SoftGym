@@ -7,7 +7,7 @@
     using SoftGym.Data.Common.Repositories;
     using SoftGym.Data.Models;
     using SoftGym.Services.Data.Contracts;
-    using SoftGym.Web.ViewModels.Users;
+    using SoftGym.Services.Mapping;
 
     public class UsersService : IUsersService
     {
@@ -74,6 +74,14 @@
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<T>> GetAllUsersAsync<T>()
+        {
+            return await this.userRepository
+                .All()
+                .To<T>()
+                .ToListAsync();
+        }
+
         public async Task<string> GetCardPictureUrlAsync(string id)
         {
             var user = await this.userRepository
@@ -99,20 +107,6 @@
                    .FirstOrDefaultAsync(x => x.Id == id);
 
             return user.LastName;
-        }
-
-        public async Task<MyCardViewModel> GetMyCardViewModelAsync(string id)
-        {
-            var result = await this.userRepository
-                .All()
-                .Select(x => new MyCardViewModel
-                {
-                    PictureUrl = x.Card.PictureUrl,
-                    Visits = x.Card.Visits,
-                })
-                .FirstOrDefaultAsync();
-
-            return result;
         }
 
         public async Task<string> GetProfilePictureUrlAsync(string id)

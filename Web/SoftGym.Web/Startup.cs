@@ -5,10 +5,12 @@
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using SoftGym.Common;
     using SoftGym.Data;
     using SoftGym.Data.Common;
     using SoftGym.Data.Common.Repositories;
@@ -49,8 +51,8 @@
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-
             services.AddSingleton(this.configuration);
+
             // Add clodinary
             var cloudinary = new Cloudinary(new Account()
             {

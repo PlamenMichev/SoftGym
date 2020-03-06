@@ -3,5 +3,12 @@
     this.ViewData["Title"] = "Admin dashboard";
 }
 
-<h1>@this.ViewData["Title"]</h1>
-Settings: @this.Model.SettingsCount
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+<div class="row">
+    <div class="col-md-4">
+        <partial name="_SideNavPartial" />
+    </div>
+    <div>
+        3 users online and stuff
+    </div>
+</div>

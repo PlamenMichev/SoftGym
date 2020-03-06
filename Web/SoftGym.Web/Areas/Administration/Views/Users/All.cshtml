@@ -1,0 +1,40 @@
+﻿@model SoftGym.Web.ViewModels.Administration.Users.AllUsersViewModel
+
+@using SoftGym.Common
+@using System.Web
+@{
+    ViewData["Title"] = "Admin dashboard";
+}
+
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+<div class="row">
+    <div class="col-md-4">
+        <partial name="../Dashboard/_SideNavPartial" />
+    </div>
+    <div class="col-md-7">
+        <h3 class="text-center">All Users</h3>
+        <ul class="list-group">
+            @foreach (var user in Model.Users)
+            {
+            <li class="list-group-item d-flex align-items-center">
+                <div class="image-parent mr-3">
+                    <img src="@user.ProfilePictureUrl" class="img-fluid rounded-circle avatar" alt="quixote">
+                </div>
+                @user.FirstName @user.LastName
+                @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                {
+                    if (user.Roles.Any(x => x.RoleId == GlobalConstants.AdministratorRoleName))
+                    {
+                        <button type="button" class="btn btn-primary m-3">Remove Admin</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-primary m-3">Make Admin</button>
+                    }
+                    <button type="button" class="btn btn-primary m-3">Make Trainer</button>
+                }
+            </li>
+            }
+        </ul>
+    </div>
+</div>

@@ -7,5 +7,7 @@
     public interface ICardsService
     {
         Task<Card> GenerateCardAsync(ApplicationUser user);
+
+        public Task<T> GetCardViewModelAsync<T>(string userId);
     }
 }

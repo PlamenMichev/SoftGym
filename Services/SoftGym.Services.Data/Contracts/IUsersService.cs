@@ -4,7 +4,7 @@
     using System.Threading.Tasks;
 
     using SoftGym.Data.Models;
-    using SoftGym.Web.ViewModels.Users;
+    using SoftGym.Web.ViewModels.Administration.Users;
 
     public interface IUsersService
     {
@@ -26,6 +26,6 @@
 
         public Task<IEnumerable<string>> GetAllEmailsAsync();
 
-        public Task<MyCardViewModel> GetMyCardViewModelAsync(string id);
+        public Task<IEnumerable<T>> GetAllUsersAsync<T>();
     }
 }

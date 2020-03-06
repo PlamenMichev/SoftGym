@@ -11,13 +11,16 @@
     {
         private readonly IUsersService usersService;
         private readonly ICloudinaryService cloudinaryService;
+        private readonly ICardsService cardsService;
 
         public UsersController(
             IUsersService usersService,
-            ICloudinaryService cloudinaryService)
+            ICloudinaryService cloudinaryService,
+            ICardsService cardsService)
         {
             this.usersService = usersService;
             this.cloudinaryService = cloudinaryService;
+            this.cardsService = cardsService;
         }
 
         public async Task<IActionResult> MyCard()
@@ -26,7 +29,7 @@
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
             var userId = claim.Value;
 
-            var model = await this.usersService.GetMyCardViewModelAsync(userId);
+            var model = await this.cardsService.GetCardViewModelAsync<MyCardViewModel>(userId);
 
             return this.View(model);
         }

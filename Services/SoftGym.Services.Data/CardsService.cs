@@ -1,8 +1,11 @@
 ﻿namespace SoftGym.Services.Data
 {
+    using Microsoft.EntityFrameworkCore;
     using SoftGym.Data.Common.Repositories;
     using SoftGym.Data.Models;
     using SoftGym.Services.Data.Contracts;
+    using SoftGym.Services.Mapping;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public class CardsService : ICardsService
@@ -30,6 +33,17 @@
             await this.cardRepository.AddAsync(card);
 
             return card;
+        }
+
+        public async Task<T> GetCardViewModelAsync<T>(string userId)
+        {
+            var result = await this.cardRepository
+                .All()
+                .Where(x => x.UserId == userId)
+                .To<T>()
+                .FirstOrDefaultAsync();
+
+            return result;
         }
     }
 }
