@@ -1,7 +1,9 @@
 ﻿namespace SoftGym.Services.Data.Contracts
 {
-    using SoftGym.Data.Models;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
+
+    using SoftGym.Data.Models;
 
     public interface IUsersService
     {
@@ -18,5 +20,9 @@
         public Task<ApplicationUser> ChangeLastNameAsync(string id, string lastName);
 
         public Task<ApplicationUser> ChangeProfilePhotoAsync(string userId, string newProfilePhotoUrl);
+
+        public Task<ApplicationUser> ChangeEmailAsync(string userId, string newEmail);
+
+        public Task<IEnumerable<string>> GetAllEmailsAsync();
     }
 }

@@ -10,10 +10,10 @@
     <div class="col-md-6">
         <section>
             <form id="account" method="post">
-                <div asp-validation-summary="All">
-                </div>
                 <hr />
                 <div class="form-group">
+                    <div asp-validation-summary="All" class="text-danger">
+                    </div>
                     <label asp-for="Input.Email"></label>
                     <input asp-for="Input.Email" class="form-control" />
                     <span asp-validation-for="Input.Email" class="text-danger"></span>

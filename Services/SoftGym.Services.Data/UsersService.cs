@@ -1,5 +1,6 @@
 ﻿namespace SoftGym.Services.Data
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,18 @@
         public UsersService(IDeletableEntityRepository<ApplicationUser> userRepository)
         {
             this.userRepository = userRepository;
+        }
+
+        public async Task<ApplicationUser> ChangeEmailAsync(string userId, string newEmail)
+        {
+            var user = await this.userRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.Id == userId);
+
+            user.Email = newEmail;
+            await this.userRepository.SaveChangesAsync();
+
+            return user;
         }
 
         public async Task<ApplicationUser> ChangeFirstNameAsync(string id, string firstName)
@@ -50,6 +63,14 @@
             await this.userRepository.SaveChangesAsync();
 
             return user;
+        }
+
+        public async Task<IEnumerable<string>> GetAllEmailsAsync()
+        {
+            return await this.userRepository
+                .All()
+                .Select(x => x.Email)
+                .ToListAsync();
         }
 
         public async Task<string> GetCardPictureUrlAsync(string id)
