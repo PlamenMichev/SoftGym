@@ -1,0 +1,42 @@
+﻿@model SoftGym.Web.ViewModels.Administration.Facilities.AllFacilitiesViewModel
+
+@using SoftGym.Common
+@{
+    ViewData["Title"] = "Admin dashboard";
+}
+
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+<hr />
+<div class="row">
+    <div class="col-md-3">
+        <partial name="../Dashboard/_SideNavPartial" />
+    </div>
+    <div class="col-md-9 col-lg-9 border">
+        <h2 class="text-center">All Facilities</h2>
+        <a class="btn btn-outline-primary waves-effect mb-3" href="/Administration/Facilities/Add">Add New Facility</a>
+        <div class="row">
+            @foreach (var facility in Model.Facilities)
+            {
+                <div class="card col-md-4 col-lg-4 col-xs-4">
+                    <div class="card-body h-100">
+                        <div class="card-img-top height-15rem">
+                            <img class="img-fluid mx-auto d-block" src="@facility.PictureUrl" alt="Card image cap">
+                        </div>
+                        <h4 class="card-title"><a>@facility.Name</a></h4>
+                        <h6>Type: @facility.Type</h6>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#a@(facility.Id)a">
+                            Details
+                        </button>
+                        @if ((facility.IsDeleted == false && this.User.IsInRole(GlobalConstants.AdministratorRoleName)))
+                        {
+                            <a href="/Administration/Facilities/Delete?facilityId=@facility.Id" class="btn btn-danger" title="Delete"><i class="fas fa-trash-alt"></i></a>
+                            <a href="/Administration/Facilities/Edit?facilityId=@facility.Id" class="btn btn-primary" title="Edit"><i class="fas fa-edit"></i></a>
+                        }
+                        <partial name="_DetailsPartial" model="@facility" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

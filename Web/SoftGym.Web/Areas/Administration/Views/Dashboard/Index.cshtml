@@ -4,11 +4,13 @@
 }
 
 <h1 class="text-center">@this.ViewData["Title"]</h1>
+<hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <partial name="_SideNavPartial" />
     </div>
-    <div>
-        3 users online and stuff
+    <div class="col-md-9 border">
+        <a href="/Administration/Users/All" class="btn btn-outline-primary waves-effect m-2">See All Users</a>
+        <a href="/Administration/Facilities/All" class="btn btn-outline-primary waves-effect m-2">See All Facilities</a>
     </div>
 </div>

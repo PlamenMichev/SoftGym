@@ -58,3 +58,7 @@ body {
 .image-parent {
     max-width: 60px;
 }
+
+.height-15rem {
+    height: 15rem;
+}

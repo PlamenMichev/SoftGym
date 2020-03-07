@@ -1,0 +1,56 @@
+﻿@model SoftGym.Web.ViewModels.Administration.Facilities.AddFacilityInputModel
+
+@using SoftGym.Data.Models.Enums
+@{
+    ViewData["Title"] = "Admin dashboard";
+}
+
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+<hr />
+<div class="row">
+    <div class="col-md-3">
+        <partial name="../Dashboard/_SideNavPartial" />
+    </div>
+    <div class="col-md-7 border">
+        <h2 class="text-center">Add Facility</h2>
+        <hr />
+        <form class="border border-light p-5" asp-action="Add" asp-area="Administration" asp-controller="Facilities" enctype="multipart/form-data">
+
+            <p class="h4 mb-4 text-center">Facility Data</p>
+
+            <div class="form-group">
+                <label for="textInput">Facility Name</label>
+                <input asp-for="Name" id="textInput" class="form-control mb-4" placeholder="ex:Bench Press...">
+                <span class="text-danger" asp-validation-for="Name"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="textarea">Facility Description</label>
+                <textarea id="textarea" asp-for="Description" class="form-control mb-4" placeholder="Description..."></textarea>
+                <span class="text-danger" asp-validation-for="Description"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="textarea">Type</label>
+                <select class="browser-default custom-select" asp-for="Type" asp-items="Html.GetEnumSelectList<FacilityType>()">
+                </select>
+                <span class="text-danger" asp-validation-for="Description"></span>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Upload</span>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" accept="image/*" asp-for="PictureFile" class="custom-file-input" id="inputGroupFile01"
+                               aria-describedby="inputGroupFileAddon01">
+                        <label class="custom-file-label" for="inputGroupFile01">Facility Image</label>
+                    </div>
+                </div>
+                <span asp-validation-for="PictureFile" class="text-danger d-block"></span>
+            </div>
+            <button class="btn btn-info btn-block my-4" type="submit">Add</button>
+        </form>
+    </div>
+</div>

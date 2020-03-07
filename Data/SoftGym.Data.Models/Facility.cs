@@ -4,6 +4,7 @@
     using System.ComponentModel.DataAnnotations;
 
     using SoftGym.Data.Common.Models;
+    using SoftGym.Data.Models.Enums;
 
     public class Facility : IDeletableEntity, IAuditInfo
     {
@@ -26,5 +27,7 @@
         [Required]
         [MaxLength(400)]
         public string Description { get; set; }
+
+        public FacilityType Type { get; set; }
     }
 }

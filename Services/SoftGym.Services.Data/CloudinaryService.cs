@@ -70,6 +70,11 @@
 
         public bool IsFileValid(IFormFile photoFile)
         {
+            if (photoFile == null)
+            {
+                return true;
+            }
+
             string[] validTypes = new string[]
             {
                 "image/x-png", "image/gif", "image/jpeg", "image/jpg", "image/png", "image/gif", "image/svg"
