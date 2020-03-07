@@ -17,5 +17,17 @@
         public Task<T> GetFacilityAsync<T>(int id);
 
         public Task<Facility> EditFacilityAsync(EditViewModel inputModel);
+
+        public Task<IEnumerable<T>> GetDeletedFacilitiesAsync<T>();
+
+        public Task<Facility> RestoreFacilityAsync(int facilityId);
+
+        public Task HardDeleteFacility(int facilityId);
+
+        public Task<IEnumerable<T>> GetAllEquipmentsAsync<T>();
+
+        public Task<IEnumerable<T>> GetSpaAsync<T>();
+
+        public Task<IEnumerable<T>> GetAllRoomsAsync<T>();
     }
 }

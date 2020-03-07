@@ -1,4 +1,4 @@
-﻿@model SoftGym.Web.ViewModels.Administration.Facilities.FacilitiListItemViewModel
+﻿@model SoftGym.Web.ViewModels.Administration.Facilities.FacilityListItemViewModel
 
 @using SoftGym.Common
 <!-- Modal -->
@@ -22,14 +22,13 @@
                         </div>
                         <div class="col-md-6 col-lg-6">
                             <h4 class="text-center">@Model.Name</h4>
-                            <h6 class="text-center">Type: @Model.Name</h6>
+                            <h6 class="text-center">Type: @Model.Type</h6>
                             <span class="text-center">@Model.Description</span>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>

@@ -1,0 +1,89 @@
+﻿@model SoftGym.Web.ViewModels.Administration.Facilities.AllFacilitiesViewModel
+
+@{
+    ViewData["Title"] = "Our Facilities";
+}
+
+<h1 class="text-center">Our Facilities</h1>
+<hr />
+<h2 class="text-center">
+    @if (this.Context.Request.Path.Value.Contains("All"))
+    {
+        @:All Facilities
+    }
+    else if (this.Context.Request.Path.Value.Contains("Equipments"))
+    {
+        @:All Equipments
+    }
+    else if (this.Context.Request.Path.Value.Contains("Rooms"))
+    {
+        @:All Rooms
+    }
+    else if (this.Context.Request.Path.Value.Contains("Spa"))
+    {
+        @:Spa Facilities
+    }
+</h2>
+
+<ul class="nav justify-content-center nav-tabs ">
+    <li class="nav-item">
+        @if (this.Context.Request.Path.Value.Contains("All"))
+        {
+            <a class="nav-link active" href="/Facilities/All">All</a>
+        }
+        else
+        {
+            <a class="nav-link" href="/Facilities/All">All</a>
+        }
+    </li>
+    <li class="nav-item">
+        @if (this.Context.Request.Path.Value.Contains("Equipments"))
+        {
+            <a class="nav-link active" href="/Facilities/Equipments">Equipments</a>
+        }
+        else
+        {
+            <a class="nav-link" href="/Facilities/Equipments">Equipments</a>
+        }
+    </li>
+    <li class="nav-item">
+        @if (this.Context.Request.Path.Value.Contains("Rooms"))
+        {
+            <a class="nav-link active" href="/Facilities/Rooms">Rooms</a>
+        }
+        else
+        {
+            <a class="nav-link" href="/Facilities/Rooms">Rooms</a>
+        }
+    </li>
+    <li class="nav-item">
+        @if (this.Context.Request.Path.Value.Contains("Spa"))
+        {
+            <a class="nav-link active" href="/Facilities/Spa">Spa</a>
+        }
+        else
+        {
+            <a class="nav-link" href="/Facilities/Spa">Spa</a>
+        }
+    </li>
+</ul>
+
+<div class="row px-5">
+    @foreach (var facility in Model.Facilities)
+    {
+        <div class="card col-md-4 col-lg-4 col-xs-4">
+            <div class="card-body h-100">
+                <div class="card-img-top height-20rem">
+                    <img class="img-fluid mx-auto d-block" src="@facility.PictureUrl" alt="Card image cap">
+                </div>
+                <h4 class="card-title"><a>@facility.Name</a></h4>
+                <h6>Type: @facility.Type</h6>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#a@(facility.Id)a">
+                    Details
+                </button>
+                <partial name="../../Areas/Administration/Views/Facilities/_DetailsPartial.cshtml" model="@facility" />
+            </div>
+        </div>
+    }
+</div>

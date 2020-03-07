@@ -12,8 +12,20 @@
         <partial name="../Dashboard/_SideNavPartial" />
     </div>
     <div class="col-md-9 col-lg-9 border">
-        <h2 class="text-center">All Facilities</h2>
+        <h2 class="text-center">
+            @if (this.Context.Request.Path.Value.Contains("All"))
+            {
+                @:All
+            }
+            else
+            {
+                @:Deleted
+            }
+            Facilities
+        </h2>
+        <a class="btn btn-outline-primary waves-effect mb-3" href="/Administration/Facilities/All">All Facilities</a>
         <a class="btn btn-outline-primary waves-effect mb-3" href="/Administration/Facilities/Add">Add New Facility</a>
+        <a class="btn btn-outline-primary waves-effect mb-3" href="/Administration/Facilities/Deleted">Deleted Facilities</a>
         <div class="row">
             @foreach (var facility in Model.Facilities)
             {
@@ -33,6 +45,14 @@
                             <a href="/Administration/Facilities/Delete?facilityId=@facility.Id" class="btn btn-danger" title="Delete"><i class="fas fa-trash-alt"></i></a>
                             <a href="/Administration/Facilities/Edit?facilityId=@facility.Id" class="btn btn-primary" title="Edit"><i class="fas fa-edit"></i></a>
                         }
+                        @if ((facility.IsDeleted == true && this.User.IsInRole(GlobalConstants.AdministratorRoleName)))
+                        {
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#b@(facility.Id)b">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                            <a href="/Administration/Facilities/Restore?facilityId=@facility.Id" class="btn btn-primary" title="Restore"><i class="fas fa-trash-restore"></i></a>
+                        }
+                        <partial name="_WarningDeletePartial" model="@facility" />
                         <partial name="_DetailsPartial" model="@facility" />
                     </div>
                 </div>

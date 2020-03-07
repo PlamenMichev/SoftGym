@@ -6,6 +6,7 @@
     using Microsoft.EntityFrameworkCore;
     using SoftGym.Data.Common.Repositories;
     using SoftGym.Data.Models;
+    using SoftGym.Data.Models.Enums;
     using SoftGym.Services.Data.Contracts;
     using SoftGym.Services.Mapping;
     using SoftGym.Web.ViewModels.Administration.Facilities;
@@ -68,10 +69,37 @@
             return currentFacility;
         }
 
+        public async Task<IEnumerable<T>> GetAllEquipmentsAsync<T>()
+        {
+            return await this.facilityRepository
+                .All()
+                .Where(x => x.Type == FacilityType.Equipment)
+                .To<T>()
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<T>> GetAllFacilitiesAsync<T>()
         {
             return await this.facilityRepository
                 .All()
+                .To<T>()
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<T>> GetAllRoomsAsync<T>()
+        {
+            return await this.facilityRepository
+                .All()
+                .Where(x => x.Type == FacilityType.Room)
+                .To<T>()
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<T>> GetDeletedFacilitiesAsync<T>()
+        {
+            return await this.facilityRepository
+                .AllWithDeleted()
+                .Where(x => x.IsDeleted == true)
                 .To<T>()
                 .ToListAsync();
         }
@@ -83,6 +111,37 @@
                 .Where(x => x.Id == id)
                 .To<T>()
                 .FirstAsync();
+        }
+
+        public async Task<IEnumerable<T>> GetSpaAsync<T>()
+        {
+            return await this.facilityRepository
+                .All()
+                .Where(x => x.Type == FacilityType.Spa)
+                .To<T>()
+                .ToListAsync();
+        }
+
+        public async Task HardDeleteFacility(int facilityId)
+        {
+            var currentFacility = await this.facilityRepository
+                .AllWithDeleted()
+                .FirstOrDefaultAsync(x => x.Id == facilityId);
+
+            this.facilityRepository.HardDelete(currentFacility);
+            await this.facilityRepository.SaveChangesAsync();
+        }
+
+        public async Task<Facility> RestoreFacilityAsync(int facilityId)
+        {
+            var currentFacility = await this.facilityRepository
+                .AllWithDeleted()
+                .FirstOrDefaultAsync(x => x.Id == facilityId);
+
+            currentFacility.IsDeleted = false;
+            await this.facilityRepository.SaveChangesAsync();
+
+            return currentFacility;
         }
     }
 }

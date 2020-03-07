@@ -4,7 +4,7 @@
     using SoftGym.Data.Models.Enums;
     using SoftGym.Services.Mapping;
 
-    public class FacilitiListItemViewModel : IMapFrom<Facility>
+    public class FacilityListItemViewModel : IMapFrom<Facility>
     {
         public int Id { get; set; }
 

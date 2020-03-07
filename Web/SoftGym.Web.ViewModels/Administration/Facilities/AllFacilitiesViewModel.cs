@@ -4,6 +4,6 @@
 
     public class AllFacilitiesViewModel
     {
-        public IEnumerable<FacilitiListItemViewModel> Facilities { get; set; }
+        public IEnumerable<FacilityListItemViewModel> Facilities { get; set; }
     }
 }
