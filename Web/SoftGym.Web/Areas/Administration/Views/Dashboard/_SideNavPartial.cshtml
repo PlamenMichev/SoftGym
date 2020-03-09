@@ -1,14 +1,25 @@
 ﻿
+@using SoftGym.Common
 @{
     ViewData["Title"] = "_SideNavPartial";
 }
 
+@if(this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+{
+    <h3 class="disabled">Admin</h3>
+    <hr />
+    <ul class="nav nav-pills flex-column" id="sideNav">
+        <li class="nav-item"><a class="nav-link" href="/Administration/Dashboard/Index">Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="/Administration/Users/All">Users</a></li>
+        <li class="nav-item"><a class="nav-link" href="/Administration/Facilities/All">Facilities</a></li>
+    </ul>
+}
+
+
+<h3 class="disabled">Trainer</h3>
+<hr />
+
 <ul class="nav nav-pills flex-column" id="sideNav">
-    <li class="nav-item"><a class="nav-link" href="/Administration/Dashboard/Index">Dashboard</a></li>
-    <li class="nav-item"><a class="nav-link" href="/Administration/Users/All">Users</a></li>
-    <li class="nav-item"><a class="nav-link" href="/Administration/Facilities/All">Facilities</a></li>
-    <li class="nav-item"><a class="nav-link" href="#">Password</a></li>
-    <li class="nav-item"><a class="nav-link" href="#">Personal data</a></li>
+    <li class="nav-item"><a class="nav-link" href="/Trainers/Dashboard/Index">Dashboard</a></li>
+    <li class="nav-item"><a class="nav-link" href="/Trainers/Meals/All">Meals</a></li>
 </ul>
-
-

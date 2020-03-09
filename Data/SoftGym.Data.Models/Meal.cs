@@ -12,6 +12,7 @@
         {
             this.Id = Guid.NewGuid().ToString();
             this.Plans = new HashSet<MealPlan>();
+            this.FoodPreferences = new HashSet<MealPreference>();
         }
 
         public string Id { get; set; }
@@ -32,5 +33,7 @@
         public string PictureUrl { get; set; }
 
         public MealType Type { get; set; }
+
+        public virtual IEnumerable<MealPreference> FoodPreferences { get; set; }
     }
 }

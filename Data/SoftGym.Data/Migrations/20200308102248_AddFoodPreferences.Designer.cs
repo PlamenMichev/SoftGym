@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SoftGym.Data;
 
 namespace SoftGym.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200308102248_AddFoodPreferences")]
+    partial class AddFoodPreferences
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -441,10 +443,12 @@ namespace SoftGym.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Preference")
+                    b.Property<int?>("PreferenceId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PreferenceId");
 
                     b.ToTable("FoodPreferences");
                 });
@@ -686,6 +690,13 @@ namespace SoftGym.Data.Migrations
                     b.HasOne("SoftGym.Data.Models.ApplicationUser", "User")
                         .WithMany("EatingPlans")
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("SoftGym.Data.Models.FoodPreference", b =>
+                {
+                    b.HasOne("SoftGym.Data.Models.FoodPreference", "Preference")
+                        .WithMany()
+                        .HasForeignKey("PreferenceId");
                 });
 
             modelBuilder.Entity("SoftGym.Data.Models.MealPlan", b =>

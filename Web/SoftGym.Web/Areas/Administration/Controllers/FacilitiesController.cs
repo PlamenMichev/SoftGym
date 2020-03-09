@@ -31,7 +31,7 @@
             return this.View(model);
         }
 
-        public async Task<IActionResult> Add()
+        public IActionResult Add()
         {
             return this.View();
         }
@@ -39,9 +39,9 @@
         [HttpPost]
         public async Task<IActionResult> Add(AddFacilityInputModel inputModel)
         {
-            if (!this.cloudinaryService.IsFileValid(inputModel?.PictureFile) || !this.ModelState.IsValid)
+            if (!this.cloudinaryService.IsFileValid(inputModel.PictureFile) || !this.ModelState.IsValid)
             {
-                if (!this.cloudinaryService.IsFileValid(inputModel?.PictureFile))
+                if (!this.cloudinaryService.IsFileValid(inputModel.PictureFile))
                 {
                     this.ModelState.AddModelError("PictureFile", "Plese enter valid file format!");
                 }

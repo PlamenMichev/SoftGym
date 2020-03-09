@@ -1,0 +1,22 @@
+﻿@model SoftGym.Web.ViewModels.Administration.Dashboard.IndexViewModel
+@{
+    this.ViewData["Title"] = "Trainers dashboard";
+}
+
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+<hr />
+<div class="row">
+    <div class="col-md-3">
+        <partial name="../../../Administration/Views/Dashboard/_SideNavPartial" />
+    </div>
+    <div class="col-md-9 border row">
+        <div class="col-md-4">
+            <h3>Meals</h3>
+            <hr />
+            <a href="/Trainers/Meals/All" class="btn btn-outline-primary waves-effect m-2">See All Meals</a>
+            <a href="/Trainers/Meals/Add" class="btn btn-outline-primary waves-effect m-2">Add Meal</a>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+</div>

@@ -1,8 +1,8 @@
-﻿namespace SoftGym.Web.Areas.Administration.Controllers
+﻿namespace SoftGym.Web.Areas.Trainers.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
 
-    public class DashboardController : AdministrationController
+    public class DashboardController : TrainersController
     {
         public IActionResult Index()
         {

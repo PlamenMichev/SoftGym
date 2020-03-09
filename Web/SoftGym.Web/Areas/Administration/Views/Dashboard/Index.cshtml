@@ -9,8 +9,18 @@
     <div class="col-md-3">
         <partial name="_SideNavPartial" />
     </div>
-    <div class="col-md-9 border">
-        <a href="/Administration/Users/All" class="btn btn-outline-primary waves-effect m-2">See All Users</a>
-        <a href="/Administration/Facilities/All" class="btn btn-outline-primary waves-effect m-2">See All Facilities</a>
+    <div class="col-md-9 border row">
+        <div class="col-md-4">
+            <h3>Facilities</h3>
+            <hr />
+            <a href="/Administration/Facilities/All" class="btn btn-outline-primary waves-effect m-2">See All Facilities</a>
+            <a href="/Administration/Facilities/Add" class="btn btn-outline-primary waves-effect m-2">Add Facility</a>
+            <a href="/Administration/Facilities/Deleted" class="btn btn-outline-primary waves-effect m-2">See Deleted Facilities</a>
+        </div>
+        <div class="col-md-4">
+            <h3>Users</h3>
+            <hr />
+            <a href="/Administration/Users/All" class="btn btn-outline-primary waves-effect m-2">See All Users</a>
+        </div>
     </div>
 </div>

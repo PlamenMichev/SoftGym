@@ -20,7 +20,7 @@
 
             <div class="form-group">
                 <label for="textInput">Facility Name</label>
-                <input asp-for="Name" id="textInput" class="form-control mb-4" placeholder="ex:Bench Press...">
+                <input asp-for="Name" id="textInput" class="form-control mb-4" placeholder="example:Bench Press...">
                 <span class="text-danger" asp-validation-for="Name"></span>
             </div>
 
@@ -34,7 +34,7 @@
                 <label for="textarea">Type</label>
                 <select class="browser-default custom-select" asp-for="Type" asp-items="Html.GetEnumSelectList<FacilityType>()">
                 </select>
-                <span class="text-danger" asp-validation-for="Description"></span>
+                <span class="text-danger" asp-validation-for="Type"></span>
             </div>
 
             <div class="form-group">

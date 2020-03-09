@@ -1,0 +1,64 @@
+﻿@model SoftGym.Web.ViewModels.Trainers.Meals.AddMealInputModel
+
+@using SoftGym.Data.Models.Enums
+@{
+    ViewData["Title"] = "Trainer dashboard";
+}
+
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+<hr />
+<div class="row">
+    <div class="col-md-3">
+        <partial name="../../../Administration/Views/Dashboard/_SideNavPartial" />
+    </div>
+    <div class="col-md-7 border">
+        <h2 class="text-center">Add Meal</h2>
+        <hr />
+        <form class="border border-light p-5" asp-action="Add" asp-area="Trainers" asp-controller="Meals" enctype="multipart/form-data">
+
+            <p class="h4 mb-4 text-center">Meal Data</p>
+
+            <div class="form-group">
+                <label for="textInput">Meal Name</label>
+                <input asp-for="Name" id="textInput" class="form-control mb-4" placeholder="example:Pancackes...">
+                <span class="text-danger" asp-validation-for="Name"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="textInput">Calories Per 100 Grams</label>
+                <input  type="number" asp-for="CaloriesPer100Grams" id="textInput" class="form-control mb-4" placeholder="example:240...">
+                <span class="text-danger" asp-validation-for="CaloriesPer100Grams"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="textarea">Type</label>
+                <select class="browser-default custom-select" asp-for="Type" asp-items="Html.GetEnumSelectList<MealType>()">
+                </select>
+                <span class="text-danger" asp-validation-for="Type"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="textarea">Bad For</label>
+                <select class="browser-default custom-select" asp-for="FoodPreferences" asp-items="Html.GetEnumSelectList<FoodPreference>()" multiple>
+                </select>
+                <span class="text-danger" asp-validation-for="FoodPreferences"></span>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Upload</span>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" accept="image/*" asp-for="PictureFile" class="custom-file-input" id="inputGroupFile01"
+                               aria-describedby="inputGroupFileAddon01">
+                        <label class="custom-file-label" for="inputGroupFile01">Meal Image</label>
+                    </div>
+                </div>
+                <span asp-validation-for="PictureFile" class="text-danger d-block"></span>
+            </div>
+
+            <button class="btn btn-info btn-block my-4" type="submit">Add</button>
+        </form>
+    </div>
+</div>

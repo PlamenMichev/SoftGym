@@ -41,6 +41,10 @@
 
         public DbSet<Facility> Facilities { get; set; }
 
+        public DbSet<FoodPreference> FoodPreferences { get; set; }
+
+        public DbSet<MealPreference> MealsPreferences { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -131,6 +135,22 @@
                 .HasOne(we => we.Exercise)
                 .WithMany(e => e.WorkoutPlans)
                 .HasForeignKey(we => we.ExerciseId);
+
+            builder
+                .Entity<MealPreference>()
+                .HasKey(x => new { x.MealId, x.PreferenceId });
+
+            builder
+                .Entity<MealPreference>()
+                .HasOne(mp => mp.Preference)
+                .WithMany(p => p.Meals)
+                .HasForeignKey(mp => mp.PreferenceId);
+
+            builder
+                .Entity<MealPreference>()
+                .HasOne(mp => mp.Meal)
+                .WithMany(m => m.FoodPreferences)
+                .HasForeignKey(mp => mp.MealId);
 
             var entityTypes = builder.Model.GetEntityTypes().ToList();
 
