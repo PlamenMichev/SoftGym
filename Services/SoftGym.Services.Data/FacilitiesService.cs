@@ -69,30 +69,23 @@
             return currentFacility;
         }
 
-        public async Task<IEnumerable<T>> GetAllEquipmentsAsync<T>()
+        public async Task<IEnumerable<T>> GetAllFacilitiesAsync<T>(FacilityType? type = null)
         {
-            return await this.facilityRepository
-                .All()
-                .Where(x => x.Type == FacilityType.Equipment)
-                .To<T>()
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<T>> GetAllFacilitiesAsync<T>()
-        {
-            return await this.facilityRepository
-                .All()
-                .To<T>()
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<T>> GetAllRoomsAsync<T>()
-        {
-            return await this.facilityRepository
-                .All()
-                .Where(x => x.Type == FacilityType.Room)
-                .To<T>()
-                .ToListAsync();
+            if (type == null)
+            {
+                return await this.facilityRepository
+                                .All()
+                                .To<T>()
+                                .ToListAsync();
+            }
+            else
+            {
+                return await this.facilityRepository
+                                .All()
+                                .Where(x => x.Type == type)
+                                .To<T>()
+                                .ToListAsync();
+            }
         }
 
         public async Task<IEnumerable<T>> GetDeletedFacilitiesAsync<T>()
@@ -111,15 +104,6 @@
                 .Where(x => x.Id == id)
                 .To<T>()
                 .FirstAsync();
-        }
-
-        public async Task<IEnumerable<T>> GetSpaAsync<T>()
-        {
-            return await this.facilityRepository
-                .All()
-                .Where(x => x.Type == FacilityType.Spa)
-                .To<T>()
-                .ToListAsync();
         }
 
         public async Task HardDeleteFacility(int facilityId)

@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
+    using SoftGym.Data.Models.Enums;
     using SoftGym.Services.Data.Contracts;
     using SoftGym.Web.ViewModels.Administration.Facilities;
 
@@ -29,7 +30,7 @@
         {
             var model = new AllFacilitiesViewModel
             {
-                Facilities = await this.facilitiesService.GetAllEquipmentsAsync<FacilityListItemViewModel>(),
+                Facilities = await this.facilitiesService.GetAllFacilitiesAsync<FacilityListItemViewModel>(FacilityType.Equipment),
             };
 
             return this.View("All", model);
@@ -39,7 +40,7 @@
         {
             var model = new AllFacilitiesViewModel
             {
-                Facilities = await this.facilitiesService.GetSpaAsync<FacilityListItemViewModel>(),
+                Facilities = await this.facilitiesService.GetAllFacilitiesAsync<FacilityListItemViewModel>(FacilityType.Spa),
             };
 
             return this.View("All", model);
@@ -49,7 +50,7 @@
         {
             var model = new AllFacilitiesViewModel
             {
-                Facilities = await this.facilitiesService.GetAllRoomsAsync<FacilityListItemViewModel>(),
+                Facilities = await this.facilitiesService.GetAllFacilitiesAsync<FacilityListItemViewModel>(FacilityType.Room),
             };
 
             return this.View("All", model);

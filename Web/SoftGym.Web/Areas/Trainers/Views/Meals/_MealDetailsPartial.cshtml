@@ -1,0 +1,29 @@
+﻿@model SoftGym.Web.ViewModels.Trainers.Meals.MealViewModel
+
+@using SoftGym.Data.Models.Enums
+<div class="row">
+    <div class="col-md-6 mt-5">
+        <img src="@Model.PictureUrl" class="w-100" alt="@Model.Name" />
+    </div>
+    <div class="col-md-6">
+        <h2 class="text-center">@Model.Name</h2>
+        <h5 class="text-center">Type: @Model.Type</h5>
+        <hr />
+        <h5 class="text-center">@Model.CaloriesPer100Grams Calories Per 100 Grams</h5>
+
+        <ul class="list-group">
+            @foreach (var preference in Model.FoodPreferences)
+            {
+                if (preference.Preference == FoodPreference.Vegan ||
+                    preference.Preference == FoodPreference.Vegetarian)
+                {
+                    <li class="list-group-item">Bad for @preference.Preference.ToString()s</li>
+                }
+                else
+                {
+                    <li class="list-group-item">Bad for people who do not consume @preference.Preference.ToString()</li>
+                }
+            }
+        </ul>
+    </div>
+</div>

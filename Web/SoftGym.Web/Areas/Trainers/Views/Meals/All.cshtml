@@ -1,0 +1,39 @@
+﻿@model SoftGym.Web.ViewModels.Trainers.Meals.AllMealsViewModel
+
+@{
+    ViewData["Title"] = "All";
+}
+
+@using SoftGym.Data.Models.Enums
+@{
+    ViewData["Title"] = "Trainer dashboard";
+}
+
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+<hr />
+<div class="row">
+    <div class="col-md-3">
+        <partial name="../../../Administration/Views/Dashboard/_SideNavPartial" />
+    </div>
+    <div class="col-md-9 border">
+        <h3 class="text-center">All Meals</h3>
+        <hr />
+        <div class="text-center">
+            <a href="/Trainers/Meals/Add" class="btn btn-outline-primary align-content-center" title="Add Meal">
+                <i class="fas fa-plus-square"></i>
+            </a>
+        </div>
+        @foreach (var meal in Model.Meals)
+        {
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="@meal.PictureUrl" alt="@meal.Name">
+                <div class="card-body">
+                    <h5 class="card-title">@meal.Name</h5>
+                    <a href="/Trainers/Meals/Details/@meal.Id" class="btn btn-primary">Details</a>
+                    <a href="/Trainers/Meals/Delete/@meal.Id" class="btn btn-danger" title="Delete"><i class="fas fa-trash-alt"></i></a>
+                    <a href="/Trainers/Meals/Edit/@meal.Id" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

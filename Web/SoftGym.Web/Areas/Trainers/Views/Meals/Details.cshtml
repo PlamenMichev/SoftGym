@@ -1,0 +1,16 @@
+﻿@model SoftGym.Web.ViewModels.Trainers.Meals.MealViewModel
+
+@{
+    ViewData["Title"] = "Trainer dashboard";
+}
+
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+<hr />
+<div class="row">
+    <div class="col-md-3">
+        <partial name="../../../Administration/Views/Dashboard/_SideNavPartial" />
+    </div>
+    <div class="col-md-9 border">
+        <partial name="_MealDetailsPartial" model="@Model" />
+    </div>
+</div>
