@@ -25,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\SoftGym.Data.Common\SoftGym.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\SoftGym.Data.Models\SoftGym.Data.Models.csproj" />
+    <ProjectReference Include="..\..\SoftGym.Common\SoftGym.Common.csproj" />
     <ProjectReference Include="..\..\Web\SoftGym.Web.ViewModels\SoftGym.Web.ViewModels.csproj" />
     <ProjectReference Include="..\SoftGym.Services.Mapping\SoftGym.Services.Mapping.csproj" />
   </ItemGroup>

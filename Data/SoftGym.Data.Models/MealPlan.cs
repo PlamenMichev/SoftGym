@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace SoftGym.Data.Models
+﻿namespace SoftGym.Data.Models
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class MealPlan
     {
         public string EatingPlanId { get; set; }

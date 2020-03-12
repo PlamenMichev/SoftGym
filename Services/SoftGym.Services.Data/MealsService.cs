@@ -40,24 +40,27 @@
                 Type = inputModel.Type,
             };
 
-            foreach (var foodPreference in inputModel.FoodPreferences)
+            if (inputModel.FoodPreferences != null)
             {
-                FoodPreference currentPreference;
-                currentPreference = await this.foodPreferenceRepository
-                    .All()
-                    .FirstAsync(x => x.Preference == foodPreference);
-
-                MealPreference mealPreference = new MealPreference
+                foreach (var foodPreference in inputModel.FoodPreferences)
                 {
-                    Meal = meal,
-                    MealId = meal.Id,
-                    Preference = currentPreference,
-                    PreferenceId = currentPreference.Id,
-                };
+                    FoodPreference currentPreference;
+                    currentPreference = await this.foodPreferenceRepository
+                        .All()
+                        .FirstAsync(x => x.Preference == foodPreference);
 
-                await this.mealsPreferencesRepository.AddAsync(mealPreference);
-                meal.FoodPreferences.ToList().Add(mealPreference);
-                currentPreference.Meals.ToList().Add(mealPreference);
+                    MealPreference mealPreference = new MealPreference
+                    {
+                        Meal = meal,
+                        MealId = meal.Id,
+                        Preference = currentPreference,
+                        PreferenceId = currentPreference.Id,
+                    };
+
+                    await this.mealsPreferencesRepository.AddAsync(mealPreference);
+                    meal.FoodPreferences.ToList().Add(mealPreference);
+                    currentPreference.Meals.ToList().Add(mealPreference);
+                }
             }
 
             await this.mealsRepository.AddAsync(meal);

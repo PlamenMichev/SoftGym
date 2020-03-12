@@ -55,7 +55,7 @@
             }
 
             await this.mealsService.AddMealAsync(inputModel);
-            return this.Redirect("/Trainers/Dashboard/Index");
+            return this.Redirect("/Trainers/Meals/All");
         }
 
         public async Task<IActionResult> Delete(string id)

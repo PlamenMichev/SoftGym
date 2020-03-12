@@ -1,0 +1,25 @@
+﻿@model SoftGym.Web.ViewModels.Trainers.AllTrainersViewModel
+
+@{
+    ViewData["Title"] = "Trainers";
+}
+
+<h1 class="text-center">Our Trainers</h1>
+<hr />
+
+<div class="row justify-content-center">
+    @foreach (var trainer in Model.Trainers)
+    {
+        <div class="card col-md-4 m-5 text-center">
+            <div class="card-body text-center h-100">
+                <div class="card-img-top height-20rem">
+                    <img class="img-fluid mx-auto d-block w-100 h-100" src="@trainer.ProfilePictureUrl" alt="@trainer.FirstName @trainer.LastName">
+                </div>
+                <h4 class="card-title">@trainer.FirstName @trainer.LastName</h4>
+                <p class="card-text">@trainer.Description.Substring(0, 60)...</p>
+                <a data-toggle="modal" data-target="#a@(trainer.Id)a" class="btn btn-primary btn-sm" title="See Profile"><i class="far fa-address-card"></i></a>
+                <partial name="_DetailsPartial", model="@trainer" />
+            </div>
+        </div>
+    }
+</div>

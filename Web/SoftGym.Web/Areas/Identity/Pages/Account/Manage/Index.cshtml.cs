@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using SoftGym.Common;
 using SoftGym.Data.Models;
 using SoftGym.Services.Data.Contracts;
 using SoftGym.Web.ViewModels.Users;
@@ -18,15 +19,18 @@ namespace SoftGym.Web.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IUsersService usersService;
+        private readonly ITrainersService trainersService;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IUsersService usersService)
+            IUsersService usersService,
+            ITrainersService trainersService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             this.usersService = usersService;
+            this.trainersService = trainersService;
         }
 
         public string Username { get; set; }
@@ -45,16 +49,23 @@ namespace SoftGym.Web.Areas.Identity.Pages.Account.Manage
             public string PhoneNumber { get; set; }
 
             [Display(Name = "First Name")]
+            [Required]
             [MinLength(3)]
             [MaxLength(25)]
             public string FirstName { get; set; }
 
             [Display(Name = "Last Name")]
+            [Required]
             [MinLength(3)]
             [MaxLength(25)]
             public string LastName { get; set; }
 
             public string ProfilePictureUrl { get; set; }
+
+            [Required]
+            [MinLength(20)]
+            [MaxLength(300)]
+            public string Description { get; set; }
 
             public ChangeProfilePhotoInputModel PhotoModel { get; set; }
         }
@@ -66,10 +77,22 @@ namespace SoftGym.Web.Areas.Identity.Pages.Account.Manage
 
             Username = userName;
 
-            Input = new InputModel
+            this.Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                PhotoModel = new ChangeProfilePhotoInputModel
+                {
+                    UserId = user.Id,
+                },
+                ProfilePictureUrl = user.ProfilePictureUrl,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
             };
+
+            if (this.User.IsInRole(GlobalConstants.TrainerRoleName))
+            {
+                this.Input.Description = user.Description;
+            }
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -81,6 +104,11 @@ namespace SoftGym.Web.Areas.Identity.Pages.Account.Manage
             }
 
             await LoadAsync(user);
+            if (this.User.IsInRole(GlobalConstants.TrainerRoleName) && user.Description != null)
+            {
+                this.Input.Description = user.Description;
+            }
+
             this.Input.FirstName = user.FirstName;
             this.Input.LastName = user.LastName;
             this.Input.PhoneNumber = user.PhoneNumber;
@@ -102,8 +130,17 @@ namespace SoftGym.Web.Areas.Identity.Pages.Account.Manage
 
             if (!ModelState.IsValid)
             {
-                await LoadAsync(user);
-                return Page();
+                if (!this.User.IsInRole(GlobalConstants.TrainerRoleName)
+                    && this.ModelState.ErrorCount > 1)
+                {
+                    await LoadAsync(user);
+                    return Page();
+                }
+                else if (this.User.IsInRole(GlobalConstants.TrainerRoleName))
+                {
+                    await LoadAsync(user);
+                    return Page();
+                }
             }
 
             var phoneNumber = await this._userManager.GetPhoneNumberAsync(user);
@@ -119,7 +156,12 @@ namespace SoftGym.Web.Areas.Identity.Pages.Account.Manage
                 await this.usersService.ChangeLastNameAsync(user.Id, this.Input.LastName);
             }
 
-            if (this. Input.PhoneNumber != phoneNumber)
+            if (this.User.IsInRole(GlobalConstants.TrainerRoleName) && user?.Description != this.Input.Description)
+            {
+                await this.trainersService.ChangeDescriptionAync(user.Id, this.Input.Description);
+            }
+
+            if (this.Input.PhoneNumber != phoneNumber)
             {
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
                 if (!setPhoneResult.Succeeded)

@@ -13,7 +13,7 @@
         [MaxLength(25)]
         public string Name { get; set; }
 
-        [Range(0, 10000)]
+        [Range(1, 10000, ErrorMessage = "Calories must be between 1 and 1000")]
         [Required(ErrorMessage = "Calories Field is Required.")]
         public double CaloriesPer100Grams { get; set; }
 

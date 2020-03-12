@@ -1,0 +1,71 @@
+﻿@model SoftGym.Web.ViewModels.EatingPlans.GenerateInputModel
+
+@using SoftGym.Web.ViewModels.EatingPlans.Enums
+@using SoftGym.Data.Models.Enums
+<h1 class="text-center mb-3">Generate Eating Plan</h1>
+<hr />
+
+<form class="border border-light p-5" asp-action="GeneratePlan" asp-area="" asp-controller="EatingPlans" enctype="multipart/form-data">
+
+    <p class="h4 mb-4 text-center">Your Data</p>
+
+    <input type="text" asp-for="Id" value="@Model.Id" hidden />
+    <div class="row text-center justify-content-center">
+        <div class="form-group col-md-6">
+            <label for="textInput">Your Gender:</label>
+            <select asp-for="Gender" class="browser-default custom-select">
+                <option value="Male" selected>Male</option>
+                <option value="Female">Female</option>
+            </select>
+            <span class="text-danger" asp-validation-for="Gender"></span>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="textInput">Weight(In kilograms):</label>
+            <input asp-for="Weight" id="textInput" class="form-control mb-4">
+            <span class="text-danger" asp-validation-for="Weight"></span>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="textInput">Height(In cm):</label>
+            <input asp-for="Height" id="textInput" class="form-control mb-4">
+            <span class="text-danger" asp-validation-for="Height"></span>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="textInput">Age:</label>
+            <input asp-for="Age" id="textInput" class="form-control mb-4">
+            <span class="text-danger" asp-validation-for="Age"></span>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="textInput">Your Goal:</label>
+            <select asp-for="Goal" class="browser-default custom-select" asp-items="Html.GetEnumSelectList<Goal>()">
+            </select>
+            <span class="text-danger" asp-validation-for="Goal"></span>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="textInput">Duration Of Plan:</label>
+            <select asp-for="DurationInDays" class="browser-default custom-select">
+                <option value="30" selected>30 days(1 month)</option>
+                <option value="60">60 days(2 months)</option>
+                <option value="90">90 days(3 months)</option>
+            </select>
+            <span class="text-danger" asp-validation-for="DurationInDays"></span>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="textarea">Food Preferences(For example if you do not eat eggs)</label>
+                <select class="browser-default custom-select" asp-for="FoodPreferences" asp-items="Html.GetEnumSelectList<FoodPreference>()" multiple>
+                </select>
+                <span class="text-danger" asp-validation-for="FoodPreferences"></span>
+            </div>
+        </div>
+
+    </div>
+    <div class="text-center">
+        <button class="btn btn-info my-4" type="submit">Generate</button>
+    </div>
+</form>
