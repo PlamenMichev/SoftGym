@@ -1,5 +1,6 @@
 ﻿namespace SoftGym.Services.Data.Contracts
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using SoftGym.Data.Models;
@@ -8,5 +9,9 @@
     public interface IEatingPlansService
     {
         public Task<EatingPlan> GenerateEatingPlanAsync(GenerateInputModel inputModel);
+
+        public Task<ICollection<T>> GetAllPlansAsync<T>();
+
+        public Task<T> GetPlanAsync<T>(string id);
     }
 }

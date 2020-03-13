@@ -1,0 +1,35 @@
+﻿@model SoftGym.Web.ViewModels.EatingPlans.EatingPlanDetailsViewModel
+
+@using SoftGym.Data.Models.Enums
+<h2>Eating Plan</h2>
+<hr />
+<div class="row">
+    <div class="col-md-3">
+        <h4>Breakfasts</h4>
+        @foreach (var meal in Model.MealEnitities.Where(x => x.Type == MealType.Breakfast))
+        {
+            <h6>@meal.Name - @Model.Meals.First(x => x.MealId == meal.Id).MealWeight.ToString("f0")g.</h6>
+        }
+    </div>
+    <div class="col-md-3">
+        <h4>Lunches</h4>
+        @foreach (var meal in Model.MealEnitities.Where(x => x.Type == MealType.Lunch))
+        {
+            <h6>@meal.Name - @Model.Meals.First(x => x.MealId == meal.Id).MealWeight.ToString("f0")g.</h6>
+        }
+    </div>
+    <div class="col-md-3">
+        <h4>Dinners</h4>
+        @foreach (var meal in Model.MealEnitities.Where(x => x.Type == MealType.Dinner))
+        {
+            <h6>@meal.Name - @Model.Meals.First(x => x.MealId == meal.Id).MealWeight.ToString("f0")g.</h6>
+        }
+    </div>
+    <div class="col-md-3">
+        <h4>Snacks</h4>
+        @foreach (var meal in Model.MealEnitities.Where(x => x.Type == MealType.Snack))
+        {
+            <h6>@meal.Name - @Model.Meals.First(x => x.MealId == meal.Id).MealWeight.ToString("f0")g.</h6>
+        }
+    </div>
+</div>

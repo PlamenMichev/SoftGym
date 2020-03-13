@@ -1,6 +1,7 @@
 ﻿namespace SoftGym.Services.Data
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@
     using SoftGym.Data.Models;
     using SoftGym.Data.Models.Enums;
     using SoftGym.Services.Data.Contracts;
+    using SoftGym.Services.Mapping;
     using SoftGym.Web.ViewModels.EatingPlans;
     using SoftGym.Web.ViewModels.EatingPlans.Enums;
 
@@ -33,7 +35,7 @@
 
         public async Task<EatingPlan> GenerateEatingPlanAsync(GenerateInputModel inputModel)
         {
-            double caloriesPerDay = 0;
+            double caloriesPerDay;
             if (inputModel.Gender == "Male")
             {
                 caloriesPerDay = (10 * inputModel.Weight)
@@ -47,6 +49,13 @@
                     + (6.25 * inputModel.Height)
                     - (5 * inputModel.Age)
                     - 161;
+            }
+
+            switch (inputModel.Activity)
+            {
+                case "light": caloriesPerDay = 1.30 * caloriesPerDay; break;
+                case "medium": caloriesPerDay = 1.60 * caloriesPerDay; break;
+                case "high": caloriesPerDay = 1.90 * caloriesPerDay; break;
             }
 
             if (inputModel.Goal == Goal.Gain)
@@ -68,164 +77,103 @@
 
             double caloriesForMeal = 0.25 * caloriesPerDay;
 
-            Meal[] breakfasts = await this.mealsRepository
-                .All()
-                .Where(x => x.Type == MealType.Breakfast)
-                .ToArrayAsync();
-
-            int[] pickedBreakfaststs = new int[3]
-            {
-                -1, -1, -1,
-            };
-            for (int i = 0; i < 3; i++)
-            {
-                var random = new Random();
-                int breakfastIndex = random.Next(0, breakfasts.Length);
-                while (pickedBreakfaststs.Contains(breakfastIndex) ||
-                    inputModel?.FoodPreferences
-                    .Any(x => breakfasts[breakfastIndex].FoodPreferences
-                    .Any(y => y.Preference.Preference == x)) != false)
-                {
-                    breakfastIndex = random.Next(0, breakfasts.Length);
-                }
-
-                pickedBreakfaststs[i] = breakfastIndex;
-                var currentBreakfast = breakfasts[breakfastIndex];
-                var mealPlan = new MealPlan()
-                {
-                    EatingPlanId = eatingPlan.Id,
-                    EatingPlan = eatingPlan,
-                    MealId = currentBreakfast.Id,
-                    Meal = currentBreakfast,
-                    MealWeight = caloriesForMeal / (currentBreakfast.CaloriesPer100Grams / 100),
-                    TotalCalories = (caloriesForMeal / (currentBreakfast.CaloriesPer100Grams / 100))
-                    * (currentBreakfast.CaloriesPer100Grams / 100),
-                };
-
-                await this.mealsPlansRepository.AddAsync(mealPlan);
-                eatingPlan.Meals.Add(mealPlan);
-                currentBreakfast.Plans.Add(mealPlan);
-            }
-
-            Meal[] lunches = await this.mealsRepository
-                .All()
-                .Where(x => x.Type == MealType.Lunch)
-                .ToArrayAsync();
-
-            int[] pickedLunches = new int[3]
-            {
-                -1, -1, -1,
-            };
-            for (int i = 0; i < 3; i++)
-            {
-                var random = new Random();
-                int lunchIndex = random.Next(0, lunches.Length);
-                while (pickedLunches.Contains(lunchIndex) ||
-                    inputModel?.FoodPreferences
-                    .Any(x => lunches[lunchIndex].FoodPreferences
-                    .Any(y => y.Preference.Preference == x)) != false)
-                {
-                    lunchIndex = random.Next(0, lunches.Length);
-                }
-
-                pickedLunches[i] = lunchIndex;
-                var currentLunch = lunches[lunchIndex];
-                var mealPlan = new MealPlan()
-                {
-                    EatingPlanId = eatingPlan.Id,
-                    EatingPlan = eatingPlan,
-                    MealId = currentLunch.Id,
-                    Meal = currentLunch,
-                    MealWeight = caloriesForMeal / (currentLunch.CaloriesPer100Grams / 100),
-                    TotalCalories = (caloriesForMeal / (currentLunch.CaloriesPer100Grams / 100))
-                    * (currentLunch.CaloriesPer100Grams / 100),
-                };
-
-                await this.mealsPlansRepository.AddAsync(mealPlan);
-                eatingPlan.Meals.Add(mealPlan);
-                currentLunch.Plans.Add(mealPlan);
-            }
-
-            Meal[] dinners = await this.mealsRepository
-                .All()
-                .Where(x => x.Type == MealType.Dinner)
-                .ToArrayAsync();
-
-            int[] pickedDinners = new int[3]
-            {
-                -1, -1, -1,
-            };
-            for (int i = 0; i < 3; i++)
-            {
-                var random = new Random();
-                int dinnerIndex = random.Next(0, dinners.Length);
-                while (pickedDinners.Contains(dinnerIndex) ||
-                    inputModel?.FoodPreferences
-                    .Any(x => dinners[dinnerIndex].FoodPreferences
-                    .Any(y => y.Preference.Preference == x)) != false)
-                {
-                    dinnerIndex = random.Next(0, dinners.Length);
-                }
-
-                pickedDinners[i] = dinnerIndex;
-                var currentDinner = dinners[dinnerIndex];
-                var mealPlan = new MealPlan()
-                {
-                    EatingPlanId = eatingPlan.Id,
-                    EatingPlan = eatingPlan,
-                    MealId = currentDinner.Id,
-                    Meal = currentDinner,
-                    MealWeight = caloriesForMeal / (currentDinner.CaloriesPer100Grams / 100),
-                    TotalCalories = (caloriesForMeal / (currentDinner.CaloriesPer100Grams / 100))
-                    * (currentDinner.CaloriesPer100Grams / 100),
-                };
-
-                await this.mealsPlansRepository.AddAsync(mealPlan);
-                eatingPlan.Meals.Add(mealPlan);
-                currentDinner.Plans.Add(mealPlan);
-            }
-
-            Meal[] snacks = await this.mealsRepository
-               .All()
-               .Where(x => x.Type == MealType.Snack)
-               .ToArrayAsync();
-
-            int[] pickedSnacks = new int[6]
-            {
-                -1, -1, -1, -1, -1, -1,
-            };
-            for (int i = 0; i < 3; i++)
-            {
-                var random = new Random();
-                int snackIndex = random.Next(0, snacks.Length);
-                while (pickedSnacks.Contains(snackIndex) ||
-                    inputModel?.FoodPreferences
-                    .Any(x => snacks[snackIndex].FoodPreferences
-                    .Any(y => y.Preference.Preference == x)) != false)
-                {
-                    snackIndex = random.Next(0, snacks.Length);
-                }
-
-                pickedSnacks[i] = snackIndex;
-                var currentSnack = snacks[snackIndex];
-                var mealPlan = new MealPlan()
-                {
-                    EatingPlanId = eatingPlan.Id,
-                    EatingPlan = eatingPlan,
-                    MealId = currentSnack.Id,
-                    Meal = currentSnack,
-                    MealWeight = (caloriesForMeal / 2) / (currentSnack.CaloriesPer100Grams / 100),
-                    TotalCalories = ((caloriesForMeal / 2) / (currentSnack.CaloriesPer100Grams / 100))
-                    * (currentSnack.CaloriesPer100Grams / 100),
-                };
-
-                await this.mealsPlansRepository.AddAsync(mealPlan);
-                eatingPlan.Meals.Add(mealPlan);
-                currentSnack.Plans.Add(mealPlan);
-            }
+            await this.AddMeals(eatingPlan, inputModel, MealType.Breakfast, caloriesForMeal);
+            await this.AddMeals(eatingPlan, inputModel, MealType.Lunch, caloriesForMeal);
+            await this.AddMeals(eatingPlan, inputModel, MealType.Dinner, caloriesForMeal);
+            await this.AddMeals(eatingPlan, inputModel, MealType.Snack, caloriesForMeal);
 
             await this.mealsRepository.SaveChangesAsync();
             return eatingPlan;
+        }
+
+        public async Task AddMeals(
+            EatingPlan eatingPlan,
+            GenerateInputModel inputModel,
+            MealType mealType,
+            double caloriesForMeal)
+        {
+            var meals = await this.mealsRepository
+                .All()
+                .Select(x => new
+                {
+                    x.Name,
+                    x.Type,
+                    FoodPreferences = x.FoodPreferences.Select(y => new
+                    {
+                        y.Preference,
+                    }),
+                    x.Id,
+                    x.CaloriesPer100Grams,
+                    x.Plans,
+                })
+                .Where(x => x.Type == mealType)
+                .ToArrayAsync();
+
+            int[] pickedMeals;
+            if (mealType == MealType.Snack)
+            {
+                pickedMeals = new int[6]
+                {
+                    -1, -1, -1, -1, -1, -1,
+                };
+                caloriesForMeal /= 2;
+            }
+            else
+            {
+                pickedMeals = new int[3]
+                {
+                    -1, -1, -1,
+                };
+            }
+
+            for (int i = 0; i < pickedMeals.Length; i++)
+            {
+                var random = new Random();
+                int mealIndex = random.Next(0, meals.Length);
+                while (pickedMeals.Contains(mealIndex) ||
+                    inputModel?.FoodPreferences
+                    .Any(x => meals[mealIndex].FoodPreferences
+                    .Any(y => y.Preference.Preference == x)) != false)
+                {
+                    mealIndex = random.Next(0, meals.Length);
+                }
+
+                pickedMeals[i] = mealIndex;
+                var currentMeal = await this.mealsRepository
+                    .All()
+                    .FirstAsync(x => x.Id == meals[mealIndex].Id);
+                var mealPlan = new MealPlan()
+                {
+                    EatingPlanId = eatingPlan.Id,
+                    EatingPlan = eatingPlan,
+                    MealId = currentMeal.Id,
+                    Meal = currentMeal,
+                    MealWeight = caloriesForMeal / (currentMeal.CaloriesPer100Grams / 100),
+                    TotalCalories = (caloriesForMeal / (currentMeal.CaloriesPer100Grams / 100))
+                    * (currentMeal.CaloriesPer100Grams / 100),
+                };
+
+                await this.mealsPlansRepository.AddAsync(mealPlan);
+                eatingPlan.Meals.Add(mealPlan);
+                currentMeal.Plans.Add(mealPlan);
+            }
+        }
+
+        public async Task<ICollection<T>> GetAllPlansAsync<T>()
+        {
+            return await this.eatingPlansRepository
+                .All()
+                .To<T>()
+                .ToListAsync();
+        }
+
+        public async Task<T> GetPlanAsync<T>(string id)
+        {
+            return await this.eatingPlansRepository
+                .All()
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstAsync();
         }
     }
 }

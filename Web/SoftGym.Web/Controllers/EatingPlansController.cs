@@ -1,11 +1,15 @@
 ﻿namespace SoftGym.Web.Controllers
 {
+    using System;
+    using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SoftGym.Services.Data.Contracts;
     using SoftGym.Web.ViewModels.EatingPlans;
+    using SoftGym.Web.ViewModels.Users;
 
     [Authorize]
     public class EatingPlansController : BaseController
@@ -19,7 +23,12 @@
 
         public IActionResult Index()
         {
-            return this.View();
+            var viewModel = new PlansIndexView()
+            {
+                Id = this.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value,
+            };
+
+            return this.View(viewModel);
         }
 
         public IActionResult GeneratePlan()
@@ -40,8 +49,34 @@
                 return this.View(inputModel);
             }
 
-            await this.eatingPlansService.GenerateEatingPlanAsync(inputModel);
+            var plan = await this.eatingPlansService.GenerateEatingPlanAsync(inputModel);
             return this.Redirect($"/EatingPlans/MyPlans/{inputModel.Id}");
+        }
+
+        public async Task<IActionResult> Details(string id)
+        {
+            var viewModel = await this.eatingPlansService.GetPlanAsync<EatingPlanDetailsViewModel>(id);
+            return this.View(viewModel);
+        }
+
+        public async Task<IActionResult> MyPlans(string id)
+        {
+            var viewModel = new AllPlansViewModel
+            {
+                ActivePlans = await this.eatingPlansService.GetAllPlansAsync<EatingPlanViewModel>(),
+                InactivePlans = await this.eatingPlansService.GetAllPlansAsync<EatingPlanViewModel>(),
+            };
+
+            viewModel.ActivePlans = viewModel
+                .ActivePlans
+                .Where(x => x.ExpireDate.Subtract(DateTime.Now).Hours > 0)
+                .ToList();
+            viewModel.InactivePlans = viewModel
+                .InactivePlans
+                .Where(x => x.ExpireDate.Subtract(DateTime.Now).Hours < 0)
+                .ToList();
+
+            return this.View(viewModel);
         }
     }
 }

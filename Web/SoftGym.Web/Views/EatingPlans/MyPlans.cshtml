@@ -1,0 +1,57 @@
+﻿@model SoftGym.Web.ViewModels.EatingPlans.AllPlansViewModel
+
+@{
+    ViewData["Title"] = "My Plans";
+}
+
+<h2 class="text-center">My Plans</h2>
+<hr />
+<h4 class="text-center">Active</h4>
+@if (Model.ActivePlans.Any())
+{
+    <ul class="list-group">
+        @foreach (var plan in Model.ActivePlans)
+        {
+            <li class="list-group-item text-center">
+                <a href="/EatingPlans/Details/@plan.Id">
+                    Plan from @plan.CreatedOn.ToString("dd/MM/yyyy") to @plan.ExpireDate.Date.ToString("dd/MM/yyyy") (@plan.CaloriesPerDay calories daily)
+                </a>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <div class="text-center">
+
+        <div class="alert alert-primary" role="alert">
+            No Active Plans
+        </div>
+        <a href="/EatingPlans/GeneratePlan" class="btn btn-primary">Generate Plan</a>
+    </div>
+}
+
+<h4 class="text-center">Inactive</h4>
+
+@if (Model.InactivePlans.Any())
+{
+    <ul class="list-group">
+        @foreach (var plan in Model.InactivePlans)
+        {
+            <li class="list-group-item text-center">
+                <a href="/EatingPlans/Details/@plan.Id">
+                    Plan from @plan.CreatedOn.ToString("dd/MM/yyyy") to @plan.ExpireDate.Date.ToString("dd/MM/yyyy") (@plan.CaloriesPerDay calories daily)
+                </a>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <div class="text-center">
+
+        <div class="alert alert-primary" role="alert">
+            No Inactive Plans
+        </div>
+    </div>
+}

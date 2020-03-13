@@ -1,4 +1,6 @@
-﻿@{
+﻿@model SoftGym.Web.ViewModels.Users.PlansIndexView
+
+@{
     ViewData["Title"] = "Eating Plans";
 }
 
@@ -16,7 +18,7 @@
         </a>
     </div>
     <div class="col-md-4">
-        <a class="btn btn-primary btn-lg" href="/Meals/GeneratePlan">
+        <a class="btn btn-primary btn-lg" href="/EatingPlans/MyPlans/@Model.Id">
             My Plans
         </a>
     </div>

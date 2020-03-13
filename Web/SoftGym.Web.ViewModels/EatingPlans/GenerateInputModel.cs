@@ -28,6 +28,9 @@
         [Required]
         public int DurationInDays { get; set; }
 
+        [Required]
+        public string Activity { get; set; }
+
         public IEnumerable<FoodPreference> FoodPreferences { get; set; } = new HashSet<FoodPreference>();
     }
 }
