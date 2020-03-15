@@ -549,9 +549,27 @@ namespace SoftGym.Data.Migrations
                     b.ToTable("Settings");
                 });
 
+            modelBuilder.Entity("SoftGym.Data.Models.TrainingDay", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Day")
+                        .HasColumnType("int");
+
+                    b.Property<string>("WorkoutPlanId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WorkoutPlanId");
+
+                    b.ToTable("TrainingDays");
+                });
+
             modelBuilder.Entity("SoftGym.Data.Models.WorkoutExercise", b =>
                 {
-                    b.Property<string>("WorkoutPlanId")
+                    b.Property<string>("TrainingDayId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ExerciseId")
@@ -563,7 +581,7 @@ namespace SoftGym.Data.Migrations
                     b.Property<int>("MinRepsCount")
                         .HasColumnType("int");
 
-                    b.HasKey("WorkoutPlanId", "ExerciseId");
+                    b.HasKey("TrainingDayId", "ExerciseId");
 
                     b.HasIndex("ExerciseId");
 
@@ -718,6 +736,13 @@ namespace SoftGym.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SoftGym.Data.Models.TrainingDay", b =>
+                {
+                    b.HasOne("SoftGym.Data.Models.WorkoutPlan", "WorkoutPlan")
+                        .WithMany("TrainingDays")
+                        .HasForeignKey("WorkoutPlanId");
+                });
+
             modelBuilder.Entity("SoftGym.Data.Models.WorkoutExercise", b =>
                 {
                     b.HasOne("SoftGym.Data.Models.Exercise", "Exercise")
@@ -726,9 +751,9 @@ namespace SoftGym.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("SoftGym.Data.Models.WorkoutPlan", "WorkoutPlan")
+                    b.HasOne("SoftGym.Data.Models.TrainingDay", "TrainingDay")
                         .WithMany("Exercises")
-                        .HasForeignKey("WorkoutPlanId")
+                        .HasForeignKey("TrainingDayId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

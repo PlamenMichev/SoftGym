@@ -10,8 +10,12 @@
     {
         public Task<EatingPlan> GenerateEatingPlanAsync(GenerateInputModel inputModel);
 
-        public Task<ICollection<T>> GetAllPlansAsync<T>();
+        public Task<ICollection<T>> GetAllPlansAsync<T>(string id = null);
 
         public Task<T> GetPlanAsync<T>(string id);
+
+        public bool HasUserActivePlan(string userId);
+
+        public Task DeletePlanAsync(string planId);
     }
 }

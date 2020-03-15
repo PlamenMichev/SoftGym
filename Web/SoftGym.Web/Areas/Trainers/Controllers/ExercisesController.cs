@@ -1,0 +1,60 @@
+﻿namespace SoftGym.Web.Areas.Trainers.Controllers
+{
+    using System.Threading.Tasks;
+
+    using Microsoft.AspNetCore.Mvc;
+    using SoftGym.Services.Data.Contracts;
+    using SoftGym.Web.ViewModels.Trainers.Exercises;
+
+    public class ExercisesController : TrainersController
+    {
+        private readonly IExercisesService exercisesService;
+        private readonly ICloudinaryService cloudinaryService;
+
+        public ExercisesController(
+            IExercisesService exercisesService,
+            ICloudinaryService cloudinaryService)
+        {
+            this.exercisesService = exercisesService;
+            this.cloudinaryService = cloudinaryService;
+        }
+
+        public IActionResult Add()
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(AddExerciseInputModel inputModel)
+        {
+            if (!this.ModelState.IsValid || !this.cloudinaryService.IsVideoFileValid(inputModel.VideoFile))
+            {
+                if (!this.cloudinaryService.IsVideoFileValid(inputModel.VideoFile))
+                {
+                    this.ModelState.AddModelError("VideoFile", "Please enter a valid video format!");
+                }
+
+                return this.View(inputModel);
+            }
+
+            await this.exercisesService.AddExerciseAsync(inputModel);
+            return this.Redirect("/Exercices/All");
+        }
+
+        public async Task<IActionResult> All()
+        {
+            var viewModel = new AllExercisesViewModel
+            {
+                Exercises = await this.exercisesService.GetAllExercisesAsync<ExerciseViewModel>(),
+            };
+
+            return this.View(viewModel);
+        }
+
+        public async Task<IActionResult> Details(string id)
+        {
+            var viewModel = await this.exercisesService.GetExerciseAsync<ExerciseViewModel>(id);
+            return this.View(viewModel);
+        }
+    }
+}

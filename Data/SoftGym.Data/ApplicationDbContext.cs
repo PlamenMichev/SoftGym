@@ -45,6 +45,8 @@
 
         public DbSet<MealPreference> MealsPreferences { get; set; }
 
+        public DbSet<TrainingDay> TrainingDays { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -122,13 +124,13 @@
 
             builder
                 .Entity<WorkoutExercise>()
-                .HasKey(x => new { x.WorkoutPlanId, x.ExerciseId });
+                .HasKey(x => new { x.TrainingDayId, x.ExerciseId });
 
             builder
                 .Entity<WorkoutExercise>()
-                .HasOne(we => we.WorkoutPlan)
+                .HasOne(we => we.TrainingDay)
                 .WithMany(wp => wp.Exercises)
-                .HasForeignKey(we => we.WorkoutPlanId);
+                .HasForeignKey(we => we.TrainingDayId);
 
             builder
                 .Entity<WorkoutExercise>()

@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
 
+    <link rel='icon' href='~/favicon.ico' type='image/x-icon' />
+
     <environment names="Development">
         <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" asp-append-version="true" />
         <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
@@ -16,6 +18,7 @@
         <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     </environment>
+
 </head>
 <body>
     <header>
@@ -37,9 +40,6 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Trainers" asp-action="All">Our Trainers</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="EatingPlans" asp-action="Index">Eating Plans</a>
                         </li>
                     </ul>
                 </div>
@@ -66,10 +66,6 @@
         <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js" asp-append-version="true"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
-        @section Scripts {
-            <partial name="_ValidationScriptsPartial" />
-        }
-
     </environment>
     <environment names="Staging,Production">
         <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
@@ -77,10 +73,8 @@
         <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
-        @section Scripts {
-            <partial name="_ValidationScriptsPartial" />
-        }
     </environment>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 
     @this.RenderSection("Scripts", required: false)
 </body>

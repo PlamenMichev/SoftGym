@@ -21,11 +21,12 @@
             this.eatingPlansService = eatingPlansService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(bool redirected = false)
         {
             var viewModel = new PlansIndexView()
             {
                 Id = this.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value,
+                Redirected = redirected,
             };
 
             return this.View(viewModel);
@@ -36,7 +37,13 @@
             var viewModel = new GenerateInputModel()
             {
                 Id = this.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value,
+                HasUserActivePlan = this.eatingPlansService.HasUserActivePlan(this.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value),
             };
+
+            if (viewModel.HasUserActivePlan == true)
+            {
+                return this.Redirect($"/EatingPlans?redirected=true");
+            }
 
             return this.View(viewModel);
         }
@@ -63,8 +70,8 @@
         {
             var viewModel = new AllPlansViewModel
             {
-                ActivePlans = await this.eatingPlansService.GetAllPlansAsync<EatingPlanViewModel>(),
-                InactivePlans = await this.eatingPlansService.GetAllPlansAsync<EatingPlanViewModel>(),
+                ActivePlans = await this.eatingPlansService.GetAllPlansAsync<EatingPlanViewModel>(id),
+                InactivePlans = await this.eatingPlansService.GetAllPlansAsync<EatingPlanViewModel>(id),
             };
 
             viewModel.ActivePlans = viewModel
@@ -77,6 +84,12 @@
                 .ToList();
 
             return this.View(viewModel);
+        }
+
+        public async Task<IActionResult> Delete (string id)
+        {
+            await this.eatingPlansService.DeletePlanAsync(id);
+            return this.Redirect("/EatingPlans/MyPlans");
         }
     }
 }

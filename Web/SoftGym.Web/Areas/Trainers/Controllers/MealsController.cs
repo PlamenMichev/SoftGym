@@ -1,6 +1,5 @@
 ﻿namespace SoftGym.Web.Areas.Trainers.Controllers
 {
-    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
@@ -48,7 +47,7 @@
             {
                 if (!this.cloudinaryService.IsFileValid(inputModel.PictureFile))
                 {
-                    this.ModelState.AddModelError("PictureFile", "Plese enter valid file format!");
+                    this.ModelState.AddModelError("PictureFile", "Plese enter valid image format!");
                 }
 
                 return this.View(inputModel);

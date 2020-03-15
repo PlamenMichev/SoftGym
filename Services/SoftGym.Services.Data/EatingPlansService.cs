@@ -54,8 +54,8 @@
             switch (inputModel.Activity)
             {
                 case "light": caloriesPerDay = 1.30 * caloriesPerDay; break;
-                case "medium": caloriesPerDay = 1.60 * caloriesPerDay; break;
-                case "high": caloriesPerDay = 1.90 * caloriesPerDay; break;
+                case "medium": caloriesPerDay = 1.54 * caloriesPerDay; break;
+                case "high": caloriesPerDay = 1.76 * caloriesPerDay; break;
             }
 
             if (inputModel.Goal == Goal.Gain)
@@ -109,6 +109,19 @@
                 .Where(x => x.Type == mealType)
                 .ToArrayAsync();
 
+            if (inputModel.Goal == Goal.Gain)
+            {
+                meals = meals
+                    .OrderByDescending(x => x.CaloriesPer100Grams)
+                    .ToArray();
+            }
+            else if (inputModel.Goal == Goal.Lose)
+            {
+                meals = meals
+                    .OrderBy(x => x.CaloriesPer100Grams)
+                    .ToArray();
+            }
+
             int[] pickedMeals;
             if (mealType == MealType.Snack)
             {
@@ -129,13 +142,23 @@
             for (int i = 0; i < pickedMeals.Length; i++)
             {
                 var random = new Random();
-                int mealIndex = random.Next(0, meals.Length);
+                int mealIndex = 0;
                 while (pickedMeals.Contains(mealIndex) ||
                     inputModel?.FoodPreferences
                     .Any(x => meals[mealIndex].FoodPreferences
                     .Any(y => y.Preference.Preference == x)) != false)
                 {
-                    mealIndex = random.Next(0, meals.Length);
+                    for (int j = 1; j < meals.Length; j++)
+                    {
+                        if (pickedMeals.Contains(j) == false &&
+                    inputModel?.FoodPreferences
+                    .Any(x => meals[j].FoodPreferences
+                    .Any(y => y.Preference.Preference == x)) == false)
+                        {
+                            mealIndex = j;
+                            break;
+                        }
+                    }
                 }
 
                 pickedMeals[i] = mealIndex;
@@ -159,12 +182,23 @@
             }
         }
 
-        public async Task<ICollection<T>> GetAllPlansAsync<T>()
+        public async Task<ICollection<T>> GetAllPlansAsync<T>(string id = null)
         {
-            return await this.eatingPlansRepository
-                .All()
-                .To<T>()
-                .ToListAsync();
+            if (id == null)
+            {
+                return await this.eatingPlansRepository
+                    .All()
+                    .To<T>()
+                    .ToListAsync();
+            }
+            else
+            {
+                return await this.eatingPlansRepository
+                    .All()
+                    .Where(x => x.UserId == id)
+                    .To<T>()
+                    .ToListAsync();
+            }
         }
 
         public async Task<T> GetPlanAsync<T>(string id)
@@ -174,6 +208,31 @@
                 .Where(x => x.Id == id)
                 .To<T>()
                 .FirstAsync();
+        }
+
+        public bool HasUserActivePlan(string userId)
+        {
+            var plansForUser = this.eatingPlansRepository
+                .All()
+                .Where(x => x.UserId == userId)
+                .Select(x => new
+                {
+                    x.ExpireDate,
+                })
+                .ToList();
+
+            return plansForUser
+                .Any(x => x.ExpireDate.Subtract(DateTime.UtcNow).Hours > 0);
+        }
+
+        public async Task DeletePlanAsync(string planId)
+        {
+            var currentPlan = await this.eatingPlansRepository
+                .All()
+                .FirstAsync(x => x.Id == planId);
+
+            this.eatingPlansRepository.Delete(currentPlan);
+            await this.eatingPlansRepository.SaveChangesAsync();
         }
     }
 }

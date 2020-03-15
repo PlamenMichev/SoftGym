@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+
     using SoftGym.Data.Common.Models;
 
     public class Card : IAuditInfo, IDeletableEntity

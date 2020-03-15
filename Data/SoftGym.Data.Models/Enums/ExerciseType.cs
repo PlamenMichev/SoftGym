@@ -2,13 +2,13 @@
 {
     public enum ExerciseType
     {
-        Base = 1,
-        Chest = 2,
-        Back = 3,
-        Shoulder = 4,
-        Biceps = 5,
-        Triceps = 6,
-        Legs = 7,
-        Abs = 8,
+        Chest = 1,
+        Back = 2,
+        Shoulder = 3,
+        Biceps = 4,
+        Triceps = 5,
+        Legs = 6,
+        Abs = 7,
+        Cardio = 8,
     }
 }

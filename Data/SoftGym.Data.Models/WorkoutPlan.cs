@@ -11,7 +11,7 @@
         public WorkoutPlan()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.Exercises = new HashSet<WorkoutExercise>();
+            this.TrainingDays = new HashSet<TrainingDay>();
         }
 
         public string Id { get; set; }
@@ -31,8 +31,8 @@
 
         public int DaysInWeek { get; set; }
 
-        public Difficulty Difficulty { get; set; }
+        public virtual ICollection<TrainingDay> TrainingDays { get; set; }
 
-        public virtual ICollection<WorkoutExercise> Exercises { get; set; }
+        public Difficulty Difficulty { get; set; }
     }
 }

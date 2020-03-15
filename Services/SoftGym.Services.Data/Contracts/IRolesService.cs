@@ -1,6 +1,7 @@
 ﻿namespace SoftGym.Services.Data.Contracts
 {
     using SoftGym.Data.Models;
+
     using System.Threading.Tasks;
 
     public interface IRolesService

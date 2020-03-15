@@ -4,7 +4,6 @@
     using System.Threading.Tasks;
 
     using SoftGym.Data.Models;
-    using SoftGym.Web.ViewModels.Administration.Users;
 
     public interface IUsersService
     {

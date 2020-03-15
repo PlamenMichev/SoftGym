@@ -6,9 +6,9 @@
 
         public virtual Exercise Exercise { get; set; }
 
-        public string WorkoutPlanId { get; set; }
+        public string TrainingDayId { get; set; }
 
-        public virtual WorkoutPlan WorkoutPlan { get; set; }
+        public virtual TrainingDay TrainingDay { get; set; }
 
         public int MinRepsCount { get; set; }
 

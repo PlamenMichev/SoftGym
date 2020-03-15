@@ -1,0 +1,33 @@
+﻿@model SoftGym.Web.ViewModels.Trainers.Exercises.ExerciseViewModel
+
+@using SoftGym.Data.Models.Enums
+@{
+    ViewData["Title"] = "Trainer dashboard";
+}
+
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+<hr />
+<div class="row">
+    <div class="col-md-3">
+        <partial name="../../../Administration/Views/Dashboard/_SideNavPartial" />
+    </div>
+    <div class="col-md-9 border row">
+        <div class="col-md-7">
+            <video controls="controls" class="owl-video-frame w-100 h-100">
+                <source src="@Model.VideoUrl" />
+            </video>
+        </div>
+        <div class="col-md-5">
+            <h3 class="text-center mt-lg-5">@Model.Name</h3>
+            <hr />
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="h5 mb-4 text-center">@Model.Type Exercise</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="h5 mb-4 text-center">Difficulty: @Model.Difficulty</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

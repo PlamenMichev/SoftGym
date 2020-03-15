@@ -1,8 +1,5 @@
 ﻿namespace SoftGym.Web.ViewModels.Administration.Users
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using Microsoft.AspNetCore.Identity;
     using SoftGym.Data.Models;
     using SoftGym.Services.Mapping;
 

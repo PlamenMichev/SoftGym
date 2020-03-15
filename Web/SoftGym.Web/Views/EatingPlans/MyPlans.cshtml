@@ -16,6 +16,9 @@
                 <a href="/EatingPlans/Details/@plan.Id">
                     Plan from @plan.CreatedOn.ToString("dd/MM/yyyy") to @plan.ExpireDate.Date.ToString("dd/MM/yyyy") (@plan.CaloriesPerDay calories daily)
                 </a>
+                <a href="/EatingPlans/Delete/@plan.Id" class="ml-5 btn btn-danger" title="Delete">
+                    <i class="fas fa-trash-alt"></i>
+                </a>
             </li>
         }
     </ul>
@@ -41,6 +44,9 @@ else
             <li class="list-group-item text-center">
                 <a href="/EatingPlans/Details/@plan.Id">
                     Plan from @plan.CreatedOn.ToString("dd/MM/yyyy") to @plan.ExpireDate.Date.ToString("dd/MM/yyyy") (@plan.CaloriesPerDay calories daily)
+                </a>
+                <a href="/EatingPlans/Delete/@plan.Id" class="ml-5 btn btn-danger" title="Delete">
+                    <i class="fas fa-trash-alt"></i>
                 </a>
             </li>
         }

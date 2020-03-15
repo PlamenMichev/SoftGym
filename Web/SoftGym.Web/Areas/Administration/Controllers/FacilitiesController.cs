@@ -2,9 +2,7 @@
 {
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using SoftGym.Common;
     using SoftGym.Services.Data.Contracts;
     using SoftGym.Web.ViewModels.Administration.Facilities;
 

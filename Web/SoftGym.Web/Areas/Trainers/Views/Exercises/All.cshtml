@@ -1,0 +1,22 @@
+﻿@model SoftGym.Web.ViewModels.Trainers.Exercises.AllExercisesViewModel
+
+@using SoftGym.Data.Models.Enums
+@{
+    ViewData["Title"] = "Trainer dashboard";
+}
+
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+<hr />
+<div class="row">
+    <div class="col-md-3">
+        <partial name="../../../Administration/Views/Dashboard/_SideNavPartial" />
+    </div>
+    <div class="col-md-7 border">
+        <ul class="list-group">
+            @foreach (var exercise in Model.Exercises)
+            {
+                <li class="list-group-item"><a href="/Trainers/Exercises/Details/@exercise.Id">@exercise.Name - @exercise.Type (@exercise.Difficulty)</a></li>
+            }
+        </ul>
+    </div>
+</div>

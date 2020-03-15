@@ -2,13 +2,11 @@
 {
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SoftGym.Data.Models.Enums;
     using SoftGym.Services.Data.Contracts;
     using SoftGym.Web.ViewModels.Administration.Facilities;
 
-    [Authorize]
     public class FacilitiesController : BaseController
     {
         private readonly IFacilitiesService facilitiesService;
