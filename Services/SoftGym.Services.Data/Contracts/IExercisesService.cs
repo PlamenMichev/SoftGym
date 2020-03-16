@@ -13,5 +13,9 @@
         public Task<IEnumerable<T>> GetAllExercisesAsync<T>();
 
         public Task<T> GetExerciseAsync<T>(string exerciseId);
+
+        public Task<Exercise> DeleteExerciseAsync(string exerciseId);
+
+        public Task<Exercise> EditExerciseAsync(EditExerciseInputModel inputModel);
     }
 }

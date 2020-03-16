@@ -56,5 +56,24 @@
             var viewModel = await this.exercisesService.GetExerciseAsync<ExerciseViewModel>(id);
             return this.View(viewModel);
         }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            await this.exercisesService.DeleteExerciseAsync(id);
+            return this.Redirect("/Trainers/Exercises/All");
+        }
+
+        public async Task<IActionResult> Edit(string id)
+        {
+            var viewModel = await this.exercisesService.GetExerciseAsync<EditExerciseInputModel>(id);
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditExerciseInputModel inputModel)
+        {
+            await this.exercisesService.EditExerciseAsync(inputModel);
+            return this.Redirect($"/Trainers/Exercises/Details/{inputModel.Id}");
+        }
     }
 }

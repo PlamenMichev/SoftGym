@@ -15,7 +15,11 @@
         <ul class="list-group">
             @foreach (var exercise in Model.Exercises)
             {
-                <li class="list-group-item"><a href="/Trainers/Exercises/Details/@exercise.Id">@exercise.Name - @exercise.Type (@exercise.Difficulty)</a></li>
+            <li class="list-group-item">
+                <a href="/Trainers/Exercises/Details/@exercise.Id">@exercise.Name - @exercise.Type (@exercise.Difficulty)</a>
+                <a href="/Trainers/Exercises/Edit/@exercise.Id" class="btn btn-primary float-lg-right mx-3" title="Edit"><i class="fas fa-edit"></i></a>
+                <a href="/Trainers/Exercises/Delete/@exercise.Id" class="btn btn-danger float-lg-right mx-3" title="Delete"><i class="fas fa-trash-alt"></i></a>
+            </li>
             }
         </ul>
     </div>

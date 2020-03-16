@@ -40,6 +40,36 @@
             return exercise;
         }
 
+        public async Task<Exercise> DeleteExerciseAsync(string exerciseId)
+        {
+            var exercise = await this.exercisesRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.Id == exerciseId);
+
+            this.exercisesRepository.Delete(exercise);
+            await this.exercisesRepository.SaveChangesAsync();
+
+            return exercise;
+        }
+
+        public async Task<Exercise> EditExerciseAsync(EditExerciseInputModel inputModel)
+        {
+            var exercise = await this.exercisesRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.Id == inputModel.Id);
+
+            exercise.Name = inputModel.Name;
+            exercise.Type = inputModel.Type;
+            exercise.Difficulty = inputModel.Difficulty;
+            exercise.VideoUrl = inputModel.VideoFile ==
+                null || !this.cloudinaryService.IsVideoFileValid(inputModel.VideoFile)
+                ? exercise.VideoUrl
+                : await this.cloudinaryService.UploadVideoAsync(inputModel.VideoFile);
+
+            await this.exercisesRepository.SaveChangesAsync();
+            return exercise;
+        }
+
         public async Task<IEnumerable<T>> GetAllExercisesAsync<T>()
         {
             return await this.exercisesRepository

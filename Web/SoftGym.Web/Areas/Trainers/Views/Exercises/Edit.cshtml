@@ -1,0 +1,66 @@
+﻿@model SoftGym.Web.ViewModels.Trainers.Exercises.EditExerciseInputModel
+
+@using SoftGym.Data.Models.Enums
+@{
+    ViewData["Title"] = "Trainer dashboard";
+}
+
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+<hr />
+<div class="row">
+    <div class="col-md-3">
+        <partial name="../../../Administration/Views/Dashboard/_SideNavPartial" />
+    </div>
+    <div class="col-md-7 border">
+        <h2 class="text-center">Add Exercise</h2>
+        <hr />
+        <form class="border border-light p-5" asp-action="Edit" asp-area="Trainers" asp-controller="Exercises" enctype="multipart/form-data">
+
+            <p class="h4 mb-4 text-center">Add Exercise</p>
+
+            <div class="form-group">
+                <label for="textInput">Exercise Name</label>
+                <input asp-for="Name" id="textInput" class="form-control mb-4" placeholder="Bench Press...">
+                <span class="text-danger" asp-validation-for="Name"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="textarea">Exercise Difficulty</label>
+                <select class="browser-default custom-select" asp-for="Difficulty" asp-items="Html.GetEnumSelectList<Difficulty>()">
+                </select>
+                <span class="text-danger" asp-validation-for="Difficulty"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label for="textarea">Exercise Type</label>
+                <select class="browser-default custom-select" asp-for="Type" asp-items="Html.GetEnumSelectList<ExerciseType>()">
+                </select>
+                <span class="text-danger" asp-validation-for="Type"></span>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Upload</span>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" accept="video/*" asp-for="VideoFile" class="custom-file-input" id="inputGroupFile01"
+                               aria-describedby="inputGroupFileAddon01">
+                        <label class="custom-file-label" for="inputGroupFile01">New Exercise Video</label>
+                    </div>
+                </div>
+                <span asp-validation-for="VideoFile" class="text-danger d-block"></span>
+            </div>
+
+            <div class="form-group">
+                <p class="h5 p-2">Current Video:</p>
+                <video controls="controls" class="w-100">
+                    <source src="@Model.VideoUrl"/>
+                </video>
+            </div>
+            <input type="text" asp-for="Id" value="@Model.Id" hidden/>
+            <button class="btn btn-info btn-block my-4" type="submit">Edit</button>
+        </form>
+    </div>
+</div>
