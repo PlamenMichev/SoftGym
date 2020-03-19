@@ -1,0 +1,66 @@
+﻿@model SoftGym.Web.ViewModels.WorkoutPlans.GenerateWorkoutPlanInputModel
+
+@using SoftGym.Web.ViewModels.EatingPlans.Enums
+@using SoftGym.Web.ViewModels.WorkoutPlans.Enums
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h2 class="text-center mt-3">Generate Workout Plan</h2>
+        <hr />
+        <form asp-action="GenerateWorkoutPlan" asp-controller="WorkoutPlans" asp-area="" class="p-5 bg-white">
+            <div class="row form-group">
+                <div class="col-md-12 mb-3 mb-md-0">
+                    <label class="font-weight-bold" for="fullname">Goal</label>
+                    <select asp-for="Goal" class="browser-default custom-select" asp-items="Html.GetEnumSelectList<Goal>()">
+                    </select>
+                    <span asp-validation-for="Goal" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-12">
+                    <label class="font-weight-bold" for="email">Email</label>
+                    <select asp-for="Experience" class="browser-default custom-select">
+                        <option value="Beginner" selected>Beginner(Less than a year)</option>
+                        <option value="Intermediate">Intermediate(1 - 3 years)</option>
+                        <option value="Advanced">Advanced(3+ years)</option>
+                    </select>
+                    <span asp-validation-for="Experience" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-md-12">
+                    <label class="font-weight-bold" for="email">How many days in week you want to workout?</label>
+                    <select asp-for="WeekdaysCount" class="browser-default custom-select">
+                        @for (int i = 1; i <= 7; i++)
+                        {
+                            <option value="@i" selected>@i</option>
+                        }
+                    </select>
+                    <span asp-validation-for="WeekdaysCount" class="text-danger"></span>
+                </div>
+            </div>
+
+            <input type="text" asp-for="UserId" value="@Model.UserId" hidden />
+
+            <div class="row form-group">
+                <div class="col-md-12">
+                    <label class="font-weight-bold" for="email">Duration Of The Plan</label>
+                    <select asp-for="DurationInDays" class="browser-default custom-select">
+                        <option value="30" selected>30 days(1 month)</option>
+                        <option value="60">60 days(2 months)</option>
+                        <option value="90">90 days(3 months)</option>
+                    </select>
+                    <span asp-validation-for="DurationInDays" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-md-12">
+                    <input type="submit" value="Generate" class="btn btn-primary pill px-4 py-2">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+

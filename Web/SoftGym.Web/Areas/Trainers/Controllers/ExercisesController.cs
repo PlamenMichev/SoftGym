@@ -38,7 +38,7 @@
             }
 
             await this.exercisesService.AddExerciseAsync(inputModel);
-            return this.Redirect("/Exercices/All");
+            return this.Redirect("/Trainers/Exercises/All");
         }
 
         public async Task<IActionResult> All()

@@ -1,4 +1,8 @@
 ﻿@using SoftGym.Common
+@using SoftGym.Data.Models
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,70 +12,111 @@
 
     <link rel='icon' href='~/favicon.ico' type='image/x-icon' />
 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900|Roboto+Mono:300,400,500">
+    <link rel="stylesheet" href="~/fonts/icomoon/style.css">
     <environment names="Development">
         <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" asp-append-version="true" />
         <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     </environment>
     <environment names="Staging,Production">
         <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
         <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     </environment>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/magnific-popup.css">
+    <link rel="stylesheet" href="~/css/jquery-ui.css">
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="~/css/animate.css">
 
+
+    <link rel="stylesheet" href="~/fonts/flaticon/font/flaticon.css">
+
+    <link rel="stylesheet" href="~/css/aos.css">
+
+    <link rel="stylesheet" href="~/css/style.css">
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.SystemName</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Facilities" asp-action="All">Our Facilities</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" href="/Facilities/All"
-                               id="facilityDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Facilities
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                                <a class="dropdown-item" href="/Facilities/Equipments">Equipments</a>
-                                <a class="dropdown-item" href="/Facilities/Rooms">Rooms</a>
-                                <a class="dropdown-item" href="/Facilities/Spa">Spa</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Trainers" asp-action="All">Our Trainers</a>
-                        </li>
-                    </ul>
+    <div class="site-wrap">
+    <div class="site-mobile-menu">
+        <div class="site-mobile-menu-header">
+            <div class="site-mobile-menu-close mt-3">
+                <span class="icon-close2 js-menu-toggle"></span>
+            </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+    </div> <!-- .site-mobile-menu -->
+
+    <div class="site-navbar-wrap bg-white">
+        <div class="container">
+            <div class="site-navbar bg-light">
+                <div class="py-1">
+                    <div class="row align-items-center">
+                        <div class="col-1">
+                            <h2 class="mb-0 site-logo"><a asp-action="Index" asp-controller="Home" asp-area="">soft<strong>gym</strong>  </a></h2>
+                        </div>
+                        <div class="col-11">
+                            <nav class="site-navigation text-left" role="navigation">
+                                <div class="container">
+                                    <ul class="site-menu js-clone-nav d-none d-lg-block">
+
+                                        <li class="active">
+                                            <a asp-action="Index" asp-controller="Home" asp-area="">Home</a>
+                                        </li>
+                                        <li class="has-children active">
+                                            <a asp-action="All" asp-controller="Facilities" asp-area="">Facilities</a>
+                                            <ul class="dropdown arrow-top">
+                                                <li><a asp-action="Equipments" asp-controller="Facilities" asp-area="">Equipments</a></li>
+                                                <li><a asp-action="Rooms" asp-controller="Facilities" asp-area="">Rooms</a></li>
+                                                <li><a asp-action="Spa" asp-controller="Facilities" asp-area="">Boxing</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="active"><a asp-action="All" asp-controller="Trainers" asp-area="">Our Trainers</a></li>
+                                        @if (this.SignInManager.IsSignedIn(this.User))
+                                        {
+                                            <li class="has-children active">
+                                                <a asp-action="Index" asp-controller="EatingPlans" asp-area="">Eating Plans</a>
+                                                <ul class="dropdown arrow-top">
+                                                    <li><a asp-action="GeneratePlan" asp-controller="EatingPlans" asp-area="">Generate Plan</a></li>
+                                                    <li><a asp-action="MyPlans" asp-controller="EatingPlans" asp-area="">My Eating Plans</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="active">
+                                                <a asp-action="Index" asp-controller="WorkoutPlans" asp-area="">Workout Plans</a>
+                                            </li>
+                                        }
+
+                                        <partial name="_LoginPartial" />
+                                        @*
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+                                        *@
+                                    </ul>
+                                    <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3 float-right"><a href="#" class="site-menu-toggle js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </nav>
-    </header>
+        </div>
+    </div>
 
-    <div class="container">
+    <div class="container pb-5">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
             @this.RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer site-footer">
         <div class="container">
             &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-
+    </div>
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js" asp-append-version="true"></script>
         <script src="~/lib/jquery-validation/dist/jquery.validate.js" asp-append-version="true"></script>
@@ -88,6 +133,19 @@
     </environment>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 
+    <script src="~/js/jquery-3.3.1.min.js"></script>
+    <script src="~/js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="~/js/jquery-ui.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/jquery.stellar.min.js"></script>
+    <script src="~/js/jquery.countdown.min.js"></script>
+    <script src="~/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/js/aos.js"></script>
+
+    <script src="~/js/main.js"></script>
     @this.RenderSection("Scripts", required: false)
 </body>
 </html>

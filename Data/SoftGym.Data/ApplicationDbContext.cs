@@ -35,7 +35,7 @@
 
         public DbSet<MealPlan> MealsPlans { get; set; }
 
-        public DbSet<WorkoutExercise> WorkoutsExercises { get; set; }
+        public DbSet<WorkoutTrainingDay> WorkoutsTrainingDays { get; set; }
 
         public DbSet<WorkoutPlan> WorkoutPlans { get; set; }
 
@@ -123,17 +123,17 @@
                 .HasForeignKey(mp => mp.MealId);
 
             builder
-                .Entity<WorkoutExercise>()
+                .Entity<WorkoutTrainingDay>()
                 .HasKey(x => new { x.TrainingDayId, x.ExerciseId });
 
             builder
-                .Entity<WorkoutExercise>()
+                .Entity<WorkoutTrainingDay>()
                 .HasOne(we => we.TrainingDay)
                 .WithMany(wp => wp.Exercises)
                 .HasForeignKey(we => we.TrainingDayId);
 
             builder
-                .Entity<WorkoutExercise>()
+                .Entity<WorkoutTrainingDay>()
                 .HasOne(we => we.Exercise)
                 .WithMany(e => e.WorkoutPlans)
                 .HasForeignKey(we => we.ExerciseId);

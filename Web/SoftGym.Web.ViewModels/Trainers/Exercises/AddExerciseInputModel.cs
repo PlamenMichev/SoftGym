@@ -12,7 +12,7 @@
         [MaxLength(30)]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Video File is Required.")]
         public IFormFile VideoFile { get; set; }
 
         [Required]

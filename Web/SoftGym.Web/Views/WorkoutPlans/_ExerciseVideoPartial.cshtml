@@ -1,0 +1,16 @@
+﻿@model SoftGym.Web.ViewModels.Trainers.Exercises.ExerciseVideoViewModel
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true" id="a@(Model.ExerciseId)a">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <video controls="controls" class="w-100 h-100">
+                        <source src="@Model.VideoUrl" />
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

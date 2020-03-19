@@ -12,7 +12,7 @@
         public Exercise()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.WorkoutPlans = new HashSet<WorkoutExercise>();
+            this.WorkoutPlans = new HashSet<WorkoutTrainingDay>();
         }
 
         public string Id { get; set; }
@@ -30,7 +30,7 @@
 
         public Difficulty Difficulty { get; set; }
 
-        public virtual ICollection<WorkoutExercise> WorkoutPlans { get; set; }
+        public virtual ICollection<WorkoutTrainingDay> WorkoutPlans { get; set; }
 
         public ExerciseType Type { get; set; }
     }

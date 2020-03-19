@@ -40,7 +40,7 @@
                 HasUserActivePlan = this.eatingPlansService.HasUserActivePlan(this.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value),
             };
 
-            if (viewModel.HasUserActivePlan == true)
+            if (viewModel.HasUserActivePlan)
             {
                 return this.Redirect($"/EatingPlans?redirected=true");
             }
@@ -56,6 +56,11 @@
                 return this.View(inputModel);
             }
 
+            if (this.eatingPlansService.HasUserActivePlan(this.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return this.Redirect("/");
+            }
+
             var plan = await this.eatingPlansService.GenerateEatingPlanAsync(inputModel);
             return this.Redirect($"/EatingPlans/MyPlans/{inputModel.Id}");
         }
@@ -68,6 +73,11 @@
 
         public async Task<IActionResult> MyPlans(string id)
         {
+            if (id == null)
+            {
+                id = this.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            }
+
             var viewModel = new AllPlansViewModel
             {
                 ActivePlans = await this.eatingPlansService.GetAllPlansAsync<EatingPlanViewModel>(id),
@@ -86,7 +96,7 @@
             return this.View(viewModel);
         }
 
-        public async Task<IActionResult> Delete (string id)
+        public async Task<IActionResult> Delete(string id)
         {
             await this.eatingPlansService.DeletePlanAsync(id);
             return this.Redirect("/EatingPlans/MyPlans");

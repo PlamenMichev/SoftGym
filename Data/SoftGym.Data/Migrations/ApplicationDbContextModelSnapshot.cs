@@ -567,33 +567,9 @@ namespace SoftGym.Data.Migrations
                     b.ToTable("TrainingDays");
                 });
 
-            modelBuilder.Entity("SoftGym.Data.Models.WorkoutExercise", b =>
-                {
-                    b.Property<string>("TrainingDayId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ExerciseId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("MaxRepsCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MinRepsCount")
-                        .HasColumnType("int");
-
-                    b.HasKey("TrainingDayId", "ExerciseId");
-
-                    b.HasIndex("ExerciseId");
-
-                    b.ToTable("WorkoutsExercises");
-                });
-
             modelBuilder.Entity("SoftGym.Data.Models.WorkoutPlan", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedOn")
@@ -617,13 +593,37 @@ namespace SoftGym.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("WorkoutPlans");
+                });
+
+            modelBuilder.Entity("SoftGym.Data.Models.WorkoutTrainingDay", b =>
+                {
+                    b.Property<string>("TrainingDayId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ExerciseId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("MaxRepsCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MinRepsCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("TrainingDayId", "ExerciseId");
+
+                    b.HasIndex("ExerciseId");
+
+                    b.ToTable("WorkoutsTrainingDays");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -743,7 +743,14 @@ namespace SoftGym.Data.Migrations
                         .HasForeignKey("WorkoutPlanId");
                 });
 
-            modelBuilder.Entity("SoftGym.Data.Models.WorkoutExercise", b =>
+            modelBuilder.Entity("SoftGym.Data.Models.WorkoutPlan", b =>
+                {
+                    b.HasOne("SoftGym.Data.Models.ApplicationUser", "User")
+                        .WithMany("WorkoutPlans")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("SoftGym.Data.Models.WorkoutTrainingDay", b =>
                 {
                     b.HasOne("SoftGym.Data.Models.Exercise", "Exercise")
                         .WithMany("WorkoutPlans")
@@ -756,13 +763,6 @@ namespace SoftGym.Data.Migrations
                         .HasForeignKey("TrainingDayId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("SoftGym.Data.Models.WorkoutPlan", b =>
-                {
-                    b.HasOne("SoftGym.Data.Models.ApplicationUser", null)
-                        .WithMany("WorkoutPlans")
-                        .HasForeignKey("ApplicationUserId");
                 });
 #pragma warning restore 612, 618
         }

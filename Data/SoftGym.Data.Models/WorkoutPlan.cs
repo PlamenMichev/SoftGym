@@ -34,5 +34,9 @@
         public virtual ICollection<TrainingDay> TrainingDays { get; set; }
 
         public Difficulty Difficulty { get; set; }
+
+        public string UserId { get; set; }
+
+        public ApplicationUser User { get; set; }
     }
 }

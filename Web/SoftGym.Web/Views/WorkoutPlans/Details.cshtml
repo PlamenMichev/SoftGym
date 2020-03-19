@@ -1,0 +1,91 @@
+﻿@model SoftGym.Web.ViewModels.WorkoutPlans.DetailsWorkoutPlanViewModel
+
+@using SoftGym.Web.ViewModels.Trainers.Exercises
+<div class="block-schedule overlay site-section" style="background-image: url('https://cdn.wallpapersafari.com/23/54/YzyvDg.jpg');">
+    <div class="container">
+        <h2 class="text-white display-4 mb-5">Schedule</h2>
+        <ul class="nav nav-pills tab-nav mb-4" id="pills-tab" role="tablist">
+            @for (int i = 0; i < Model.TrainingDaysExercises.Count; i++)
+            {
+                var currentDay = Model.TrainingDaysExercises.OrderBy(x => x.Day).ToList()[i];
+                if (i == 0)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link active" id="pills-@currentDay.Day.ToString()-tab" data-toggle="pill" href="#pills-@currentDay.Day.ToString()-@i" role="tab" aria-controls="pills-@currentDay.Day.ToString()" aria-selected="true">
+
+                            @if (currentDay.Day == SoftGym.Data.Models.Enums.Day.Undefined)
+                            {
+                                @: Day One
+                            }
+                            else
+                            {
+                                @currentDay.Day.ToString()
+                            }
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-@currentDay.Day.ToString()-tab" data-toggle="pill" href="#pills-@currentDay.Day.ToString()-@i" role="tab" aria-controls="pills-@currentDay.Day.ToString()" aria-selected="true">
+                            @if (currentDay.Day == SoftGym.Data.Models.Enums.Day.Undefined)
+                            {
+                                @: Day Two
+                            }
+                            else
+                            {
+                                @currentDay.Day.ToString()
+                            }
+                        </a>
+                    </li>
+                }
+            }
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+            @for (int i = 0; i < Model.TrainingDaysExercises.Count; i++)
+            {
+                var trainingDay = Model.TrainingDaysExercises.OrderBy(x => x.Day).ToArray()[i];
+                var active = i == 0 ? "active" : "";
+
+                <div class="tab-pane fade show @active"
+                     id="pills-@trainingDay.Day.ToString()-@i" role="tabpanel" aria-labelledby="pills-@trainingDay.Day.ToString()-tab">
+                    @foreach (var exercise in trainingDay.ExercisesEntities.OrderBy(x => x.Type).ThenByDescending(x => x.Difficulty))
+                    {
+                        var detailsExercise = trainingDay.Exercises.First(x => x.ExerciseId == exercise.Id);
+                        <div class="row-wrap">
+                            <div class="row bg-white p-4 align-items-center">
+                                <div class="col-sm-3 col-md-3 col-lg-3"><h3 class="h5">@exercise.Name</h3></div>
+                                @if (exercise.Type == SoftGym.Data.Models.Enums.ExerciseType.Cardio)
+                                {
+                                    <div class="col-sm-3 col-md-3 col-lg-3"><h3 class="h5">@detailsExercise.MinRepsCount - @detailsExercise.MaxRepsCount minutes</h3></div>
+                                }
+                                else
+                                {
+                                    <div class="col-sm-3 col-md-3 col-lg-3"><h3 class="h5">4 series @detailsExercise.MinRepsCount - @detailsExercise.MaxRepsCount reps</h3></div>
+                                }
+                                <div class="col-sm-3 col-md-3 col-lg-3"><h3 class="h5">@exercise.Type (@exercise.Difficulty)</h3></div>
+                                <div class="col-sm-3 col-md-3 col-lg-3 text-md-right">
+                                    <button type="button" class="btn btn-primary pill px-4 mt-3 mt-md-0" data-toggle="modal" data-target="#a@(exercise.Id)a">See Exercise</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@foreach (var trainingDay in Model.TrainingDaysExercises)
+{
+    foreach (var exercise in trainingDay.ExercisesEntities)
+    {
+        var exerciseVideoModel = new ExerciseVideoViewModel()
+        {
+            ExerciseId = exercise.Id,
+            VideoUrl = exercise.VideoUrl,
+        };
+
+        <partial name="_ExerciseVideoPartial" model="@exerciseVideoModel" />
+    }
+}
