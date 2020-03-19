@@ -4,22 +4,38 @@
     ViewData["Title"] = "Trainers";
 }
 
-<h1 class="text-center">Our Trainers</h1>
-<hr />
+<div class="site-section bg-light">
 
-<div class="row justify-content-center">
-    @foreach (var trainer in Model.Trainers)
-    {
-        <div class="card col-md-4 m-5 text-center">
-            <div class="card-body text-center h-100">
-                <div class="card-img-top height-20rem">
-                    <img class="img-fluid mx-auto d-block w-100 h-100" src="@trainer.ProfilePictureUrl" alt="@trainer.FirstName @trainer.LastName">
-                </div>
-                <h4 class="card-title">@trainer.FirstName @trainer.LastName</h4>
-                <p class="card-text">@trainer.Description.Substring(0, 60)...</p>
-                <a data-toggle="modal" data-target="#a@(trainer.Id)a" class="btn btn-primary btn-sm" title="See Profile"><i class="far fa-address-card"></i></a>
-                <partial name="_DetailsPartial", model="@trainer" />
-            </div>
+    <div class="container">
+
+        <div class="heading-with-border text-center mb-5">
+            <h2 class="heading text-uppercase">Our Trainers</h2>
         </div>
-    }
+
+        <div class="row">
+            @foreach (var trainer in Model.Trainers)
+            {
+                <div class="col-lg-4 mb-4">
+                    <div class="block-trainer h-100 w-100">
+                        <img src="@trainer.ProfilePictureUrl" alt="@trainer.FirstName @trainer.LastName" class="img-fluid h-100 w-100">
+                        <div class="block-trainer-overlay">
+                            <h2>@trainer.FirstName @trainer.LastName</h2>
+                            <p class="text-white">@trainer.Description</p>
+                            <p>
+                                <a data-toggle="modal" data-target="#a@(trainer.Id)a" class="p-2" style="cursor: pointer"><i class="fas fa-phone"></i></a>
+                                <a data-toggle="modal" data-target="#a@(trainer.Id)a" class="p-2" style="cursor: pointer"><i class="fas fa-envelope-square"></i></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+
 </div>
+
+@foreach (var trainer in Model.Trainers)
+{
+    <partial name="_DetailsPartial" , model="@trainer" />
+}

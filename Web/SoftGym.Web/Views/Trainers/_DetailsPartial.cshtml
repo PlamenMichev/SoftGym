@@ -8,22 +8,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title" id="myModalLabel">More About @Model.FirstName</h4>
+                    <h4 class="modal-title text-center" id="myModalLabel">Contacts for @Model.FirstName @Model.LastName</h4>
                 </div>
                 <div class="modal-body">
                     <center>
-                        <img src="@Model.ProfilePictureUrl" name="aboutme" width="140" height="140" border="0" class="img-circle"></a>
-                        <h3 class="media-heading">@Model.FirstName @Model.LastName</h3>
                         <span><strong>Contacts: </strong></span>
                         <p class="label label-info">Email: @Model.Email</p>
                         <p class="label label-info">Phone Number: @Model.PhoneNumber</p>
-                    </center>
-                    <hr>
-                    <center>
-                        <p class="text-left">
-                            <strong>Bio: </strong><br>
-                        <p>@Model.Description</p>
-                        <br>
                     </center>
                 </div>
                 <div class="modal-footer">

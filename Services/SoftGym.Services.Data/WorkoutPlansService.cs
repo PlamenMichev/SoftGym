@@ -93,6 +93,21 @@
             return entity;
         }
 
+        public async Task<bool> HasUserActivePlan(string userId)
+        {
+            var userPlans = await this.workoutPlansRepository
+                .All()
+                .Where(x => x.UserId == userId)
+                .ToListAsync();
+
+            if (userPlans.Any(x => x.ExpireDate.Subtract(DateTime.Now).Hours > 0))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         private async Task<WorkoutPlan> GenerateShortPlan(GenerateWorkoutPlanInputModel inputModel)
         {
             var workoutPlan = new WorkoutPlan()
@@ -256,8 +271,8 @@
                 case 4:
                     {
                         days.Add(Day.Monday);
-                        days.Add(Day.Thurstday);
                         days.Add(Day.Tuesday);
+                        days.Add(Day.Thurstday);
                         days.Add(Day.Friday);
                         break;
                     }
@@ -265,9 +280,9 @@
                 case 5:
                     {
                         days.Add(Day.Monday);
-                        days.Add(Day.Thurstday);
-                        days.Add(Day.Wednesday);
                         days.Add(Day.Tuesday);
+                        days.Add(Day.Wednesday);
+                        days.Add(Day.Thurstday);
                         days.Add(Day.Friday);
                         break;
                     }
@@ -275,9 +290,9 @@
                 case 6:
                     {
                         days.Add(Day.Monday);
-                        days.Add(Day.Thurstday);
-                        days.Add(Day.Wednesday);
                         days.Add(Day.Tuesday);
+                        days.Add(Day.Wednesday);
+                        days.Add(Day.Thurstday);
                         days.Add(Day.Friday);
                         days.Add(Day.Saturday);
                         break;
@@ -286,9 +301,9 @@
                 case 7:
                     {
                         days.Add(Day.Monday);
-                        days.Add(Day.Thurstday);
-                        days.Add(Day.Wednesday);
                         days.Add(Day.Tuesday);
+                        days.Add(Day.Wednesday);
+                        days.Add(Day.Thurstday);
                         days.Add(Day.Friday);
                         days.Add(Day.Saturday);
                         days.Add(Day.Sunday);
@@ -521,6 +536,7 @@
                 {
                     break;
                 }
+
                 var rand = new Random();
                 var currentExercise = currentExercises[rand.Next(0, currentExercises.Count)];
                 pickedExercises.Add(currentExercise);

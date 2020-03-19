@@ -19,7 +19,7 @@
             @foreach (var plan in Model.ActivePlan)
             {
                 <li class="list-group-item text-center">
-                    <a href="/WorkoutPlans/Details/@plan.Id">
+                    <a href="/WorkoutPlans/Details/@plan.Id" class="text-black">
                         Workout Plan from @plan.CreatedOn.ToString("dd/MM/yyyy") to @plan.ExpireDate.ToString("dd/MM/yyyy")
                     </a>
                     <a href="/WorkoutPlans/Delete/@plan.Id" class="ml-5 btn btn-danger" title="Delete">
@@ -44,7 +44,7 @@
             @foreach (var plan in Model.InactivePlans)
             {
                 <li class="list-group-item text-center">
-                    <a href="/WorkoutPlans/Details/@plan.Id">
+                    <a href="/WorkoutPlans/Details/@plan.Id" class="text-black">
                         Workout Plan from @plan.CreatedOn.ToString("dd/MM/yyyy") to @plan.ExpireDate.ToString("dd/MM/yyyy")
                     </a>
                     <a href="/WorkoutPlans/Delete/@plan.Id" class="ml-5 btn btn-danger" title="Delete">

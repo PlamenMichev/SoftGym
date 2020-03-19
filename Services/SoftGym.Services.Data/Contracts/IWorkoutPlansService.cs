@@ -15,5 +15,7 @@
         public Task<T> GetWorkoutPlanAsync<T>(string planId);
 
         public Task<WorkoutPlan> DeleteAsync(string planId);
+
+        public Task<bool> HasUserActivePlan(string userId);
     }
 }

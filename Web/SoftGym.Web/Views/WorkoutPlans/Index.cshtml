@@ -1,12 +1,16 @@
-﻿<div class="border-bottom">
+﻿@{
+    ViewData["Title"] = "Workout Plans";
+}
+
+<div class="border-bottom">
     <div class="row no-gutters">
         <div class="col-md-6 col-lg-3">
             <div class="w-100 h-100 block-feature p-5 bg-light">
                 <span class="d-block mb-3">
                     <span class="flaticon-padmasana display-4"></span>
                 </span>
-                <h2>Yoga</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora fugiat iure eveniet perferendis odit est.</p>
+                <h2>Peace</h2>
+                <p>Training makes you feel better. It gives you high quality sleep and produce the hormone of happiness.</p>
             </div>
         </div>
         <div class="col-md-6 col-lg-3">
@@ -15,7 +19,7 @@
                     <span class="flaticon-weight display-4"></span>
                 </span>
                 <h2>Weight Lifting</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora fugiat iure eveniet perferendis odit est.</p>
+                <p>In our gym you have variety of exercises with lifting weights. Doing them will make you stronger and with better shape.</p>
             </div>
         </div>
         <div class="col-md-6 col-lg-3">
@@ -25,7 +29,7 @@
                 </span>
 
                 <h2>Boxing</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora fugiat iure eveniet perferendis odit est.</p>
+                <p>You have unlimited access to our boxing room and if you don't feel like lifting today you can hit the bag for 30 minutes.</p>
             </div>
         </div>
         <div class="col-md-6 col-lg-3">
@@ -34,12 +38,21 @@
                     <span class="flaticon-running display-4"></span>
                 </span>
                 <h2>Running</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora fugiat iure eveniet perferendis odit est.</p>
+                <p>Cardio is important for your heart. We don't thing cardio is the most important thing but we include it in our training plans.</p>
             </div>
         </div>
     </div>
-</div> 
+</div>
 <div class="row">
+    @if (this.ViewData["Redirected"] != null)
+    {
+        if ((bool)this.ViewData["Redirected"])
+        {
+            <div class="col-md-12 alert alert-dark text-center" role="alert">
+                You already have active plan. Wait for your plan to end or delete it in order to generate new one.
+            </div>
+        }
+    }
     <div class="col-md-6 text-center">
         <a asp-action="GenerateWorkoutPlan" asp-controller="WorkoutPlans" asp-area="" class="btn btn-primary pill px-4 py-2 mt-3 text-center">Generate Workout Plan</a>
     </div>

@@ -18,15 +18,26 @@
             this.workoutPlansService = workoutPlansService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index([FromQuery] bool redirected = false)
         {
+            if (redirected == true)
+            {
+                this.ViewData["Redirected"] = true;
+            }
+
             return this.View();
         }
 
-        public IActionResult GenerateWorkoutPlan()
+        public async Task<IActionResult> GenerateWorkoutPlan()
         {
+            string userId = this.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            if (await this.workoutPlansService.HasUserActivePlan(userId))
+            {
+                return this.Redirect($"/WorkoutPlans/Index?redirected=true");
+            }
+
             var viewModel = new GenerateWorkoutPlanInputModel();
-            viewModel.UserId = this.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            viewModel.UserId = userId;
             return this.View(viewModel);
         }
 
