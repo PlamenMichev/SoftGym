@@ -1,13 +1,13 @@
 ﻿namespace SoftGym.Services.Data
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+
     using Microsoft.EntityFrameworkCore;
     using SoftGym.Data.Common.Repositories;
     using SoftGym.Data.Models;
     using SoftGym.Services.Data.Contracts;
     using SoftGym.Services.Mapping;
-
-    using System.Linq;
-    using System.Threading.Tasks;
 
     public class CardsService : ICardsService
     {
@@ -20,6 +20,18 @@
         {
             this.cardRepository = cardRepository;
             this.qrCodeService = qrCodeService;
+        }
+
+        public async Task<Card> AddVisitsToUser(string userId, int visits)
+        {
+            var card = await this.cardRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.UserId == userId);
+
+            card.Visits = visits;
+            await this.cardRepository.SaveChangesAsync();
+
+            return card;
         }
 
         public async Task<Card> GenerateCardAsync(ApplicationUser user)
@@ -45,6 +57,31 @@
                 .FirstOrDefaultAsync();
 
             return result;
+        }
+
+        public decimal GetPrice(int visits)
+        {
+            decimal result;
+            switch (visits)
+            {
+                case 12: result = 20; break;
+                case 16: result = 26; break;
+                case 20: result = 32; break;
+                case 30: result = 42; break;
+                default:
+                    result = 30;
+                    break;
+            }
+
+            return result;
+        }
+
+        public bool HasCardVisits(string id)
+        {
+            return this.cardRepository
+                .All()
+                .Where(x => x.Id == id)
+                .Any(x => x.Visits > 0);
         }
     }
 }

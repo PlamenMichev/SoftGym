@@ -5,6 +5,8 @@
 
     public class MyCardViewModel : IMapFrom<Card>
     {
+        public string Id { get; set; }
+
         public int Visits { get; set; }
 
         public string PictureUrl { get; set; }

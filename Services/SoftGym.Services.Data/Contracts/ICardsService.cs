@@ -6,8 +6,14 @@
 
     public interface ICardsService
     {
-        Task<Card> GenerateCardAsync(ApplicationUser user);
+        public Task<Card> GenerateCardAsync(ApplicationUser user);
 
         public Task<T> GetCardViewModelAsync<T>(string userId);
+
+        public decimal GetPrice(int visits);
+
+        public Task<Card> AddVisitsToUser(string userId, int visits);
+
+        public bool HasCardVisits(string id);
     }
 }

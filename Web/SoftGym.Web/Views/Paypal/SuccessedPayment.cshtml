@@ -1,0 +1,15 @@
+﻿@model int
+
+@{
+    ViewData["Title"] = "Payment Success";
+}
+
+<h2>You successfully bought @Model gym visits. You can use them any time you want.</h2>
+<div class="row">
+    <div class="col-md-6 text-center">
+        <a asp-action="Index" asp-controller="Home" asp-area="" class="btn btn-primary pill px-4 py-2 mt-3 text-center">Home</a>
+    </div>
+    <div class="col-md-6 text-center">
+        <a asp-action="MyCard" asp-controller="Users" asp-area="" class="btn btn-primary pill px-4 py-2 mt-3 text-center">My Card</a>
+    </div>
+</div>

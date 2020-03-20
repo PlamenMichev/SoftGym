@@ -6,7 +6,7 @@
 
     public interface IPaypalService
     {
-        public Task<Payment> CreatePayment();
+        public Task<Payment> CreatePayment(decimal value, int visits);
 
         public Task<Payment> ExecutePayment(string payerId, string paymentId, string token);
     }

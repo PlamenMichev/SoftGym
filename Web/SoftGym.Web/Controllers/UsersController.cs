@@ -23,11 +23,13 @@
             this.cardsService = cardsService;
         }
 
-        public async Task<IActionResult> MyCard()
+        public async Task<IActionResult> MyCard([FromQuery] bool hasVisits = false)
         {
             var claimsIdentity = (ClaimsIdentity)this.User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
             var userId = claim.Value;
+
+            this.ViewData["hasVisits"] = hasVisits;
 
             var model = await this.cardsService.GetCardViewModelAsync<MyCardViewModel>(userId);
 
@@ -44,6 +46,25 @@
             }
 
             return this.Redirect("/Identity/Account/Manage");
+        }
+
+        [HttpPost]
+        public IActionResult BuyCard(MyCardViewModel inputModel)
+        {
+            if (inputModel.Visits != 12 &&
+                inputModel.Visits != 16 &&
+                inputModel.Visits != 20 &&
+                inputModel.Visits != 30)
+            {
+                return this.Redirect("/Users/MyCard");
+            }
+
+            if (this.cardsService.HasCardVisits(inputModel.Id))
+            {
+                return this.Redirect("/Users/MyCard?hasVisits=true");
+            }
+
+            return this.Redirect($"/Paypal/CreatePayment?visits={inputModel.Visits}");
         }
     }
 }

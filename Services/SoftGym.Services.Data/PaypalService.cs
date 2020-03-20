@@ -18,7 +18,7 @@
             this.configuration = configuration;
         }
 
-        public async Task<Payment> CreatePayment()
+        public async Task<Payment> CreatePayment(decimal value, int visits)
         {
             var config = new Dictionary<string, string>();
             config.Add("mode", this.configuration["Logging:Paypal:Mode"]);
@@ -48,16 +48,16 @@
                             },
                             amount = new Amount
                             {
-                                currency = "EUR",
-                                total = "10",
+                                currency = "USD",
+                                total = value.ToString(),
                             },
-                            description = "Test transaction",
+                            description = "Buying card for fitness entrance in softgym.",
                         },
                     },
                     redirect_urls = new RedirectUrls
                     {
                         cancel_url = @"https://localhost:44319/Paypal/FailedPayment",
-                        return_url = @"https://localhost:44319/Paypal/SuccessedPayment",
+                        return_url = $@"https://localhost:44319/Paypal/SuccessedPayment?visits={visits}",
                     },
                 };
 
