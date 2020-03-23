@@ -66,5 +66,21 @@
 
             return this.Redirect($"/Paypal/CreatePayment?visits={inputModel.Visits}");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> AddTrainer(string id)
+        {
+            var clientId = this.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            await this.usersService.AddClientToTrainer(clientId, id);
+            return this.Redirect("/Users/MyTrainers");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveTrainer(string id)
+        {
+            var clientId = this.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            await this.usersService.RemoveClientFromTrainer(clientId, id);
+            return this.Redirect("/Users/MyTrainers");
+        }
     }
 }

@@ -4,6 +4,11 @@
     ViewData["Title"] = "Trainers";
 }
 
+@using SoftGym.Data.Models
+@using Microsoft.AspNetCore.Identity
+
+@inject UserManager<ApplicationUser> userManager
+
 <div class="site-section bg-light">
 
     <div class="container">
@@ -24,6 +29,24 @@
                             <p>
                                 <a data-toggle="modal" data-target="#a@(trainer.Id)a" class="p-2" style="cursor: pointer"><i class="fas fa-phone"></i></a>
                                 <a data-toggle="modal" data-target="#a@(trainer.Id)a" class="p-2" style="cursor: pointer"><i class="fas fa-envelope-square"></i></a>
+                                @{string userId = this.userManager.GetUserId(this.User); }
+                                @if (this.User.Identity.IsAuthenticated)
+                                {
+                                    @if (trainer.ClientIds.Contains(userId))
+                                    {
+                                        <form asp-action="RemoveTrainer" asp-controller="Users" method="post">
+                                            <input type="text" name="Id" value="@trainer.Id" hidden />
+                                            <button type="submit" class="p-2 btn" style="cursor: pointer" title="Remove From My Trainers"><i class="fas fa-user-times"></i></button>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <form asp-action="AddTrainer" asp-controller="Users" method="post">
+                                            <input type="text" name="Id" value="@trainer.Id" hidden />
+                                            <button type="submit" class="p-2 btn" style="cursor: pointer" title="Add To My Trainers"><i class="fas fa-user-plus"></i></button>
+                                        </form>
+                                    }
+                                }
                             </p>
                         </div>
                     </div>

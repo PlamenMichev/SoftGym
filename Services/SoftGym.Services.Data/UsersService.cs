@@ -13,10 +13,52 @@
     public class UsersService : IUsersService
     {
         private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
+        private readonly IDeletableEntityRepository<ClientTrainer> clientTrainersRepository;
 
-        public UsersService(IDeletableEntityRepository<ApplicationUser> userRepository)
+        public UsersService(
+            IDeletableEntityRepository<ApplicationUser> userRepository,
+            IDeletableEntityRepository<ClientTrainer> clientTrainersRepository)
         {
             this.userRepository = userRepository;
+            this.clientTrainersRepository = clientTrainersRepository;
+        }
+
+        public async Task<ClientTrainer> AddClientToTrainer(string clientId, string trainerId)
+        {
+            var client = await this.userRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.Id == clientId);
+
+            var trainer = await this.userRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.Id == trainerId);
+
+            if (this.clientTrainersRepository.AllWithDeleted().Any(x => x.ClientId == clientId && x.TrainerId == trainerId))
+            {
+                var clientTrainer = await this.clientTrainersRepository
+                    .AllWithDeleted()
+                    .FirstAsync(x => x.ClientId == clientId && x.TrainerId == trainerId);
+                clientTrainer.IsDeleted = false;
+                await this.clientTrainersRepository.SaveChangesAsync();
+
+                return clientTrainer;
+            }
+
+            var newClientTrainer = new ClientTrainer()
+            {
+                Client = client,
+                ClientId = clientId,
+                Trainer = trainer,
+                TrainerId = trainerId,
+            };
+
+            client.Trainers.Add(newClientTrainer);
+            trainer.Clients.Add(newClientTrainer);
+
+            await this.clientTrainersRepository.AddAsync(newClientTrainer);
+            await this.clientTrainersRepository.SaveChangesAsync();
+
+            return newClientTrainer;
         }
 
         public async Task<ApplicationUser> ChangeEmailAsync(string userId, string newEmail)
@@ -141,6 +183,18 @@
                     .Where(x => x.Trainers.Any(y => y.TrainerId == trainerId))
                     .CountAsync();
             }
+        }
+
+        public async Task<ClientTrainer> RemoveClientFromTrainer(string clientId, string trainerId)
+        {
+            var clientTrainer = await this.clientTrainersRepository
+                .All()
+                .FirstAsync(x => x.ClientId == clientId && x.TrainerId == trainerId);
+
+            this.clientTrainersRepository.Delete(clientTrainer);
+            await this.clientTrainersRepository.SaveChangesAsync();
+
+            return clientTrainer;
         }
     }
 }
