@@ -113,6 +113,7 @@
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                app.UseStatusCodePagesWithRedirects("/Home/Error");
                 app.UseHsts();
             }
 
