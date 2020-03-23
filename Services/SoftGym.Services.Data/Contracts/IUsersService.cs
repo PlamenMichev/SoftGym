@@ -30,9 +30,5 @@
         public Task<IEnumerable<T>> GetAllUsersAsync<T>();
 
         public Task<ApplicationUser> GetUserByIdAsync(string id);
-
-        public Task<ClientTrainer> AddClientToTrainer(string clientId, string trainerId);
-
-        public Task<ClientTrainer> RemoveClientFromTrainer(string clientId, string trainerId);
     }
 }

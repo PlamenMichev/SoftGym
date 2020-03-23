@@ -40,82 +40,91 @@
 </head>
 <body>
     <div class="site-wrap">
-    <div class="site-mobile-menu">
-        <div class="site-mobile-menu-header">
-            <div class="site-mobile-menu-close mt-3">
-                <span class="icon-close2 js-menu-toggle"></span>
+        <div class="site-mobile-menu">
+            <div class="site-mobile-menu-header">
+                <div class="site-mobile-menu-close mt-3">
+                    <span class="icon-close2 js-menu-toggle"></span>
+                </div>
             </div>
-        </div>
-        <div class="site-mobile-menu-body"></div>
-    </div> <!-- .site-mobile-menu -->
+            <div class="site-mobile-menu-body"></div>
+        </div> <!-- .site-mobile-menu -->
 
-    <div class="site-navbar-wrap bg-white">
-        <div class="container">
-            <div class="site-navbar bg-light">
-                <div class="py-1">
-                    <div class="row align-items-center">
-                        <div class="col-1">
-                            <h2 class="mb-0 site-logo"><a asp-action="Index" asp-controller="Home" asp-area="">soft<strong>gym</strong>  </a></h2>
-                        </div>
-                        <div class="col-11">
-                            <nav class="site-navigation text-left" role="navigation">
-                                <div class="container">
-                                    <ul class="site-menu js-clone-nav d-none d-lg-block">
+        <div class="site-navbar-wrap bg-white">
+            <div class="container">
+                <div class="site-navbar bg-light">
+                    <div class="py-1">
+                        <div class="row align-items-center">
+                            <div class="col-1">
+                                <h2 class="mb-0 site-logo"><a asp-action="Index" asp-controller="Home" asp-area="">soft<strong>gym</strong>  </a></h2>
+                            </div>
+                            <div class="col-11">
+                                <nav class="site-navigation text-left" role="navigation">
+                                    <div class="container">
+                                        <ul class="site-menu js-clone-nav d-none d-lg-block">
 
-                                        <li class="active">
-                                            <a asp-action="Index" asp-controller="Home" asp-area="">Home</a>
-                                        </li>
-                                        <li class="has-children active">
-                                            <a asp-action="All" asp-controller="Facilities" asp-area="">Facilities</a>
-                                            <ul class="dropdown arrow-top">
-                                                <li><a asp-action="Equipments" asp-controller="Facilities" asp-area="">Equipments</a></li>
-                                                <li><a asp-action="Rooms" asp-controller="Facilities" asp-area="">Rooms</a></li>
-                                                <li><a asp-action="Spa" asp-controller="Facilities" asp-area="">Boxing</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="active"><a asp-action="All" asp-controller="Trainers" asp-area="">Our Trainers</a></li>
-                                        @if (this.SignInManager.IsSignedIn(this.User))
-                                        {
+                                            <li class="active">
+                                                <a asp-action="Index" asp-controller="Home" asp-area="">Home</a>
+                                            </li>
                                             <li class="has-children active">
-                                                <a asp-action="Index" asp-controller="EatingPlans" asp-area="">Eating Plans</a>
+                                                <a asp-action="All" asp-controller="Facilities" asp-area="">Facilities</a>
                                                 <ul class="dropdown arrow-top">
-                                                    <li><a asp-action="GeneratePlan" asp-controller="EatingPlans" asp-area="">Generate Plan</a></li>
-                                                    <li><a asp-action="MyPlans" asp-controller="EatingPlans" asp-area="">My Eating Plans</a></li>
+                                                    <li><a asp-action="Equipments" asp-controller="Facilities" asp-area="">Equipments</a></li>
+                                                    <li><a asp-action="Rooms" asp-controller="Facilities" asp-area="">Rooms</a></li>
+                                                    <li><a asp-action="Spa" asp-controller="Facilities" asp-area="">Boxing</a></li>
                                                 </ul>
                                             </li>
-                                            <li class="active">
-                                                <a asp-action="Index" asp-controller="WorkoutPlans" asp-area="">Workout Plans</a>
-                                            </li>
-                                        }
+                                            @if (!this.SignInManager.IsSignedIn(this.User))
+                                            {
+                                                <li class="active"><a asp-action="All" asp-controller="Trainers" asp-area="">Trainers</a></li>
+                                            }
+                                            else
+                                            {
+                                                <li class="has-children active">
+                                                    <a asp-action="All" asp-controller="Trainers" asp-area="">Trainers</a>
+                                                    <ul class="dropdown arrow-top">
+                                                        <li><a asp-action="MyTrainers" asp-controller="Trainers" asp-area="">My Trainers</a></li>
+                                                    </ul>
+                                                </li>
+                                            }
+                                            @if (this.SignInManager.IsSignedIn(this.User))
+                                            {
+                                                <li class="has-children active">
+                                                    <a href="#">Plans</a>
+                                                    <ul class="dropdown arrow-top">
+                                                        <li><a asp-action="Index" asp-controller="WorkoutPlans" asp-area="">Workout Plans</a></li>
+                                                        <li><a asp-action="Index" asp-controller="EatingPlans" asp-area="">Eating Plans</a></li>
+                                                    </ul>
+                                                </li>
+                                            }
 
-                                        <partial name="_LoginPartial" />
-                                        @*
+                                            <partial name="_LoginPartial" />
+                                            @*
         <li><a href="about.html">About</a></li>
         <li><a href="contact.html">Contact</a></li>
-                                        *@
-                                    </ul>
-                                    <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3 float-right"><a href="#" class="site-menu-toggle js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>
-                                </div>
-                            </nav>
+                                            *@
+                                        </ul>
+                                        <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3 float-right"><a href="#" class="site-menu-toggle js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>
+                                    </div>
+                                </nav>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="container pb-5">
-        <partial name="_CookieConsentPartial" />
-        <main role="main" class="pb-3">
-            @this.RenderBody()
-        </main>
-    </div>
-
-    <footer class="footer site-footer">
-        <div class="container">
-            &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <div class="container pb-5">
+            <partial name="_CookieConsentPartial" />
+            <main role="main" class="pb-3">
+                @this.RenderBody()
+            </main>
         </div>
-    </footer>
+
+        <footer class="footer site-footer">
+            <div class="container">
+                &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
     </div>
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js" asp-append-version="true"></script>

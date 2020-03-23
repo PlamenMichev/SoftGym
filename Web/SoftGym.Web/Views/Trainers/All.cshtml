@@ -34,14 +34,14 @@
                                 {
                                     @if (trainer.ClientIds.Contains(userId))
                                     {
-                                        <form asp-action="RemoveTrainer" asp-controller="Users" method="post">
+                                        <form asp-action="RemoveTrainer" asp-controller="Trainers" method="post">
                                             <input type="text" name="Id" value="@trainer.Id" hidden />
                                             <button type="submit" class="p-2 btn" style="cursor: pointer" title="Remove From My Trainers"><i class="fas fa-user-times"></i></button>
                                         </form>
                                     }
                                     else
                                     {
-                                        <form asp-action="AddTrainer" asp-controller="Users" method="post">
+                                        <form asp-action="AddTrainer" asp-controller="Trainers" method="post">
                                             <input type="text" name="Id" value="@trainer.Id" hidden />
                                             <button type="submit" class="p-2 btn" style="cursor: pointer" title="Add To My Trainers"><i class="fas fa-user-plus"></i></button>
                                         </form>

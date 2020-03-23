@@ -1,63 +1,78 @@
 ﻿@model SoftGym.Web.ViewModels.EatingPlans.AllPlansViewModel
 
 @{
-    ViewData["Title"] = "My Plans";
+    ViewData["Title"] = "My Eating Plans";
 }
 
-<h2 class="text-center">My Plans</h2>
+<h2 class="text-center mt-4">@ViewData["Title"]</h2>
 <hr />
-<h4 class="text-center">Active</h4>
-@if (Model.ActivePlans.Any())
-{
-    <ul class="list-group">
-        @foreach (var plan in Model.ActivePlans)
-        {
-            <li class="list-group-item text-center">
-                <a href="/EatingPlans/Details/@plan.Id">
-                    Plan from @plan.CreatedOn.ToString("dd/MM/yyyy") to @plan.ExpireDate.Date.ToString("dd/MM/yyyy") (@plan.CaloriesPerDay.ToString("f0") calories daily)
-                </a>
-                <a href="/EatingPlans/Delete/@plan.Id" class="ml-5 btn btn-danger" title="Delete">
-                    <i class="fas fa-trash-alt"></i>
-                </a>
-            </li>
-        }
-    </ul>
-}
-else
-{
-    <div class="text-center">
 
-        <div class="alert alert-primary" role="alert">
-            No Active Plans
+<div class="site-section block-14">
+
+    <div class="container">
+
+        <div class="heading-with-border text-center">
+            <h2 class="heading text-uppercase">Active Plans</h2>
         </div>
-        <a href="/EatingPlans/GeneratePlan" class="btn btn-primary">Generate Plan</a>
-    </div>
-}
-
-<h4 class="text-center">Inactive</h4>
-
-@if (Model.InactivePlans.Any())
-{
-    <ul class="list-group">
-        @foreach (var plan in Model.InactivePlans)
+        @if (Model.ActivePlans.Any())
         {
-            <li class="list-group-item text-center">
-                <a href="/EatingPlans/Details/@plan.Id">
-                    Plan from @plan.CreatedOn.ToString("dd/MM/yyyy") to @plan.ExpireDate.Date.ToString("dd/MM/yyyy") (@plan.CaloriesPerDay.ToString("f0") calories daily)
-                </a>
-                <a href="/EatingPlans/Delete/@plan.Id" class="ml-5 btn btn-danger" title="Delete">
-                    <i class="fas fa-trash-alt"></i>
-                </a>
-            </li>
-        }
-    </ul>
-}
-else
-{
-    <div class="text-center">
+            <ul class="list-unstyled list-group">
+                @foreach (var plan in Model.ActivePlans)
+                {
+                    <li class="list-group-item text-center">
+                        <a href="/WorkoutPlans/Details/@plan.Id" class="text-black">
+                            Workout Plan from @plan.CreatedOn.ToString("dd/MM/yyyy") to @plan.ExpireDate.ToString("dd/MM/yyyy")
+                        </a>
+                        <a href="/WorkoutPlans/Delete/@plan.Id" class="ml-5 btn btn-danger" title="Delete">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </li>
+                }
+            </ul>
 
-        <div class="alert alert-primary" role="alert">
-            No Inactive Plans
-        </div>
+        }
+        else
+        {
+            <div class="text-center">
+                <div class="alert alert-primary" role="alert">
+                    You Have no Active Eating Plan
+                </div>
+                <a href="/EatingPlans/GeneratePlan" class="btn btn-primary pill">Generate Eating Plan</a>
+            </div>
+        }
     </div>
-}
+</div>
+
+
+<div class="site-section block-14">
+    <div class="container">
+        <div class="heading-with-border text-center">
+            <h2 class="heading text-uppercase">Inactive Plans</h2>
+        </div>
+        @if (Model.InactivePlans.Any())
+        {
+            <ul class="list-unstyled list-group">
+                @foreach (var plan in Model.InactivePlans)
+                {
+                    <li class="list-group-item text-center">
+                        <a href="/WorkoutPlans/Details/@plan.Id" class="text-black">
+                            Workout Plan from @plan.CreatedOn.ToString("dd/MM/yyyy") to @plan.ExpireDate.ToString("dd/MM/yyyy")
+                        </a>
+                        <a href="/WorkoutPlans/Delete/@plan.Id" class="ml-5 btn btn-danger" title="Delete">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <div class="text-center">
+                <div class="alert alert-primary" role="alert">
+                    No Inactive Eating Plans
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

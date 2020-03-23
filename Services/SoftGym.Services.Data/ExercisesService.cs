@@ -1,5 +1,6 @@
 ﻿namespace SoftGym.Services.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -7,6 +8,7 @@
     using Microsoft.EntityFrameworkCore;
     using SoftGym.Data.Common.Repositories;
     using SoftGym.Data.Models;
+    using SoftGym.Data.Models.Enums;
     using SoftGym.Services.Data.Contracts;
     using SoftGym.Services.Mapping;
     using SoftGym.Web.ViewModels.Trainers.Exercises;
@@ -70,12 +72,24 @@
             return exercise;
         }
 
-        public async Task<IEnumerable<T>> GetAllExercisesAsync<T>()
+        public async Task<IEnumerable<T>> GetAllExercisesAsync<T>(string filterType = null)
         {
-            return await this.exercisesRepository
-                .All()
-                .To<T>()
-                .ToListAsync();
+            if (filterType == null)
+            {
+                return await this.exercisesRepository
+                    .All()
+                    .To<T>()
+                    .ToListAsync();
+            }
+            else
+            {
+                ExerciseType currentType = (ExerciseType)int.Parse(filterType);
+                return await this.exercisesRepository
+                    .All()
+                    .Where(x => x.Type == currentType)
+                    .To<T>()
+                    .ToListAsync();
+            }
         }
 
         public async Task<T> GetExerciseAsync<T>(string exerciseId)

@@ -17,6 +17,21 @@
                 <i class="fas fa-plus-square"></i>
             </a>
         </div>
+        <div class="text-center m-3">
+            <form asp-action="FilterExercises" asp-controller="Exercises" asp-area="Trainers">
+                <div class="row">
+                    <div class="col-md-10">
+                        <label name="FilterType">Show: </label>
+                        <select asp-for="ExerciseType" asp-items="Html.GetEnumSelectList<ExerciseType>()" class="browser-default custom-select">
+                            <option value="All" selected>All</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 align-self-end">
+                        <button type="submit" class="btn btn-success">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
         <ul class="list-group">
             @foreach (var exercise in Model.Exercises)
             {

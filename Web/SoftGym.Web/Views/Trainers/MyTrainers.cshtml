@@ -1,0 +1,55 @@
+﻿@model SoftGym.Web.ViewModels.Trainers.MyTrainersViewModel
+
+@using SoftGym.Web.ViewModels.Trainers
+@{
+    this.ViewData["Title"] = "My Trainers";
+}
+
+<h2 class="text-center m-3">@this.ViewData["Title"]</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="img-fluid">
+            <img src="@Model.Trainers.First().ProfilePictureUrl" alt="Alternate Text" class="w-100" id="pictureElement" />
+        </div>
+    </div>
+    <div class="col-md-8">
+        <ul class="list-group">
+            @foreach (var trainer in Model.Trainers)
+            {
+                <div class="row">
+                    <li class="list-group-item col-md-8">
+                        <a onclick="changePhoto('@trainer.ProfilePictureUrl')" href="#">
+                            @trainer.FirstName @trainer.LastName - @trainer.ClientsCount clients
+                        </a>
+                    </li>
+                    <div class="col-md-4">
+                        <button data-toggle="modal" data-target="#a@(trainer.Id)a" class="p-2 float-right btn btn-primary" style="cursor: pointer">Contacts</button>
+                    </div>
+                </div>
+            }
+        </ul>
+    </div>
+</div>
+
+<script>
+    function changePhoto(photoUrl) {
+        var pictureElement = document.getElementById('pictureElement');
+        pictureElement.src = photoUrl;
+    }
+</script>
+
+@foreach (var trainer in Model.Trainers)
+{
+    var viewModel = new TrainerViewModel()
+    {
+        Id = trainer.Id,
+        FirstName = trainer.FirstName,
+        LastName = trainer.LastName,
+        PhoneNumber = trainer.PhoneNumber,
+        Email = trainer.Email,
+    };
+
+    <partial name="_DetailsPartial" , model="@viewModel" />
+}

@@ -4,7 +4,7 @@
     ViewData["Title"] = "Eating Plans";
 }
 
-    <h1 class="text-center mb-3">
+    <h1 class="text-center m-3">
         Eating Plans
         <a data-toggle="modal" data-target="#infoModal" title="Info" class="btn btn-info"><i class="fas fa-info"></i></a>
         <partial name="_InfoPartial" />
@@ -18,13 +18,13 @@
         </div>
     }
     <div class="col-md-6">
-        <a class="btn btn-primary btn-lg pill" href="/EatingPlans/MyPlans/@Model.Id">
-            My Plans
+        <a class="btn btn-primary pill" href="/EatingPlans/GeneratePlan">
+            Generate New Eating Plan
         </a>
     </div>
     <div class="col-md-6">
-        <a class="btn btn-primary btn-lg pill" href="/EatingPlans/GeneratePlan">
-            Generate New Eating Plan
+        <a class="btn btn-primary pill" href="/EatingPlans/MyPlans/@Model.Id">
+            My Eating Plans
         </a>
     </div>
 </div>

@@ -4,7 +4,7 @@
     ViewData["Title"] = "My Workout Plans";
 }
 
-<h2 class="text-center mt-4">My Plans</h2>
+<h2 class="text-center mt-4">@ViewData["Title"]</h2>
 <hr />
 
 <div class="site-section block-14">
@@ -14,20 +14,31 @@
         <div class="heading-with-border text-center">
             <h2 class="heading text-uppercase">Active Plans</h2>
         </div>
-
-        <ul class="list-unstyled list-group">
-            @foreach (var plan in Model.ActivePlan)
-            {
-                <li class="list-group-item text-center">
-                    <a href="/WorkoutPlans/Details/@plan.Id" class="text-black">
-                        Workout Plan from @plan.CreatedOn.ToString("dd/MM/yyyy") to @plan.ExpireDate.ToString("dd/MM/yyyy")
-                    </a>
-                    <a href="/WorkoutPlans/Delete/@plan.Id" class="ml-5 btn btn-danger" title="Delete">
-                        <i class="fas fa-trash-alt"></i>
-                    </a>
-                </li>
-            }
-        </ul>
+        @if (Model.ActivePlan.Any())
+        {
+            <ul class="list-unstyled list-group">
+                @foreach (var plan in Model.ActivePlan)
+                {
+                    <li class="list-group-item text-center">
+                        <a href="/WorkoutPlans/Details/@plan.Id" class="text-black">
+                            Workout Plan from @plan.CreatedOn.ToString("dd/MM/yyyy") to @plan.ExpireDate.ToString("dd/MM/yyyy")
+                        </a>
+                        <a href="/WorkoutPlans/Delete/@plan.Id" class="ml-5 btn btn-danger" title="Delete">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <div class="text-center">
+                <div class="alert alert-primary" role="alert">
+                    You Have no Active Workout Plan
+                </div>
+                <a href="/WorkoutPlans/GenerateWorkoutPlan" class="btn btn-primary pill">Generate Eating Plan</a>
+            </div>
+        }
     </div>
 </div>
 
@@ -37,20 +48,31 @@
         <div class="heading-with-border text-center">
             <h2 class="heading text-uppercase">Inactive Plans</h2>
         </div>
-
-        <ul class="list-unstyled list-group">
-            @foreach (var plan in Model.InactivePlans)
-            {
-                <li class="list-group-item text-center">
-                    <a href="/WorkoutPlans/Details/@plan.Id" class="text-black">
-                        Workout Plan from @plan.CreatedOn.ToString("dd/MM/yyyy") to @plan.ExpireDate.ToString("dd/MM/yyyy")
-                    </a>
-                    <a href="/WorkoutPlans/Delete/@plan.Id" class="ml-5 btn btn-danger" title="Delete">
-                        <i class="fas fa-trash-alt"></i>
-                    </a>
-                </li>
-            }
-        </ul>
+        @if (Model.ActivePlan.Any())
+        {
+            <ul class="list-unstyled list-group">
+                @foreach (var plan in Model.InactivePlans)
+                {
+                    <li class="list-group-item text-center">
+                        <a href="/WorkoutPlans/Details/@plan.Id" class="text-black">
+                            Workout Plan from @plan.CreatedOn.ToString("dd/MM/yyyy") to @plan.ExpireDate.ToString("dd/MM/yyyy")
+                        </a>
+                        <a href="/WorkoutPlans/Delete/@plan.Id" class="ml-5 btn btn-danger" title="Delete">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <div class="text-center">
+                <div class="alert alert-primary" role="alert">
+                    No Inactive Eating Plans
+                </div>
+                <a href="/WorkoutPlans/GenerateWorkoutPlan" class="btn btn-primary pill">Generate Eating Plan</a>
+            </div>
+        }
     </div>
 </div>
 

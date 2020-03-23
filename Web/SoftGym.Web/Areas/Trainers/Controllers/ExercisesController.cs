@@ -46,6 +46,7 @@
             var viewModel = new AllExercisesViewModel
             {
                 Exercises = await this.exercisesService.GetAllExercisesAsync<ExerciseViewModel>(),
+                ExerciseType = "All",
             };
 
             return this.View(viewModel);
@@ -84,6 +85,23 @@
 
             await this.exercisesService.EditExerciseAsync(inputModel);
             return this.Redirect($"/Trainers/Exercises/Details/{inputModel.Id}");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> FilterExercises(AllExercisesViewModel inputModel)
+        {
+            if (inputModel.ExerciseType.ToLower() == "all")
+            {
+                return this.Redirect("/Trainers/Exercises/All");
+            }
+
+            var viewModel = new AllExercisesViewModel
+            {
+                Exercises = await this.exercisesService.GetAllExercisesAsync<ExerciseViewModel>(inputModel.ExerciseType),
+                ExerciseType = inputModel.ExerciseType.ToString(),
+            };
+
+            return this.View("All", viewModel);
         }
     }
 }
