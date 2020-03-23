@@ -16,6 +16,8 @@
 
         public Task Delete(string mealId);
 
-        Task<Meal> EditMealAsync(EditMealInputModel inputModel);
+        public Task<Meal> EditMealAsync(EditMealInputModel inputModel);
+
+        public Task<int> GetMealsCountAsync();
     }
 }

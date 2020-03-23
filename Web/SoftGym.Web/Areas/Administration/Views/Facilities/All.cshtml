@@ -37,20 +37,20 @@
                         <h4 class="card-title"><a>@facility.Name</a></h4>
                         <h6>Type: @facility.Type</h6>
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#a@(facility.Id)a">
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#a@(facility.Id)a">
                             Details
                         </button>
                         @if (facility.IsDeleted == false)
                         {
                             <a href="/Administration/Facilities/Delete?facilityId=@facility.Id" class="btn btn-danger" title="Delete"><i class="fas fa-trash-alt"></i></a>
-                            <a href="/Administration/Facilities/Edit?facilityId=@facility.Id" class="btn btn-primary" title="Edit"><i class="fas fa-edit"></i></a>
+                            <a href="/Administration/Facilities/Edit?facilityId=@facility.Id" class="btn btn-primary custom-blue" title="Edit"><i class="fas fa-edit"></i></a>
                         }
                         @if (facility.IsDeleted == true)
                         {
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#b@(facility.Id)b">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
-                            <a href="/Administration/Facilities/Restore?facilityId=@facility.Id" class="btn btn-primary" title="Restore"><i class="fas fa-trash-restore"></i></a>
+                            <a href="/Administration/Facilities/Restore?facilityId=@facility.Id" class="btn btn-primary custom-blue" title="Restore"><i class="fas fa-trash-restore"></i></a>
                         }
                         <partial name="_WarningDeletePartial" model="@facility" />
                         <partial name="_DetailsPartial" model="@facility" />

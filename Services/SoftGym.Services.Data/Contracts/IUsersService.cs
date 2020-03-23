@@ -21,6 +21,8 @@
 
         public Task<ApplicationUser> ChangeProfilePhotoAsync(string userId, string newProfilePhotoUrl);
 
+        public Task<int> GetUsersCountAsync(string trainerId = null);
+
         public Task<ApplicationUser> ChangeEmailAsync(string userId, string newEmail);
 
         public Task<IEnumerable<string>> GetAllEmailsAsync();

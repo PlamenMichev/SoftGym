@@ -147,5 +147,12 @@
                 .To<T>()
                 .ToListAsync();
         }
+
+        public async Task<int> GetMealsCountAsync()
+        {
+            return await this.mealsRepository
+                .All()
+                .CountAsync();
+        }
     }
 }

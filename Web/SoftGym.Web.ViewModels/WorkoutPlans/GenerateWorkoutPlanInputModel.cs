@@ -15,6 +15,7 @@
         [Range(1, 7, ErrorMessage = "Days in week are between 1 and 7")]
         public int WeekdaysCount { get; set; }
 
+        [Required]
         public Goal Goal { get; set; }
 
         [Required]

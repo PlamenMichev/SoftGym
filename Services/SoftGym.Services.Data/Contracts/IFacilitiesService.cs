@@ -24,5 +24,7 @@
         public Task<Facility> RestoreFacilityAsync(int facilityId);
 
         public Task HardDeleteFacility(int facilityId);
+
+        public Task<int> GetFacilitiesCountAsync();
     }
 }

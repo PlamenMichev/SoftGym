@@ -49,8 +49,8 @@
                 return this.View(inputModel);
             }
 
-            await this.workoutPlansService.GenerateWorkoutPlanAsync(inputModel);
-            return this.Redirect("/WorkoutPlans/Index");
+            var plan = await this.workoutPlansService.GenerateWorkoutPlanAsync(inputModel);
+            return this.Redirect($"/WorkoutPlans/Details/{plan.Id}");
         }
 
         public async Task<IActionResult> MyWorkoutPlans()

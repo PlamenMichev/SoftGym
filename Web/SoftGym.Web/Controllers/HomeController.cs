@@ -2,9 +2,11 @@
 {
     using System.Diagnostics;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SoftGym.Web.ViewModels;
 
+    [AllowAnonymousAttribute]
     public class HomeController : BaseController
     {
         public IActionResult Index()

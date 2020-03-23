@@ -2,10 +2,12 @@
 {
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SoftGym.Services.Data.Contracts;
     using SoftGym.Web.ViewModels.Trainers;
 
+    [AllowAnonymousAttribute]
     public class TrainersController : BaseController
     {
         private readonly ITrainersService trainersService;

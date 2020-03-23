@@ -37,8 +37,8 @@
                 return this.View(inputModel);
             }
 
-            await this.exercisesService.AddExerciseAsync(inputModel);
-            return this.Redirect("/Trainers/Exercises/All");
+            var exercise = await this.exercisesService.AddExerciseAsync(inputModel);
+            return this.Redirect($"/Trainers/Exercises/Details/{exercise.Id}");
         }
 
         public async Task<IActionResult> All()
@@ -72,6 +72,16 @@
         [HttpPost]
         public async Task<IActionResult> Edit(EditExerciseInputModel inputModel)
         {
+            if (!this.ModelState.IsValid || !this.cloudinaryService.IsVideoFileValid(inputModel.VideoFile))
+            {
+                if (!this.cloudinaryService.IsVideoFileValid(inputModel.VideoFile))
+                {
+                    this.ModelState.AddModelError("VideoFile", "Please enter a valid video format!");
+                }
+
+                return this.View(inputModel);
+            }
+
             await this.exercisesService.EditExerciseAsync(inputModel);
             return this.Redirect($"/Trainers/Exercises/Details/{inputModel.Id}");
         }

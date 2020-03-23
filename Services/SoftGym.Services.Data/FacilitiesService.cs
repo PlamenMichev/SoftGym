@@ -98,6 +98,13 @@
                 .ToListAsync();
         }
 
+        public async Task<int> GetFacilitiesCountAsync()
+        {
+            return await this.facilityRepository
+                .All()
+                .CountAsync();
+        }
+
         public async Task<T> GetFacilityAsync<T>(int id)
         {
             return await this.facilityRepository

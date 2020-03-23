@@ -9,18 +9,58 @@
     <div class="col-md-3">
         <partial name="_SideNavPartial" />
     </div>
-    <div class="col-md-9 border row">
-        <div class="col-md-4">
-            <h3>Facilities</h3>
-            <hr />
-            <a href="/Administration/Facilities/All" class="btn btn-outline-primary waves-effect m-2">See All Facilities</a>
-            <a href="/Administration/Facilities/Add" class="btn btn-outline-primary waves-effect m-2">Add Facility</a>
-            <a href="/Administration/Facilities/Deleted" class="btn btn-outline-primary waves-effect m-2">See Deleted Facilities</a>
-        </div>
-        <div class="col-md-4">
-            <h3>Users</h3>
-            <hr />
-            <a href="/Administration/Users/All" class="btn btn-outline-primary waves-effect m-2">See All Users</a>
+    <div class="col main pt-5 mt-3 border">
+
+        <h1 class="display-4 d-none d-sm-block">
+            Administration Dashboard
+        </h1>
+        <p class="lead d-none d-sm-block">Check and control all things in the gym</p>
+
+        <div class="row mb-3">
+            <a asp-action="All" asp-controller="Users" asp-area="Administration" title="All Users" class="col-xl-3 col-sm-6 py-2">
+                <div class="card bg-success text-white h-100">
+                    <div class="card-body bg-success">
+                        <div class="rotate">
+                            <i class="fa fa-user fa-4x"></i>
+                        </div>
+                        <h6 class="text-uppercase">Users</h6>
+                        <h1 class="display-4">@Model.UsersCount</h1>
+                    </div>
+                </div>
+            </a>
+            <a asp-action="All" asp-controller="Facilities" asp-area="Administration" title="All Facilities" class="col-xl-3 col-sm-6 py-2">
+                <div class="card text-white bg-danger h-100">
+                    <div class="card-body bg-danger">
+                        <div class="rotate">
+                            <i class="fas fa-bicycle fa-4x"></i>
+                        </div>
+                        <h6 class="text-uppercase">Facilities</h6>
+                        <h1 class="display-4">@Model.FacilitiesCount</h1>
+                    </div>
+                </div>
+            </a>
+            <a asp-action="All" asp-controller="Exercises" asp-area="Trainers" title="All Exercises" class="col-xl-3 col-sm-6 py-2">
+                <div class="card text-white bg-info h-100">
+                    <div class="card-body bg-info">
+                        <div class="rotate">
+                            <i class="fas fa-dumbbell fa-4x"></i>
+                        </div>
+                        <h6 class="text-uppercase">Exercises</h6>
+                        <h1 class="display-4">@Model.ExercisesCount</h1>
+                    </div>
+                </div>
+            </a>
+            <a asp-action="All" asp-controller="Meals" asp-area="Trainers" title="All Meals" class="col-xl-3 col-sm-6 py-2">
+                <div class="card text-white bg-warning h-100">
+                    <div class="card-body">
+                        <div class="rotate">
+                            <i class="fas fa-drumstick-bite fa-4x"></i>
+                        </div>
+                        <h6 class="text-uppercase">Meals</h6>
+                        <h1 class="display-4">@Model.MealsCount</h1>
+                    </div>
+                </div>
+            </a>
         </div>
     </div>
 </div>

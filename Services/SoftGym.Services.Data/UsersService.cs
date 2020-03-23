@@ -125,5 +125,22 @@
                 .All()
                 .FirstAsync(x => x.Id == id);
         }
+
+        public async Task<int> GetUsersCountAsync(string trainerId = null)
+        {
+            if (trainerId == null)
+            {
+                return await this.userRepository
+                    .All()
+                    .CountAsync();
+            }
+            else
+            {
+                return await this.userRepository
+                    .All()
+                    .Where(x => x.Trainers.Any(y => y.TrainerId == trainerId))
+                    .CountAsync();
+            }
+        }
     }
 }

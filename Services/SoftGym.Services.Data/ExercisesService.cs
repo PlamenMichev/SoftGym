@@ -86,5 +86,12 @@
                 .To<T>()
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<int> GetExercisesCountAsync()
+        {
+            return await this.exercisesRepository
+                .All()
+                .CountAsync();
+        }
     }
 }

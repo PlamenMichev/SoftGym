@@ -53,8 +53,8 @@
                 return this.View(inputModel);
             }
 
-            await this.mealsService.AddMealAsync(inputModel);
-            return this.Redirect("/Trainers/Meals/All");
+            var meal = await this.mealsService.AddMealAsync(inputModel);
+            return this.Redirect($"/Trainers/Meals/Details/{meal.Id}");
         }
 
         public async Task<IActionResult> Delete(string id)
@@ -84,8 +84,8 @@
                 return this.View(inputModel);
             }
 
-            await this.mealsService.EditMealAsync(inputModel);
-            return this.Redirect("/Trainers/Meals/All");
+            var meal = await this.mealsService.EditMealAsync(inputModel);
+            return this.Redirect($"/Trainers/Meals/Details/{meal.Id}");
         }
     }
 }

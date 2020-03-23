@@ -52,7 +52,7 @@
                 </div>
                 <span asp-validation-for="VideoFile" class="text-danger d-block"></span>
             </div>
-
+            <input type="text" asp-for="VideoUrl" value="@Model.VideoUrl" hidden/>
             <div class="form-group">
                 <p class="h5 p-2">Current Video:</p>
                 <video controls="controls" class="w-100">
@@ -60,7 +60,7 @@
                 </video>
             </div>
             <input type="text" asp-for="Id" value="@Model.Id" hidden/>
-            <button class="btn btn-info btn-block my-4" type="submit">Edit</button>
+            <button class="btn btn-info btn-block my-4 pill" type="submit">Edit</button>
         </form>
     </div>
 </div>

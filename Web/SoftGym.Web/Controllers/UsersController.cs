@@ -39,7 +39,7 @@
         [HttpPost]
         public async Task<IActionResult> UpdateProfilePicture(ChangeProfilePhotoInputModel inputModel)
         {
-            if (inputModel.ProfilePictureFile != null && this.cloudinaryService.IsFileValid(inputModel.ProfilePictureFile) == true)
+            if (this.ModelState.IsValid && this.cloudinaryService.IsFileValid(inputModel.ProfilePictureFile) == true)
             {
                 string newProfilePicUrl = await this.cloudinaryService.UploudAsync(inputModel.ProfilePictureFile);
                 await this.usersService.ChangeProfilePhotoAsync(inputModel.UserId, newProfilePicUrl);

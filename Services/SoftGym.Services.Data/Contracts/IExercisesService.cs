@@ -17,5 +17,7 @@
         public Task<Exercise> DeleteExerciseAsync(string exerciseId);
 
         public Task<Exercise> EditExerciseAsync(EditExerciseInputModel inputModel);
+
+        public Task<int> GetExercisesCountAsync();
     }
 }
