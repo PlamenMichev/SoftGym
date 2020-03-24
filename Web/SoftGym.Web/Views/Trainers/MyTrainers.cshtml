@@ -18,14 +18,18 @@
         <ul class="list-group">
             @foreach (var trainer in Model.Trainers)
             {
-                <div class="row">
+                <div class="row mb-3">
                     <li class="list-group-item col-md-8">
                         <a onclick="changePhoto('@trainer.ProfilePictureUrl')" href="#">
                             @trainer.FirstName @trainer.LastName - @trainer.ClientsCount clients
                         </a>
                     </li>
-                    <div class="col-md-4">
-                        <button data-toggle="modal" data-target="#a@(trainer.Id)a" class="p-2 float-right btn btn-primary" style="cursor: pointer">Contacts</button>
+                    <div class="col-md-4 row">
+                        <form asp-action="RemoveTrainer" asp-controller="Trainers" method="post" class="col-md-4">
+                            <input type="text" name="Id" value="@trainer.Id" hidden />
+                            <button type="submit" class="btn" style="cursor: pointer" title="Remove From My Trainers"><i class="fas fa-user-times"></i></button>
+                        </form>
+                        <button data-toggle="modal" data-target="#a@(trainer.Id)a" class="p-2 float-right btn btn-primary col-md-8" style="cursor: pointer">Contacts</button>
                     </div>
                 </div>
             }

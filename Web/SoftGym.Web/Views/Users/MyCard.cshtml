@@ -51,7 +51,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form asp-action="BuyCard" asp-controller="Users" method="post">
+            <form asp-action="BuyCard" asp-controller="Cards" method="post">
                 <div class="modal-body text-center m-3">
                     <span class="text-info">Price for one visit (without card) - 2 USD</span>
                     <input type="text" asp-for="Id" value="@Model.Id" hidden/>

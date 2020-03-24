@@ -1,0 +1,15 @@
+﻿@model string
+
+@{
+    ViewData["Title"] = "Add Success";
+}
+
+<h2 class="text-center">You successfully removed one gym visit.</h2>
+<div class="row">
+    <div class="col-md-6 text-center">
+        <a asp-action="All" asp-controller="Users" asp-area="Administration" class="btn btn-primary pill px-4 py-2 mt-3 text-center">All Users</a>
+    </div>
+    <div class="col-md-6 text-center">
+        <a href="/Administration/Cards/UserCard?userId=@Model" class="btn btn-primary pill px-4 py-2 mt-3 text-center">Back to Users Card</a>
+    </div>
+</div>

@@ -83,5 +83,17 @@
                 .Where(x => x.Id == id)
                 .Any(x => x.Visits > 0);
         }
+
+        public async Task<Card> RemoveVisitFromCard(string cardId)
+        {
+            var card = await this.cardRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.Id == cardId);
+
+            card.Visits -= 1;
+            await this.cardRepository.SaveChangesAsync();
+
+            return card;
+        }
     }
 }

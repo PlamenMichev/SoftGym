@@ -47,24 +47,5 @@
 
             return this.Redirect("/Identity/Account/Manage");
         }
-
-        [HttpPost]
-        public IActionResult BuyCard(MyCardViewModel inputModel)
-        {
-            if (inputModel.Visits != 12 &&
-                inputModel.Visits != 16 &&
-                inputModel.Visits != 20 &&
-                inputModel.Visits != 30)
-            {
-                return this.Redirect("/Users/MyCard");
-            }
-
-            if (this.cardsService.HasCardVisits(inputModel.Id))
-            {
-                return this.Redirect("/Users/MyCard?hasVisits=true");
-            }
-
-            return this.Redirect($"/Paypal/CreatePayment?visits={inputModel.Visits}");
-        }
     }
 }

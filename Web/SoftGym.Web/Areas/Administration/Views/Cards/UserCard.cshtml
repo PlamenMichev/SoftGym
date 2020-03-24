@@ -1,0 +1,93 @@
+﻿@model SoftGym.Web.ViewModels.Administration.Cards.UserCardViewModel
+
+@using SoftGym.Common
+@using Microsoft.AspNetCore.Identity
+@using SoftGym.Data.Models
+
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Admin dashboard";
+}
+
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+<hr />
+<div class="row">
+    <div class="col-md-3">
+        <partial name="../Dashboard/_SideNavPartial" />
+    </div>
+    <div class="col-md-7 border">
+        <h2 class="text-center">My Card</h2>
+
+        @if ((bool)this.ViewData["noVisits"])
+        {
+            <div class="row">
+                <div class="col-md-12 alert alert-dark text-center" role="alert">
+                    <span>This user has no visits to be used.</span>
+                </div>
+            </div>
+        }
+
+        @if ((bool)this.ViewData["hasVisits"])
+        {
+            <div class="row">
+                <div class="col-md-12 alert alert-dark text-center" role="alert">
+                    <span>This user already has visits in his card. He can buy more visits when he use all of his visits.</span>
+                </div>
+            </div>
+        }
+        <div class="row">
+            <img src="@Model.PictureUrl" alt="Alternate Text" class="w-100 col-md-8 mx-auto" />
+            <div class="col-md-12 text-center">
+                <h5 class="d-inline">Avaiable Visits: @Model.Visits</h5>
+                <div class="row justify-content-center">
+                    <div class="text-center col-md-4">
+                        <a href="" class="btn btn-primary btn-rounded mb-4 ml-3 pill" data-toggle="modal" data-target="#modalSubscriptionForm">
+                            Add Visits
+                        </a>
+                    </div>
+                    <form asp-controller="Cards" asp-action="RemoveVisit" asp-area="Administration" class="col-md-4">
+                        <input type="text" asp-for="Id" value="@Model.Id" hidden />
+                        <input type="text" asp-for="UserId" value="@Model.UserId" hidden />
+                        <button type="submit" class="btn btn-primary btn-rounded mb-4 ml-3 pill">
+                            Remove Visit
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalSubscriptionForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Subscribe</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-action="AddVisits" asp-controller="Cards" asp-area="Administration">
+                <div class="modal-body text-center m-3">
+                    <span class="text-info">Price for one visit (without card) - 2 USD</span>
+                    <input type="text" asp-for="Id" value="@Model.Id" hidden />
+                    <input type="text" asp-for="UserId" value="@Model.UserId" hidden />
+                    <select class="browser-default mt-3 custom-select" asp-for="Visits">
+                        <option selected>Card Options</option>
+                        <option value="12">12 visits - 20 USD</option>
+                        <option value="16">16 visits - 26 USD</option>
+                        <option value="20">20 visits - 32 USD</option>
+                        <option value="30">30 visits - 42 USD</option>
+                    </select>
+
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button class="btn pill btn-success">Add Visits</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

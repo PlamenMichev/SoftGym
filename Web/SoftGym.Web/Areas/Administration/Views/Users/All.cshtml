@@ -56,6 +56,15 @@
                                 Make Trainer
                             </a>
                         }
+
+                        var userData = new Dictionary<string, string>()
+                            {
+                            { "userId", user.Id },
+                        };
+                        <a class="btn btn-success mx-2" title="Card" asp-controller="Cards" asp-action="UserCard" asp-area="Administration" asp-all-route-data="userData">
+                            <i class="fas fa-id-card"></i>
+                        </a>
+
                     }
                     else
                     {

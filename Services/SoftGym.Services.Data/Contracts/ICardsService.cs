@@ -15,5 +15,7 @@
         public Task<Card> AddVisitsToUser(string userId, int visits);
 
         public bool HasCardVisits(string id);
+
+        public Task<Card> RemoveVisitFromCard(string cardId);
     }
 }
