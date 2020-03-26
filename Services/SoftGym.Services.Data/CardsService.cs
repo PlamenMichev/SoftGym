@@ -42,7 +42,7 @@
                 User = user,
                 UserId = user.Id,
             };
-            card.PictureUrl = await this.qrCodeService.GenerateQrCodeAsync(card.Id);
+            card.PictureUrl = await this.qrCodeService.GenerateQrCodeAsync(user.Id);
             await this.cardRepository.AddAsync(card);
 
             return card;

@@ -20,7 +20,7 @@
         public async Task<string> GenerateQrCodeAsync(string textValue)
         {
             QRCodeGenerator qr = new QRCodeGenerator();
-            QRCodeData data = qr.CreateQrCode(@"https://localhost:44319/Administration/Cards/UserCard/" + textValue, QRCodeGenerator.ECCLevel.Q);
+            QRCodeData data = qr.CreateQrCode(@"http://192.168.0.104/Administration/Cards/UserCard?cardId=" + textValue, QRCodeGenerator.ECCLevel.Q);
             QRCode code = new QRCode(data);
             var image = code.GetGraphic(20);
 
