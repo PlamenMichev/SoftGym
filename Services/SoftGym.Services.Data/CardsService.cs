@@ -28,6 +28,11 @@
                 .All()
                 .FirstOrDefaultAsync(x => x.UserId == userId);
 
+            if (card.Visits != 0)
+            {
+                return card;
+            }
+
             card.Visits = visits;
             await this.cardRepository.SaveChangesAsync();
 
@@ -69,7 +74,7 @@
                 case 20: result = 32; break;
                 case 30: result = 42; break;
                 default:
-                    result = 30;
+                    result = 0;
                     break;
             }
 
