@@ -1,6 +1,6 @@
 ﻿@model SoftGym.Web.ViewModels.Administration.Facilities.AllFacilitiesViewModel
 
-@using SoftGym.Common
+@using SoftGym.Data.Models.Enums
 @{
     ViewData["Title"] = "Admin dashboard";
 }
@@ -23,38 +23,68 @@
             }
             Facilities
         </h2>
-        <a class="btn btn-outline-primary waves-effect mb-3" href="/Administration/Facilities/All">All Facilities</a>
-        <a class="btn btn-outline-primary waves-effect mb-3" href="/Administration/Facilities/Add">Add New Facility</a>
-        <a class="btn btn-outline-primary waves-effect mb-3" href="/Administration/Facilities/Deleted">Deleted Facilities</a>
-        <div class="row">
-            @foreach (var facility in Model.Facilities)
-            {
-                <div class="card col-md-4 col-lg-4 col-xs-4">
-                    <div class="card-body h-100">
-                        <div class="card-img-top height-15rem">
-                            <img class="img-fluid mx-auto d-block" src="@facility.PictureUrl" alt="Card image cap">
+        <div class="text-center row">
+            <div class="text-center col-md-7 mb-3">
+                <form asp-action="FilterFacilities" asp-controller="Facilities" asp-area="Administration">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <label name="FilterType">Show: </label>
+                            <select asp-for="FacilityType" asp-items="Html.GetEnumSelectList<FacilityType>()" class="browser-default custom-select">
+                                <option value="all" selected>All</option>
+                            </select>
                         </div>
-                        <h4 class="card-title"><a>@facility.Name</a></h4>
-                        <h6>Type: @facility.Type</h6>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#a@(facility.Id)a">
-                            Details
-                        </button>
-                        @if (facility.IsDeleted == false)
-                        {
-                            <a href="/Administration/Facilities/Delete?facilityId=@facility.Id" class="btn btn-danger" title="Delete"><i class="fas fa-trash-alt"></i></a>
-                            <a href="/Administration/Facilities/Edit?facilityId=@facility.Id" class="btn btn-primary custom-blue" title="Edit"><i class="fas fa-edit"></i></a>
-                        }
-                        @if (facility.IsDeleted == true)
-                        {
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#b@(facility.Id)b">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                            <a href="/Administration/Facilities/Restore?facilityId=@facility.Id" class="btn btn-primary custom-blue" title="Restore"><i class="fas fa-trash-restore"></i></a>
-                        }
-                        <partial name="_WarningDeletePartial" model="@facility" />
-                        <partial name="_DetailsPartial" model="@facility" />
+                        <div class="col-md-2 align-self-end">
+                            <button type="submit" class="btn btn-success">Search</button>
+                        </div>
                     </div>
+                </form>
+            </div>
+            <div class="col-md-2 align-self-end">
+                <a class="btn btn-primary waves-effect mb-3 custom-blue" href="/Administration/Facilities/Add" title="Add Facility"><i class="fas fa-plus-circle"></i></a>
+            </div>
+            <div class="col-md-2 align-self-end">
+                <a class="btn btn-primary waves-effect mb-3 custom-blue" href="/Administration/Facilities/Deleted">Deleted Facilities</a>
+            </div>
+        </div>
+        <div class="row">
+            @if (Model.Facilities.Any())
+            {
+
+                @foreach (var facility in Model.Facilities)
+                {
+                    <div class="card col-md-4 col-lg-4 col-xs-4">
+                        <div class="card-body h-100">
+                            <div class="card-img-top height-15rem">
+                                <img class="img-fluid mx-auto d-block" src="@facility.PictureUrl" alt="Card image cap">
+                            </div>
+                            <h4 class="card-title"><a>@facility.Name</a></h4>
+                            <h6>Type: @facility.Type</h6>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#a@(facility.Id)a">
+                                Details
+                            </button>
+                            @if (facility.IsDeleted == false)
+                            {
+                                <a href="/Administration/Facilities/Delete?facilityId=@facility.Id" class="btn btn-danger" title="Delete"><i class="fas fa-trash-alt"></i></a>
+                                <a href="/Administration/Facilities/Edit?facilityId=@facility.Id" class="btn btn-primary custom-blue" title="Edit"><i class="fas fa-edit"></i></a>
+                            }
+                            @if (facility.IsDeleted == true)
+                            {
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#b@(facility.Id)b">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                                <a href="/Administration/Facilities/Restore?facilityId=@facility.Id" class="btn btn-primary custom-blue" title="Restore"><i class="fas fa-trash-restore"></i></a>
+                            }
+                            <partial name="_WarningDeletePartial" model="@facility" />
+                            <partial name="_DetailsPartial" model="@facility" />
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="alert alert-info col-md-12 text-center" role="alert">
+                    No Facilities Found.
                 </div>
             }
         </div>

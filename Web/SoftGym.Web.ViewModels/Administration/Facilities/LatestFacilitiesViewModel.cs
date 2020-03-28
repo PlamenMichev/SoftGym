@@ -2,10 +2,8 @@
 {
     using System.Collections.Generic;
 
-    public class AllFacilitiesViewModel
+    public class LatestFacilitiesViewModel
     {
         public IEnumerable<FacilityListItemViewModel> Facilities { get; set; }
-
-        public string FacilityType { get; set; }
     }
 }

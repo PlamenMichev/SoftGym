@@ -1,0 +1,29 @@
+﻿@model SoftGym.Web.ViewModels.Administration.Facilities.LatestFacilitiesViewModel
+
+
+<div class="container pt-5">
+    <h4>Latest Facilities</h4>
+    <hr />
+    <ul class="list-group">
+        @foreach (var facility in Model?.Facilities)
+        {
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a data-toggle="modal" style="cursor: pointer" data-target="#a@(facility.Id)a">
+                    <div class="row">
+                        <div class="col-md-7 h4">
+                            @facility.Name
+                        </div>
+                        <div class="col-md-5">
+                            <img src="@facility.PictureUrl" class="img-fluid w-100" alt="quixote">
+                        </div>
+                    </div>
+                </a>
+            </li>
+        }
+    </ul>
+</div>
+
+@foreach (var facility in Model.Facilities)
+{
+    <partial name="../../../../Areas/Administration/Views/Facilities/_DetailsPartial.cshtml" model="@facility" />
+}

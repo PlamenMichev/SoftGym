@@ -1,5 +1,6 @@
 ﻿namespace SoftGym.Services.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -112,6 +113,16 @@
                 .Where(x => x.Id == id)
                 .To<T>()
                 .FirstAsync();
+        }
+
+        public async Task<IEnumerable<T>> GetLatestFacilitiesAsync<T>()
+        {
+            return await this.facilityRepository
+                            .All()
+                            .OrderByDescending(x => x.CreatedOn)
+                            .To<T>()
+                            .Take(7)
+                            .ToListAsync();
         }
 
         public async Task HardDeleteFacility(int facilityId)

@@ -1,8 +1,10 @@
 ﻿namespace SoftGym.Web.Areas.Administration.Controllers
 {
+    using System;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
+    using SoftGym.Data.Models.Enums;
     using SoftGym.Services.Data.Contracts;
     using SoftGym.Web.ViewModels.Administration.Facilities;
 
@@ -19,12 +21,25 @@
             this.cloudinaryService = cloudinaryService;
         }
 
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery] string type = null)
         {
-            var model = new AllFacilitiesViewModel
+            AllFacilitiesViewModel model;
+            if (type == null || Enum.TryParse(type, out FacilityType enumType) == false)
             {
-                Facilities = await this.facilitiesService.GetAllFacilitiesAsync<FacilityListItemViewModel>(),
-            };
+                model = new AllFacilitiesViewModel
+                {
+                    Facilities = await this.facilitiesService.GetAllFacilitiesAsync<FacilityListItemViewModel>(),
+                    FacilityType = "all",
+                };
+            }
+            else
+            {
+                model = new AllFacilitiesViewModel
+                {
+                    Facilities = await this.facilitiesService.GetAllFacilitiesAsync<FacilityListItemViewModel>(enumType),
+                    FacilityType = type,
+                };
+            }
 
             return this.View(model);
         }
@@ -102,6 +117,16 @@
             await this.facilitiesService.HardDeleteFacility(facilityId);
 
             return this.Redirect("/Administration/Facilities/Deleted");
+        }
+
+        public IActionResult FilterFacilities(string facilityType)
+        {
+            if (facilityType == "all")
+            {
+                return this.Redirect("/Administration/Facilities/All");
+            }
+
+            return this.Redirect($"/Administration/Facilities/All?type={facilityType}");
         }
     }
 }

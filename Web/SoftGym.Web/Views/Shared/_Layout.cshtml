@@ -99,8 +99,8 @@
 
                                             <partial name="_LoginPartial" />
                                             @*
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
+                                            <li><a href="about.html">About</a></li>
+                                            <li><a href="contact.html">Contact</a></li>
                                             *@
                                         </ul>
                                         <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3 float-right"><a href="#" class="site-menu-toggle js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>
@@ -112,14 +112,24 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-2">
 
-        <div class="container pb-5">
-            <partial name="_CookieConsentPartial" />
-            <main role="main" class="pb-3">
-                @this.RenderBody()
-            </main>
+            </div>
+            <div class="col-md-8">
+                <div class="container pb-5">
+                    <partial name="_CookieConsentPartial" />
+                    <main role="main" class="pb-3">
+                        @this.RenderBody()
+                    </main>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <vc:latest-facilities></vc:latest-facilities>
+            </div>
         </div>
-
+        
+        
         <footer class="footer site-footer">
             <div class="container">
                 &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>

@@ -23,6 +23,8 @@
 
         public Task<Facility> RestoreFacilityAsync(int facilityId);
 
+        public Task<IEnumerable<T>> GetLatestFacilitiesAsync<T>();
+
         public Task HardDeleteFacility(int facilityId);
 
         public Task<int> GetFacilitiesCountAsync();

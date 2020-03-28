@@ -1,8 +1,10 @@
 ﻿namespace SoftGym.Web.Areas.Trainers.Controllers
 {
+    using System;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
+    using SoftGym.Data.Models.Enums;
     using SoftGym.Services.Data.Contracts;
     using SoftGym.Web.ViewModels.Trainers.Exercises;
 
@@ -41,13 +43,25 @@
             return this.Redirect($"/Trainers/Exercises/Details/{exercise.Id}");
         }
 
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery] string type = null)
         {
-            var viewModel = new AllExercisesViewModel
+            AllExercisesViewModel viewModel;
+            if (type == null)
             {
-                Exercises = await this.exercisesService.GetAllExercisesAsync<ExerciseViewModel>(),
-                ExerciseType = "All",
-            };
+                viewModel = new AllExercisesViewModel
+                {
+                    Exercises = await this.exercisesService.GetAllExercisesAsync<ExerciseViewModel>(),
+                    ExerciseType = "All",
+                };
+            }
+            else
+            {
+                viewModel = new AllExercisesViewModel
+                {
+                    Exercises = await this.exercisesService.GetAllExercisesAsync<ExerciseViewModel>(type),
+                    ExerciseType = type,
+                };
+            }
 
             return this.View(viewModel);
         }
@@ -88,20 +102,14 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> FilterExercises(AllExercisesViewModel inputModel)
+        public IActionResult FilterExercises(AllExercisesViewModel inputModel)
         {
             if (inputModel.ExerciseType.ToLower() == "all")
             {
                 return this.Redirect("/Trainers/Exercises/All");
             }
 
-            var viewModel = new AllExercisesViewModel
-            {
-                Exercises = await this.exercisesService.GetAllExercisesAsync<ExerciseViewModel>(inputModel.ExerciseType),
-                ExerciseType = inputModel.ExerciseType.ToString(),
-            };
-
-            return this.View("All", viewModel);
+            return this.Redirect($"/Trainers/Exercises/All?type={inputModel.ExerciseType}");
         }
     }
 }
