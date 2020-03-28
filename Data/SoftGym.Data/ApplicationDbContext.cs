@@ -25,6 +25,8 @@
 
         public DbSet<Setting> Settings { get; set; }
 
+        public DbSet<Notification> Notifications { get; set; }
+
         public DbSet<Card> Cards { get; set; }
 
         public DbSet<ClientTrainer> ClientsTrainers { get; set; }

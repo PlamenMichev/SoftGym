@@ -11,6 +11,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using SendGrid;
     using SoftGym.Data;
     using SoftGym.Data.Common;
     using SoftGym.Data.Common.Repositories;
@@ -65,13 +66,17 @@
             });
             services.AddSingleton(cloudinary);
 
+            // Add sendgrid
+            var sendGrid = new SendGridClient(this.configuration["SendGrid:ApiKey"]);
+            services.AddSingleton(sendGrid);
+
             // Data repositories
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
-            services.AddTransient<IEmailSender, NullMessageSender>();
+            services.AddTransient<IEmailSender, SendGridEmailSender>();
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<ICloudinaryService, CloudinaryService>();
             services.AddTransient<IQrCodeService, QrCodeService>();
@@ -86,6 +91,7 @@
             services.AddTransient<IWorkoutPlansService, WorkoutPlansService>();
             services.AddTransient<IPaypalService, PaypalService>();
             services.AddTransient<IExportsService, ExportsService>();
+            services.AddTransient<INotificationsService, NotificationsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

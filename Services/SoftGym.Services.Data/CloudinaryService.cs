@@ -15,7 +15,7 @@
         private readonly Cloudinary cloudinary;
         private readonly string defaultProfilePicUrl = @"https://res.cloudinary.com/dzivpr6fj/image/upload/v1580902697/ClubestPics/24029_llq8xg.png";
 
-        public CloudinaryService(IConfiguration configuration, Cloudinary cloudinary)
+        public CloudinaryService(Cloudinary cloudinary)
         {
             this.cloudinary = cloudinary;
         }

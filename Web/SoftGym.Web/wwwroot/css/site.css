@@ -46,6 +46,7 @@ html {
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
+    overflow-x: hidden;
 }
 
 .footer {
