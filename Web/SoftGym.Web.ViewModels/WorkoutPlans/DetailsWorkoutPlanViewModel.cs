@@ -10,6 +10,8 @@
 
     public class DetailsWorkoutPlanViewModel : IMapFrom<WorkoutPlan>, IHaveCustomMappings
     {
+        public string Id { get; set; }
+
         public int DaysInWeek { get; set; }
 
         public Difficulty Difficulty { get; set; }

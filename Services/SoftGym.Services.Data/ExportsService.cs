@@ -24,14 +24,6 @@
             this.workoutRepository = workoutRepository;
         }
 
-        public byte[] GetBytes()
-        {
-            using (MemoryStream stream = new MemoryStream())
-            {
-                return stream.ToArray();
-            }
-        }
-
         public async Task<ExportInputModel> GetExportModel(string id)
         {
             var result = await this.workoutRepository
@@ -64,7 +56,7 @@
             return result;
         }
 
-        public byte[] Process(ExportInputModel inputModel)
+        public byte[] ProcessWordDocument(ExportInputModel inputModel)
         {
             using (MemoryStream mem = new MemoryStream())
             {
@@ -130,7 +122,6 @@
                     wordDocument.Save();
                 }
 
-                // Download File
                 return mem.ToArray();
             }
         }

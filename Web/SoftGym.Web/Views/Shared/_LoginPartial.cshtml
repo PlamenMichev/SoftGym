@@ -9,7 +9,7 @@
 {
     <li class="nav-item float-right">
         <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">
-            <button type="submit" class="btn text-white btn-link btn-outline-white">LOGOUT</button>
+            <button type="submit" class="btn text-white btn-link btn-outline-white"><span id="logoutBtn" class="">LOGOUT</span></button>
         </form>
     </li>
     <li class="nav-item active float-right">

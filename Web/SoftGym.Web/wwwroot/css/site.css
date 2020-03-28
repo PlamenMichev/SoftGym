@@ -195,3 +195,15 @@ body {
         font-size: 22px;
     }
 }
+
+@media only screen and (max-width: 991px) {
+    #logoutBtn {
+        color: #F23A2E !important;
+    }
+}
+
+@media only screen and (min-width: 991px) {
+    #logoutBtn {
+        color: white !important;
+    }
+}

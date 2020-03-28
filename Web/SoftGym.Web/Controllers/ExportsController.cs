@@ -19,7 +19,7 @@
         {
             var model = await this.exportsService.GetExportModel(id);
 
-            var document = this.exportsService.Process(model);
+            var document = this.exportsService.ProcessWordDocument(model);
 
             return this.File(document, "application/.docx", "Workout Plan.docx");
         }
