@@ -13,13 +13,16 @@
     {
         private readonly IDeletableEntityRepository<Card> cardRepository;
         private readonly IQrCodeService qrCodeService;
+        private readonly INotificationsService notificationsService;
 
         public CardsService(
             IDeletableEntityRepository<Card> cardRepository,
-            IQrCodeService qrCodeService)
+            IQrCodeService qrCodeService,
+            INotificationsService notificationsService)
         {
             this.cardRepository = cardRepository;
             this.qrCodeService = qrCodeService;
+            this.notificationsService = notificationsService;
         }
 
         public async Task<Card> AddVisitsToUser(string userId, int visits)
@@ -35,6 +38,10 @@
 
             card.Visits = visits;
             await this.cardRepository.SaveChangesAsync();
+            await this.notificationsService.CreateNotificationAsync(
+                $"You had successfully {visits} visits added to your card.",
+                $"/Users/MyCard",
+                userId);
 
             return card;
         }
@@ -97,6 +104,10 @@
 
             card.Visits -= 1;
             await this.cardRepository.SaveChangesAsync();
+            await this.notificationsService.CreateNotificationAsync(
+                $"One visit was removed from your card.",
+                $"/Users/MyCard",
+                card.UserId);
 
             return card;
         }

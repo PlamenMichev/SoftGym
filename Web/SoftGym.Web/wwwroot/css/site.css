@@ -208,3 +208,9 @@ body {
         color: white !important;
     }
 }
+
+.notification-badge {
+    position: relative;
+    top: -10px;
+    left: -5px;
+}

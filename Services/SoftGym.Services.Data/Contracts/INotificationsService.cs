@@ -15,6 +15,10 @@
 
         public Task<int> GetNotificationsCount(string userId);
 
+        public Task<int> GetNewNotificationsCount(string userId);
+
         public Task ReadNotification(int notificationId);
+
+        public Task<IEnumerable<T>> GetFilteredNotifications<T>(string userId, bool isRead);
     }
 }

@@ -17,13 +17,16 @@
     {
         private readonly IDeletableEntityRepository<Facility> facilityRepository;
         private readonly ICloudinaryService cloudinaryService;
+        private readonly INotificationsService notificationsService;
 
         public FacilitiesService(
             IDeletableEntityRepository<Facility> facilityRepository,
-            ICloudinaryService cloudinaryService)
+            ICloudinaryService cloudinaryService,
+            INotificationsService notificationsService)
         {
             this.facilityRepository = facilityRepository;
             this.cloudinaryService = cloudinaryService;
+            this.notificationsService = notificationsService;
         }
 
         public async Task<Facility> AddFacilityAsync(AddFacilityInputModel inputModel)
@@ -38,6 +41,9 @@
 
             await this.facilityRepository.AddAsync(facility);
             await this.facilityRepository.SaveChangesAsync();
+            await this.notificationsService.CreateNotificationAsync(
+                $"New facility added in SoftGym. The new facility is {facility.Name}",
+                $"/Facilities/All#{facility.Id}");
 
             return facility;
         }

@@ -21,17 +21,20 @@
         private readonly IDeletableEntityRepository<Exercise> exercisesRepository;
         private readonly IRepository<WorkoutTrainingDay> workoutTrainingDayRepository;
         private readonly IRepository<TrainingDay> trainingDaysRepository;
+        private readonly INotificationsService notificationsService;
 
         public WorkoutPlansService(
             IDeletableEntityRepository<WorkoutPlan> workoutPlansRepository,
             IDeletableEntityRepository<Exercise> exercisesRepository,
             IRepository<WorkoutTrainingDay> workoutTrainingDayRepository,
-            IRepository<TrainingDay> trainingDaysRepository)
+            IRepository<TrainingDay> trainingDaysRepository,
+            INotificationsService notificationsService)
         {
             this.workoutPlansRepository = workoutPlansRepository;
             this.exercisesRepository = exercisesRepository;
             this.workoutTrainingDayRepository = workoutTrainingDayRepository;
             this.trainingDaysRepository = trainingDaysRepository;
+            this.notificationsService = notificationsService;
         }
 
         public async Task<WorkoutPlan> GenerateWorkoutPlanAsync(GenerateWorkoutPlanInputModel inputModel)
@@ -52,6 +55,10 @@
 
             await this.workoutPlansRepository.AddAsync(result);
             await this.workoutPlansRepository.SaveChangesAsync();
+            await this.notificationsService.CreateNotificationAsync(
+                "You have sucessfully generated a workout program",
+                $"/WorkoutPlans/Details/{result.Id}",
+                result.UserId);
 
             return result;
         }

@@ -20,17 +20,20 @@
         private readonly IDeletableEntityRepository<Meal> mealsRepository;
         private readonly IRepository<MealPlan> mealsPlansRepository;
         private readonly IUsersService usersService;
+        private readonly INotificationsService notificationsService;
 
         public EatingPlansService(
             IDeletableEntityRepository<EatingPlan> eatingPlansRepository,
             IDeletableEntityRepository<Meal> mealsRepository,
             IRepository<MealPlan> mealsPlansRepository,
-            IUsersService usersService)
+            IUsersService usersService,
+            INotificationsService notificationsService)
         {
             this.eatingPlansRepository = eatingPlansRepository;
             this.mealsRepository = mealsRepository;
             this.mealsPlansRepository = mealsPlansRepository;
             this.usersService = usersService;
+            this.notificationsService = notificationsService;
         }
 
         public async Task<EatingPlan> GenerateEatingPlanAsync(GenerateInputModel inputModel)
@@ -83,6 +86,11 @@
             await this.AddMeals(eatingPlan, inputModel, MealType.Snack, caloriesForMeal);
 
             await this.mealsRepository.SaveChangesAsync();
+            await this.notificationsService.CreateNotificationAsync(
+                "You have sucessfully generated a eating plan.",
+                $"/EatingPlans/Details/{eatingPlan.Id}",
+                inputModel.Id);
+
             return eatingPlan;
         }
 

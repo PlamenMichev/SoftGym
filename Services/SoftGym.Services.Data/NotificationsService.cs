@@ -42,7 +42,7 @@
             }
             else
             {
-                foreach (var user in this.userManager.Users.Where(x => x.Roles.Any() == false))
+                foreach (var user in this.userManager.Users)
                 {
                     var notification = new Notification()
                     {
@@ -72,6 +72,23 @@
             return notification;
         }
 
+        public async Task<IEnumerable<T>> GetFilteredNotifications<T>(string userId, bool isRead)
+        {
+            return await this.notificationsRepository
+                .All()
+                .Where(x => x.UserId == userId && x.IsRead == isRead)
+                .To<T>()
+                .ToListAsync();
+        }
+
+        public async Task<int> GetNewNotificationsCount(string userId)
+        {
+            return await this.notificationsRepository
+                .All()
+                .Where(x => x.UserId == userId && x.IsRead == false)
+                .CountAsync();
+        }
+
         public async Task<IEnumerable<T>> GetNotifications<T>(string userId)
         {
             return await this.notificationsRepository
@@ -95,7 +112,11 @@
                 .All()
                 .FirstAsync(x => x.Id == notificationId);
 
-            notification.IsRead = true;
+            if (notification.IsRead == false)
+            {
+                notification.IsRead = true;
+            }
+
             await this.notificationsRepository.SaveChangesAsync();
         }
     }

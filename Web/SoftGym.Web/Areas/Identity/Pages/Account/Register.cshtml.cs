@@ -28,14 +28,16 @@
         private readonly IEmailSender _emailSender;
         private readonly ICloudinaryService cloudinaryService;
         private readonly ICardsService cardService;
+        private readonly INotificationsService notificationsService;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            ICloudinaryService cloudinaryService, 
-            ICardsService cardService)
+            ICloudinaryService cloudinaryService,
+            ICardsService cardService,
+            INotificationsService notificationsService)
         {
             this._userManager = userManager;
             this._signInManager = signInManager;
@@ -43,6 +45,7 @@
             this._emailSender = emailSender;
             this.cloudinaryService = cloudinaryService;
             this.cardService = cardService;
+            this.notificationsService = notificationsService;
         }
 
         [BindProperty]
@@ -113,6 +116,10 @@
                 var result = await this._userManager.CreateAsync(user, this.Input.Password);
                 if (result.Succeeded)
                 {
+                    await this.notificationsService.CreateNotificationAsync(
+                        $"You have your fitness card generated in your profile.",
+                        $"/Users/MyCard",
+                        user.Id);
                     this._logger.LogInformation("User created a new account with password.");
 
                     var code = await this._userManager.GenerateEmailConfirmationTokenAsync(user);
