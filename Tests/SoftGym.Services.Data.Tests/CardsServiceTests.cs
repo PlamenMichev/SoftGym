@@ -17,11 +17,13 @@
     {
         private readonly Mock<IDeletableEntityRepository<Card>> cardRepository;
         private readonly Mock<IQrCodeService> qrcodeService;
+        private readonly Mock<INotificationsService> notificationsService;
 
         public CardsServiceTests()
         {
             this.cardRepository = new Mock<IDeletableEntityRepository<Card>>();
             this.qrcodeService = new Mock<IQrCodeService>();
+            this.notificationsService = new Mock<INotificationsService>();
         }
 
         [Theory]
@@ -32,7 +34,7 @@
         [InlineData(0, 300)]
         public void GetPriceShouldReturnCorrectPrice(decimal expectedPrice, int visits)
         {
-            var service = new CardsService(this.cardRepository.Object, this.qrcodeService.Object);
+            var service = new CardsService(this.cardRepository.Object, this.qrcodeService.Object, this.notificationsService.Object);
 
             var price = service.GetPrice(visits);
 
@@ -47,7 +49,7 @@
             var db = new ApplicationDbContext(options);
             var repository = new EfDeletableEntityRepository<Card>(db);
 
-            var service = new CardsService(repository, this.qrcodeService.Object);
+            var service = new CardsService(repository, this.qrcodeService.Object, this.notificationsService.Object);
 
             var result = await service.GenerateCardAsync(new ApplicationUser());
 
@@ -62,7 +64,7 @@
             var db = new ApplicationDbContext(options);
             var repository = new EfDeletableEntityRepository<Card>(db);
 
-            var service = new CardsService(repository, this.qrcodeService.Object);
+            var service = new CardsService(repository, this.qrcodeService.Object, this.notificationsService.Object);
 
             var result = await service.GenerateCardAsync(new ApplicationUser());
 
@@ -86,7 +88,7 @@
             });
             await repository.SaveChangesAsync();
 
-            var service = new CardsService(repository, this.qrcodeService.Object);
+            var service = new CardsService(repository, this.qrcodeService.Object, this.notificationsService.Object);
 
             var result = await service.AddVisitsToUser(user.Id, 12);
             var result2 = await service.AddVisitsToUser(user.Id, 12);
@@ -113,7 +115,7 @@
             });
             await repository.SaveChangesAsync();
 
-            var service = new CardsService(repository, this.qrcodeService.Object);
+            var service = new CardsService(repository, this.qrcodeService.Object, this.notificationsService.Object);
 
             await Assert.ThrowsAnyAsync<NullReferenceException>(async () => await service.AddVisitsToUser(userId, 12));
         }

@@ -47,7 +47,21 @@
                     <span asp-validation-for="Input.PictureFile" class="text-danger"></span>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary mt-4 pill">Register</button>
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <button type="submit" class="btn btn-primary mt-4 pill">Register</button>
+                </div>
+                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                    <div class="form-group col-md-2">
+                        <p>
+                            @foreach (var provider in Model.ExternalLogins)
+                            {
+                                <button type="submit" class="btn btn-primary custom-blue" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                            }
+                        </p>
+                    </div>
+                </form>
+            </div>
         </form>
     </div>
     <div class="col-md-4">
