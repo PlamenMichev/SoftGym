@@ -25,7 +25,7 @@
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
+        private readonly SoftGym.Services.Messaging.IEmailSender emailSender;
         private readonly ICloudinaryService cloudinaryService;
         private readonly ICardsService cardService;
         private readonly INotificationsService notificationsService;
@@ -34,7 +34,7 @@
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender,
+            SoftGym.Services.Messaging.IEmailSender emailSender,
             ICloudinaryService cloudinaryService,
             ICardsService cardService,
             INotificationsService notificationsService)
@@ -42,7 +42,7 @@
             this._userManager = userManager;
             this._signInManager = signInManager;
             this._logger = logger;
-            this._emailSender = emailSender;
+            this.emailSender = emailSender;
             this.cloudinaryService = cloudinaryService;
             this.cardService = cardService;
             this.notificationsService = notificationsService;
@@ -122,21 +122,19 @@
                         user.Id);
                     this._logger.LogInformation("User created a new account with password.");
 
-                    var code = await this._userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = this.Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code = code },
-                        protocol: this.Request.Scheme);
-
-                    string htmlMessage = $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.";
-                    await this._emailSender.SendEmailAsync(this.Input.Email, "Confirm your email",
-                        htmlMessage);
-
                     if (this._userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return this.RedirectToPage("RegisterConfirmation", new { email = Input.Email });
+                        var token = await this._userManager.GenerateEmailConfirmationTokenAsync(user);
+                        var confirmationLink = this.Url.Action("ConfirmEmail", "Account", new { token, email = user.Email }, this.Request.Scheme);
+
+                        await this.emailSender.SendEmailAsync(
+                            "michev10@abv.bg",
+                            "Plamen Michev",
+                            user.Email,
+                            "Email Confirmation",
+                            $"<h1>Thank you for your registration in SoftGym. Your email conformation link is {confirmationLink}</h1>");
+
+                        return this.RedirectToPage("RegisterConfirmation", new { email = this.Input.Email });
                     }
                     else
                     {
