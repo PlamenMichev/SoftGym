@@ -51,20 +51,22 @@
                 <div class="form-group col-md-2">
                     <button type="submit" class="btn btn-primary mt-4 pill">Register</button>
                 </div>
-                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                    <div class="form-group col-md-2">
-                        <p>
-                            @foreach (var provider in Model.ExternalLogins)
-                            {
-                                <button type="submit" class="btn btn-primary custom-blue" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                            }
-                        </p>
-                    </div>
-                </form>
             </div>
         </form>
     </div>
     <div class="col-md-4">
+        <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-8">
+                        <label class="text-black h4">Register with: </label>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary custom-blue" name="provider" value="Facebook" title="Log in using your Facebook account">Facebook</button>
+                    </div>
+                </div>
+            </div>
+        </form>
         <img src="~/images/69a884890c65eeaa850c035f16242479.jpg" class="w-100" alt="Alternate Text" />
     </div>
 </div>

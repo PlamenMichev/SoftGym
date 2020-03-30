@@ -48,6 +48,9 @@
             {
                 facebookOptions.AppId = this.configuration["Facebook:AppId"];
                 facebookOptions.AppSecret = this.configuration["Facebook:AppSecret"];
+                facebookOptions.Scope.Add("public_profile");
+                facebookOptions.Fields.Add("name");
+                facebookOptions.Fields.Add("picture");
             });
 
             services.Configure<CookiePolicyOptions>(
