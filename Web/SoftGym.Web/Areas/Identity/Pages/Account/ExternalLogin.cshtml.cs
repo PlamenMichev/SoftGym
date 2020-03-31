@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using SoftGym.Data.Models;
+using SoftGym.Services.Data.Contracts;
 
 namespace SoftGym.Web.Areas.Identity.Pages.Account
 {
@@ -23,18 +24,24 @@ namespace SoftGym.Web.Areas.Identity.Pages.Account
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEmailSender _emailSender;
+        private readonly ICardsService cardsService;
+        private readonly INotificationsService notificationsService;
         private readonly ILogger<ExternalLoginModel> _logger;
 
         public ExternalLoginModel(
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
             ILogger<ExternalLoginModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ICardsService cardsService,
+            INotificationsService notificationsService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
             _emailSender = emailSender;
+            this.cardsService = cardsService;
+            this.notificationsService = notificationsService;
         }
 
         [BindProperty]
@@ -148,6 +155,15 @@ namespace SoftGym.Web.Areas.Identity.Pages.Account
                         Email = this.Input.Email,
                     };
                 }
+
+                var card = await this.cardsService.GenerateCardAsync(user);
+                user.Card = card;
+                user.CardId = card.Id;
+
+                await this.notificationsService.CreateNotificationAsync(
+                    $"You have your fitness card generated in your profile.",
+                    $"/Users/MyCard",
+                    user.Id);
 
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
