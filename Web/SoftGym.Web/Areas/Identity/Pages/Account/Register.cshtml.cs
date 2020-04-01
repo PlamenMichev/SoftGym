@@ -125,14 +125,14 @@
                     if (this._userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         var token = await this._userManager.GenerateEmailConfirmationTokenAsync(user);
-                        var confirmationLink = this.Url.Action("ConfirmEmail", "Account", new { token, email = user.Email }, this.Request.Scheme);
+                        var confirmationLink = this.Url.Action("ConfirmEmail", "Account", new { code = token, userId = user.Id }, this.Request.Scheme);
 
                         await this.emailSender.SendEmailAsync(
-                            "michev10@abv.bg",
-                            "Plamen Michev",
+                            "softgym@abv.bg",
+                            "SoftGym",
                             user.Email,
                             "Email Confirmation",
-                            $"<h1>Thank you for your registration in SoftGym. Your email conformation link is {confirmationLink}</h1>");
+                            $"<h1>Thank you for your registration in SoftGym. Click <a href={confirmationLink}>here</a> to confirm your email.</h1>");
 
                         return this.RedirectToPage("RegisterConfirmation", new { email = this.Input.Email });
                     }
