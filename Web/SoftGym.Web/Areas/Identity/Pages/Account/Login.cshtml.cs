@@ -98,9 +98,12 @@
                 else
                 {
                     var user = this._userManager.Users.FirstOrDefault(x => x.Email == this.Input.Email);
-                    if (await this._userManager.IsEmailConfirmedAsync(user) == false)
+                    if (user != null)
                     {
-                        this.ModelState.AddModelError(this.Input.Email, "Please confirm your email");
+                        if (await this._userManager.IsEmailConfirmedAsync(user) == false)
+                        {
+                            this.ModelState.AddModelError(this.Input.Email, "Please confirm your email");
+                        }
                     }
                     else
                     {
