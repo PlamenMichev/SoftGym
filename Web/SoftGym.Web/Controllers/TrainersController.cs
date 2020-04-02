@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SoftGym.Services.Data.Contracts;
+    using SoftGym.Services.Messaging;
     using SoftGym.Web.ViewModels.Trainers;
 
     [AllowAnonymousAttribute]
