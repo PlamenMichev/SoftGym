@@ -15,7 +15,6 @@
             Trainer Dashboard
         </h1>
         <p class="lead d-none d-sm-block">Check and control all things in the gym</p>
-
         <div class="row mb-3">
             <a asp-action="All" asp-controller="Users" asp-area="Administration" title="All Users" class="col-xl-3 col-sm-6 py-2">
                 <div class="card bg-success text-white h-100">
@@ -61,6 +60,59 @@
                     </div>
                 </div>
             </a>
+        </div>
+        <div class="row justify-content-center m-2">
+            <div>
+                <a asp-controller="Appointments" asp-action="Add" class="btn custom-blue text-white">New Appointment</a>
+            </div>
+        </div>
+
+        <div class="row justify-content-center m-2">
+            <h2>My Appointments</h2>
+            <hr />
+            <div id="calender"></div>
+            <script>
+                $(document).ready(function () {
+                    var events = [];
+
+                    $.ajax({
+                        type: "GET",
+                        url: "/Trainers/Appointments/GetAppointments",
+                        success: function (data) {
+                            $.each(data, function (i, v) {
+                                events.push({
+                                    title: v.clientFirstName + " " + v.clientLastName,
+                                    start: moment(v.startTime),
+                                    end: v.endTime != null ? moment(v.endTime) : null,
+                                    color: v.type == 1 ? "#FF6347" : v.type == 2 ? "#00BFFF" : "#ADFF2F"
+                                });
+                            })
+                            console.log(events);
+                            GenerateCalender(events);
+                        },
+                        error: function (error) {
+                            alert('failed');
+                        }
+                    })
+
+                    function GenerateCalender(events) {
+                        $('#calender').fullCalendar('destroy');
+                        $('#calender').fullCalendar({
+                            contentHeight: 400,
+                            defaultDate: new Date(),
+                            timeFormat: 'h(:mm)a',
+                            header: {
+                                left: 'prev,next today',
+                                center: 'title',
+                                right: 'month,basicWeek,basicDay,agenda'
+                            },
+                            eventLimit: true,
+                            eventColor: '#378006',
+                            events: events,
+                        })
+                    }
+                })
+            </script>
         </div>
     </div>
 </div>

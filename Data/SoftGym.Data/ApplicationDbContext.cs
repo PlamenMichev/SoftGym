@@ -49,6 +49,8 @@
 
         public DbSet<TrainingDay> TrainingDays { get; set; }
 
+        public DbSet<Appointment> Appointments { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -155,6 +157,18 @@
                 .HasOne(mp => mp.Meal)
                 .WithMany(m => m.FoodPreferences)
                 .HasForeignKey(mp => mp.MealId);
+
+            builder
+                .Entity<Appointment>()
+                .HasOne(a => a.Trainer)
+                .WithMany(t => t.TrainerAppointments)
+                .HasForeignKey(a => a.TrainerId);
+
+            builder
+                .Entity<Appointment>()
+                .HasOne(a => a.Client)
+                .WithMany(c => c.ClientAppointments)
+                .HasForeignKey(a => a.ClientId);
 
             var entityTypes = builder.Model.GetEntityTypes().ToList();
 

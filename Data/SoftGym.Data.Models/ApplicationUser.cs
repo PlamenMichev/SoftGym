@@ -4,6 +4,7 @@ namespace SoftGym.Data.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     using Microsoft.AspNetCore.Identity;
     using SoftGym.Data.Common.Models;
@@ -20,6 +21,9 @@ namespace SoftGym.Data.Models
             this.Clients = new HashSet<ClientTrainer>();
             this.EatingPlans = new HashSet<EatingPlan>();
             this.WorkoutPlans = new HashSet<WorkoutPlan>();
+            this.ClientAppointments = new HashSet<Appointment>();
+            this.TrainerAppointments = new HashSet<Appointment>();
+            this.RestDays = new HashSet<DayOfWeek>();
         }
 
         // Audit info
@@ -48,6 +52,9 @@ namespace SoftGym.Data.Models
 
         public string ProfilePictureUrl { get; set; }
 
+        [NotMapped]
+        public virtual ICollection<DayOfWeek> RestDays { get; set; }
+
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
@@ -61,5 +68,9 @@ namespace SoftGym.Data.Models
         public virtual ICollection<EatingPlan> EatingPlans { get; set; }
 
         public virtual ICollection<WorkoutPlan> WorkoutPlans { get; set; }
+
+        public virtual ICollection<Appointment> TrainerAppointments { get; set; }
+
+        public virtual ICollection<Appointment> ClientAppointments { get; set; }
     }
 }

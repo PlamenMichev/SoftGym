@@ -103,6 +103,7 @@
             services.AddTransient<IPaypalService, PaypalService>();
             services.AddTransient<IExportsService, ExportsService>();
             services.AddTransient<INotificationsService, NotificationsService>();
+            services.AddTransient<IAppointmentsService, AppointmentsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

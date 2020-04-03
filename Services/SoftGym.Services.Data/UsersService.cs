@@ -79,8 +79,17 @@
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAllUsersAsync<T>()
+        public async Task<IEnumerable<T>> GetAllUsersAsync<T>(string trainerId = null)
         {
+            if (trainerId != null)
+            {
+                return await this.userRepository
+                .All()
+                .Where(x => x.Trainers.Any(x => x.TrainerId == trainerId))
+                .To<T>()
+                .ToListAsync();
+            }
+
             return await this.userRepository
                 .All()
                 .To<T>()

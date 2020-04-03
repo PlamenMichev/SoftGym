@@ -1,0 +1,86 @@
+﻿@model SoftGym.Web.ViewModels.Trainers.Appointments.AddAppointmentInputModel
+
+@using SoftGym.Data.Models.Enums
+@{
+    this.ViewData["Title"] = "Trainers dashboard";
+}
+
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+<hr />
+<div class="row">
+    <div class="col-md-3">
+        <partial name="../../../Administration/Views/Dashboard/_SideNavPartial" />
+    </div>
+    <div class="col main pt-1 mt-3 border">
+        <h3 class="text-center mt-3">
+            Add Appointment
+        </h3>
+        <hr />
+        <form asp-controller="Appointments" asp-action="Add" method="post">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="StartTime" class="label col-form-label">Start of the appointment</label>
+                            <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                                <input asp-for="StartTime" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" />
+                                <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                            <span asp-validation-for="StartTime" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        $(function () {
+                            $('#datetimepicker1').datetimepicker();
+                        });
+                    </script>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="EndTime">End of the appointment</label>
+                            <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                                <input asp-for="EndTime" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" />
+                                <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                            <span asp-validation-for="EndTime" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        $(function () {
+                            $('#datetimepicker2').datetimepicker();
+                        });
+                    </script>
+                </div>
+
+                <div class="mb-2 row">
+                    <div class="col-md-6">
+                        <label asp-for="ClientId">Client:</label>
+                        <select class="form-control" asp-for="ClientId">
+                            <option value="@null" selected>Select a client</option>
+                            @foreach (var client in Model.ClientsOptions)
+                            {
+                                <option value="@client.Id">@client.FirstName @client.LastName</option>
+                            }
+                        </select>
+                        <span asp-validation-for="ClientId" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Type">Appointment goal:</label>
+                        <select class="form-control" asp-for="Type" asp-items="Html.GetEnumSelectList<AppointmentType>()">
+                        </select>
+                        <span asp-validation-for="Type" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <input asp-for="TrainerId" value="@Model.TrainerId" hidden/>
+
+                <div class="text-center">
+                    <button class="btn btn-primary pill mb-2">Add new appointment</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -27,7 +27,7 @@
 
         public Task<IEnumerable<string>> GetAllEmailsAsync();
 
-        public Task<IEnumerable<T>> GetAllUsersAsync<T>();
+        public Task<IEnumerable<T>> GetAllUsersAsync<T>(string trainerId = null);
 
         public Task<ApplicationUser> GetUserByIdAsync(string id);
     }
