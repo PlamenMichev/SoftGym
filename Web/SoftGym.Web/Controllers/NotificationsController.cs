@@ -29,21 +29,21 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> SeeAll(IndexViewModel inputModel)
+        public async Task<IActionResult> SeeAll(string userId)
         {
-            if (inputModel.UserId != null)
+            if (userId != null)
             {
                 List<Task> tasks = new List<Task>();
-                var notifications = await this.notificationsService.GetFilteredNotifications<NotificationViewModel>(inputModel.UserId, false);
+                var notifications = await this.notificationsService.GetFilteredNotifications<NotificationViewModel>(userId, false);
                 foreach (var notification in notifications)
                 {
-                    tasks.Add(this.notificationsService.ReadNotification(notification.Id));
+                    await this.notificationsService.ReadNotification(notification.Id);
                 }
 
-                await Task.WhenAll(tasks);
+                return this.Ok(notifications);
             }
 
-            return this.Redirect("/Notifications/Index");
+            return this.Ok();
         }
 
         [HttpPost]

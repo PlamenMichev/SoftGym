@@ -6,15 +6,6 @@
 
 <h1 class="text-center">Notifications</h1>
 <hr />
-<form asp-action="SeeAll" asp-controller="Notifications" asp-area="" method="post">
-    @if (Model.Notifications.Any())
-    {
-        <input asp-for="UserId" value="@Model.Notifications?.Select(x => x.UserId).First()" hidden />
-    }
-    <button type="submit" class="btn btn-link" style="color: blue">
-        Mark all as seen
-    </button>
-</form>
 @if (Model.Notifications.Any())
 {
     @foreach (var notification in Model.Notifications.OrderByDescending(x => x.CreatedOn))
@@ -58,19 +49,19 @@
                         <small>@timeSince.ToString("f0") mins ago</small>
                     }
                 }
-            <form asp-controller="Notifications" asp-action="Delete" method="post">
-                <input type="number" name="notificationId" value="@notification.Id" hidden/>
-                <button type="submit" class="ml-2 mb-1 close" title="Delete">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </form>
+                <form asp-controller="Notifications" asp-action="Delete" method="post">
+                    <input type="number" name="notificationId" value="@notification.Id" hidden />
+                    <button type="submit" class="ml-2 mb-1 close" title="Delete">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </form>
             </div>
             <div class="toast-body text-white row">
                 <div class="col-md-10">
                     @notification.Content
                 </div>
                 <div class="col-md-2">
-                    <form asp-area="" asp-controller="Notifications" asp-action="See" method="post">
+                    <form asp-area="" asp-controller="Notifications" asp-action="See" method="post" id="deleteForm">
                         <input type="text" name="url" value="@notification.Url" hidden />
                         <input type="text" name="notificationId" value="@notification.Id" hidden />
                         <button class="btn btn-warning float-right">
@@ -88,3 +79,20 @@ else
         You have no notifications.
     </div>
 }
+
+<script>
+    window.onload = function (event) {
+        var url = document.activeElement.href;
+        event.preventDefault();
+        var token = $("#deleteForm input[name=__RequestVerificationToken").val();
+        $.ajax({
+            type: "POST",
+            url: "/Notifications/SeeAll",
+            headers: { "X-CSRF-TOKEN": token },
+            data:
+            {
+                UserId: "@Model.Notifications?.Select(x => x.UserId).First()"
+            }
+        });
+    };
+</script>
