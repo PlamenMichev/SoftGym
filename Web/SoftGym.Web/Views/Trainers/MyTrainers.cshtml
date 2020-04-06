@@ -1,17 +1,80 @@
 ﻿@model SoftGym.Web.ViewModels.Trainers.MyTrainersViewModel
 
 @using SoftGym.Web.ViewModels.Trainers
+@using SoftGym.Data.Models
+@using Microsoft.AspNetCore.Identity
 @{
     this.ViewData["Title"] = "My Trainers";
 }
+
+
+@inject UserManager<ApplicationUser> userManager
 
 <h2 class="text-center m-3">@this.ViewData["Title"]</h2>
 <hr />
 
 <div class="row">
     <div class="col-md-4">
+        <input id="trainerId" value="e6aa5334-a60c-4a0c-8f8f-02d5a22a5219" hidden>
         <div class="img-fluid">
-            <img src="" alt="Alternate Text" class="w-100" id="pictureElement" />
+            <div class="container-fluid h-100">
+                <div class="row justify-content-center h-100">
+                    <div class="card">
+                        <div class="card-header msg_head">
+                            <div class="d-flex bd-highlight">
+                                <div class="img_cont">
+                                    <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
+                                    <span class="online_icon"></span>
+                                </div>
+                                <div class="user_info">
+                                    <span>Chat with Khalid</span>
+                                    <p>1767 Messages</p>
+                                </div>
+                            </div>
+                            <span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
+                            <div class="action_menu">
+                                <ul>
+                                    <li><i class="fas fa-user-circle"></i> View profile</li>
+                                    <li><i class="fas fa-users"></i> Add to close friends</li>
+                                    <li><i class="fas fa-plus"></i> Add to group</li>
+                                    <li><i class="fas fa-ban"></i> Block</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body msg_card_body">
+                            <div class="d-flex justify-content-start mb-4">
+                                <div class="img_cont_msg">
+                                    <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
+                                </div>
+                                <div class="msg_cotainer">
+                                    Hi, how are you samim?
+                                    <span class="msg_time">8:40 AM, Today</span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end mb-4">
+                                <div class="msg_cotainer_send">
+                                    Hi Khalid i am good tnx how about you?
+                                    <span class="msg_time_send">8:55 AM, Today</span>
+                                </div>
+                                <div class="img_cont_msg">
+                                    <img src="https://thumbor.forbes.com/thumbor/fit-in/416x416/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5d2388f14c687b00085c0f91%2F0x0.jpg%3Fbackground%3D000000%26cropX1%3D0%26cropX2%3D1559%26cropY1%3D130%26cropY2%3D1690" class="rounded-circle user_img_msg">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
+                                </div>
+                                <textarea name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
+                                <div class="input-group-append">
+                                    <span class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-md-8">
@@ -36,24 +99,70 @@
         </ul>
     </div>
 </div>
+@section Scripts {
+    <script>
+        var connection =
+            new signalR.HubConnectionBuilder()
+                .withUrl("/chat")
+                .build();
 
-<script>
-    function changePhoto(photoUrl) {
-        var pictureElement = document.getElementById('pictureElement');
-        pictureElement.src = photoUrl;
+        connection.on("SendMessage", function (message) {
+            @{var user = await this.userManager.GetUserAsync(this.User);}
+            var messageElement = `
+                            <div class="d-flex justify-content-end mb-4">
+                                <div class="msg_cotainer_send">
+                                    ${message}
+                                    <span class="msg_time_send">8:55 AM, Today</span>
+                                </div>
+                                <div class="img_cont_msg">
+                                    <img src="@user.ProfilePictureUrl" class="rounded-circle user_img_msg">
+                                </div>
+                            </div>`
+            $("div.card-body").append(messageElement);
+            $('div.card-body').scrollTop($('div.card-body')[0].scrollHeight - $('div.card-body')[0].clientHeight);
+        });
+
+        connection.on("RecieveMessage", function (message) {
+            @{var user = await this.userManager.GetUserAsync(this.User);}
+            var messageElement = `
+                            <div class="d-flex justify-content-end mb-4">
+                                <div class="msg_cotainer_send">
+                                    ${message}
+                                    <span class="msg_time_send">8:55 AM, Today</span>
+                                </div>
+                                <div class="img_cont_msg">
+                                    <img src="@user.ProfilePictureUrl" class="rounded-circle user_img_msg">
+                                </div>
+                            </div>`
+            $("div.card-body").append(messageElement);
+            $('div.card-body').scrollTop($('div.card-body')[0].scrollHeight - $('div.card-body')[0].clientHeight);
+        });
+
+        $(".send_btn").click(function () {
+            console.log(12);
+            var message = $("textarea").val();
+            var trainerId = $("#trainerId").val();
+            var model = {
+                message: message,
+                trainerId: trainerId
+            }
+            connection.invoke("Send", model);
+            $("textarea").val("");
+        });
+
+        connection.start();
+    </script>
     }
-</script>
-
-@foreach (var trainer in Model.Trainers)
-{
-    var viewModel = new TrainerViewModel()
+    @foreach (var trainer in Model.Trainers)
     {
-        Id = trainer.Id,
-        FirstName = trainer.FirstName,
-        LastName = trainer.LastName,
-        PhoneNumber = trainer.PhoneNumber,
-        Email = trainer.Email,
-    };
+        var viewModel = new TrainerViewModel()
+        {
+            Id = trainer.Id,
+            FirstName = trainer.FirstName,
+            LastName = trainer.LastName,
+            PhoneNumber = trainer.PhoneNumber,
+            Email = trainer.Email,
+        };
 
-    <partial name="_DetailsPartial" , model="@viewModel" />
-}
+        <partial name="_DetailsPartial" , model="@viewModel" />
+    }
