@@ -214,3 +214,12 @@ body {
     top: -10px;
     left: -5px;
 }
+
+.dark-link {
+    color: midnightblue !important;
+}
+
+.custom-active {
+    background-color: midnightblue !important;
+    color: whitesmoke !important;
+}

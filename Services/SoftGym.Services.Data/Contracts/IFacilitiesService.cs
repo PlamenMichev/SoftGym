@@ -27,6 +27,8 @@
 
         public Task HardDeleteFacility(int facilityId);
 
-        public Task<int> GetFacilitiesCountAsync();
+        public Task<int> GetFacilitiesCountAsync(FacilityType? type = null);
+
+        public Task<IEnumerable<T>> GetSomeFacilitiesAsync<T>(int page, int count = 6, FacilityType? type = null);
     }
 }

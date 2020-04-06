@@ -18,44 +18,39 @@
             this.facilitiesService = facilitiesService;
         }
 
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All(int page = 1, FacilityType? type = null)
         {
-            var model = new AllFacilitiesViewModel
+            var facilitiesCount = await this.facilitiesService.GetFacilitiesCountAsync(type);
+            var pages = facilitiesCount / 6;
+            if (facilitiesCount % 6 != 0 || pages == 0)
             {
-                Facilities = await this.facilitiesService.GetAllFacilitiesAsync<FacilityListItemViewModel>(),
-            };
+                pages++;
+            }
+
+            if (page <= 0 || page > pages)
+            {
+                return this.NotFound();
+            }
+
+            if (page == 0)
+            {
+                page = 1;
+            }
+
+            var model = new AllFacilitiesViewModel();
+            if (type == null)
+            {
+                model.Facilities = await this.facilitiesService.GetSomeFacilitiesAsync<FacilityListItemViewModel>(page);
+            }
+            else
+            {
+                model.Facilities = await this.facilitiesService.GetSomeFacilitiesAsync<FacilityListItemViewModel>(page, 6, type);
+            }
+
+            model.Pages = pages;
+            model.CurrentPage = page;
 
             return this.View(model);
-        }
-
-        public async Task<IActionResult> Equipments()
-        {
-            var model = new AllFacilitiesViewModel
-            {
-                Facilities = await this.facilitiesService.GetAllFacilitiesAsync<FacilityListItemViewModel>(FacilityType.Equipment),
-            };
-
-            return this.View("All", model);
-        }
-
-        public async Task<IActionResult> Spa()
-        {
-            var model = new AllFacilitiesViewModel
-            {
-                Facilities = await this.facilitiesService.GetAllFacilitiesAsync<FacilityListItemViewModel>(FacilityType.Spa),
-            };
-
-            return this.View("All", model);
-        }
-
-        public async Task<IActionResult> Rooms()
-        {
-            var model = new AllFacilitiesViewModel
-            {
-                Facilities = await this.facilitiesService.GetAllFacilitiesAsync<FacilityListItemViewModel>(FacilityType.Room),
-            };
-
-            return this.View("All", model);
         }
     }
 }

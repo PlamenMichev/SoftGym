@@ -1,5 +1,6 @@
 ﻿@model SoftGym.Web.ViewModels.Administration.Facilities.AllFacilitiesViewModel
 
+@using SoftGym.Data.Models.Enums
 @{
     ViewData["Title"] = "Our Facilities";
 }
@@ -7,27 +8,28 @@
 <h1 class="text-center">Our Facilities</h1>
 <hr />
 <h2 class="text-center">
-    @if (this.Context.Request.Path.Value.Contains("All"))
-    {
-        @:All Facilities
-    }
-    else if (this.Context.Request.Path.Value.Contains("Equipments"))
+    
+    @if (this.Context.Request.QueryString.ToString().Contains("Equipment"))
     {
         @:All Equipments
     }
-    else if (this.Context.Request.Path.Value.Contains("Rooms"))
+    else if (this.Context.Request.QueryString.ToString().Contains("Room"))
     {
         @:All Rooms
     }
-    else if (this.Context.Request.Path.Value.Contains("Spa"))
+    else if (this.Context.Request.QueryString.ToString().Contains("Spa"))
     {
         @:Spa Facilities
+    }
+    else
+    {
+        @:All Facilities
     }
 </h2>
 
 <ul class="nav justify-content-center nav-tabs ">
     <li class="nav-item">
-        @if (this.Context.Request.Path.Value.Contains("All"))
+        @if (this.Context.Request.Path.Value.Contains("All") && !this.Context.Request.QueryString.ToString().Contains("type"))
         {
             <a class="nav-link active" href="/Facilities/All">All</a>
         }
@@ -37,33 +39,39 @@
         }
     </li>
     <li class="nav-item">
-        @if (this.Context.Request.Path.Value.Contains("Equipments"))
+        @if (this.Context.Request.QueryString.ToString().Contains("Equipment"))
         {
-            <a class="nav-link active" href="/Facilities/Equipments">Equipments</a>
+            <a class="nav-link active" asp-controller="Facilities" asp-action="All"
+               asp-route-type="@FacilityType.Equipment">Equipments</a>
         }
         else
         {
-            <a class="nav-link" href="/Facilities/Equipments">Equipments</a>
+            <a class="nav-link" asp-controller="Facilities" asp-action="All"
+               asp-route-type="@FacilityType.Equipment">Equipments</a>
         }
     </li>
     <li class="nav-item">
-        @if (this.Context.Request.Path.Value.Contains("Rooms"))
+        @if (this.Context.Request.QueryString.ToString().Contains("Room"))
         {
-            <a class="nav-link active" href="/Facilities/Rooms">Rooms</a>
+            <a class="nav-link active" asp-controller="Facilities" asp-action="All"
+               asp-route-type="@FacilityType.Room">Rooms</a>
         }
         else
         {
-            <a class="nav-link" href="/Facilities/Rooms">Rooms</a>
+            <a class="nav-link" asp-controller="Facilities" asp-action="All"
+               asp-route-type="@FacilityType.Room">Rooms</a>
         }
     </li>
     <li class="nav-item">
-        @if (this.Context.Request.Path.Value.Contains("Spa"))
+        @if (this.Context.Request.QueryString.ToString().Contains("Spa"))
         {
-            <a class="nav-link active" href="/Facilities/Spa">Spa</a>
+            <a class="nav-link active" asp-controller="Facilities" asp-action="All"
+               asp-route-type="@FacilityType.Spa">Spa</a>
         }
         else
         {
-            <a class="nav-link" href="/Facilities/Spa">Spa</a>
+            <a class="nav-link" asp-controller="Facilities" asp-action="All"
+               asp-route-type="@FacilityType.Spa">Spa</a>
         }
     </li>
 </ul>
@@ -87,3 +95,49 @@
         </div>
     }
 </div>
+
+<nav class="mt-2">
+    <ul class="pagination justify-content-center">
+        @{FacilityType? currentType = this.Context.Request.Query.ContainsKey("type") == true
+                    ? (FacilityType?)Enum.Parse(typeof(FacilityType), this.Context.Request.Query["type"].ToString())
+                    : null;}
+        @if (Model.CurrentPage == 1)
+        {
+            <li class="page-item disabled">
+                <a class="page-link">Previous</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item">
+                <a class="page-link dark-link" asp-controller="Facilities" asp-action="All"
+                   asp-route-page="@(Model.CurrentPage - 1)"
+                   asp-route-type="@currentType">Previous</a>
+            </li>
+        }
+        @for (int i = 1; i <= Model.Pages; i++)
+        {
+            var active = Model.CurrentPage == i ? "custom-active" : string.Empty;
+            <li class="page-item">
+                <a class="page-link dark-link @active" asp-controller="Facilities" asp-action="All"
+                   asp-route-page="@i"
+                   asp-route-type="@currentType">@i</a>
+            </li>
+        }
+
+        @if (Model.CurrentPage == Model.Pages)
+        {
+            <li class="page-item disabled">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item">
+                <a class="page-link dark-link" asp-controller="Facilities" asp-action="All"
+                   asp-route-page="@(Model.CurrentPage + 1)"
+                   asp-route-type="@currentType">Next</a>
+            </li>
+        }
+    </ul>
+</nav>

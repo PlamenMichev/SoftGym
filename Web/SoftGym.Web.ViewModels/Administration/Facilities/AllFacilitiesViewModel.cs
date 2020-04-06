@@ -7,5 +7,9 @@
         public IEnumerable<FacilityListItemViewModel> Facilities { get; set; }
 
         public string FacilityType { get; set; }
+
+        public int CurrentPage { get; set; }
+
+        public int Pages { get; set; }
     }
 }

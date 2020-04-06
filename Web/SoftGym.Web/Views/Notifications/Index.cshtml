@@ -82,7 +82,6 @@ else
 
 <script>
     window.onload = function (event) {
-        var url = document.activeElement.href;
         event.preventDefault();
         var token = $("#deleteForm input[name=__RequestVerificationToken").val();
         $.ajax({

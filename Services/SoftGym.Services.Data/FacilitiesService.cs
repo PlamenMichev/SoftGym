@@ -96,6 +96,30 @@
             }
         }
 
+        public async Task<IEnumerable<T>> GetSomeFacilitiesAsync<T>(int page, int count = 6, FacilityType? type = null)
+        {
+            if (type == null)
+            {
+                return await this.facilityRepository
+                                .All()
+                                .OrderByDescending(x => x.CreatedOn)
+                                .Skip((page - 1) * count)
+                                .Take(count)
+                                .To<T>()
+                                .ToListAsync();
+            }
+            else
+            {
+                return await this.facilityRepository
+                                .All()
+                                .Where(x => x.Type == type)
+                                .Skip((page - 1) * count)
+                                .Take(count)
+                                .To<T>()
+                                .ToListAsync();
+            }
+        }
+
         public async Task<IEnumerable<T>> GetDeletedFacilitiesAsync<T>()
         {
             return await this.facilityRepository
@@ -105,11 +129,21 @@
                 .ToListAsync();
         }
 
-        public async Task<int> GetFacilitiesCountAsync()
+        public async Task<int> GetFacilitiesCountAsync(FacilityType? type = null)
         {
-            return await this.facilityRepository
-                .All()
-                .CountAsync();
+            if (type == null)
+            {
+                return await this.facilityRepository
+                    .All()
+                    .CountAsync();
+            }
+            else
+            {
+                return await this.facilityRepository
+                    .All()
+                    .Where(x => x.Type == type)
+                    .CountAsync();
+            }
         }
 
         public async Task<T> GetFacilityAsync<T>(int id)
