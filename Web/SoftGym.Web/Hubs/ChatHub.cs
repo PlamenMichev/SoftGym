@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
 
+    using Ganss.XSS;
     using Microsoft.AspNetCore.SignalR;
     using SoftGym.Web.ViewModels.Messages;
 
@@ -9,13 +10,22 @@
     {
         public async Task Send(SendMessageInputModel inputModel)
         {
+            if (string.IsNullOrEmpty(inputModel.Message) ||
+                string.IsNullOrWhiteSpace(inputModel.Message) ||
+                string.IsNullOrEmpty(inputModel.UserId))
+            {
+                return;
+            }
+
+            var sanitizer = new HtmlSanitizer();
+            var message = sanitizer.Sanitize(inputModel.Message);
             await this.Clients
-                .User(inputModel.TrainerId)
-                .SendAsync("RecieveMessage", inputModel.Message);
+                .User(inputModel.UserId)
+                .SendAsync("RecieveMessage", message);
 
             await this.Clients
                 .Caller
-                .SendAsync("SendMessage", inputModel.Message);
+                .SendAsync("SendMessage", message);
         }
     }
 }

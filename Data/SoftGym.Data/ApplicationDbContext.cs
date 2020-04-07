@@ -51,6 +51,8 @@
 
         public DbSet<Appointment> Appointments { get; set; }
 
+        public DbSet<Message> Messages { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -169,6 +171,18 @@
                 .HasOne(a => a.Client)
                 .WithMany(c => c.ClientAppointments)
                 .HasForeignKey(a => a.ClientId);
+
+            builder
+                .Entity<Message>()
+                .HasOne(m => m.Reciever)
+                .WithMany(r => r.RecievedMessages)
+                .HasForeignKey(m => m.RecieverId);
+
+            builder
+                .Entity<Message>()
+                .HasOne(m => m.Sender)
+                .WithMany(s => s.SentMessages)
+                .HasForeignKey(m => m.SenderId);
 
             var entityTypes = builder.Model.GetEntityTypes().ToList();
 

@@ -47,5 +47,12 @@
 
             return this.Redirect("/Identity/Account/Manage");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetChatData(string id)
+        {
+            var result = await this.usersService.GetUserByIdAsync<ChatDataViewModel>(id);
+            return this.Json(result);
+        }
     }
 }

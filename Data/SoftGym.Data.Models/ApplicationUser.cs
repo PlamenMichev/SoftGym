@@ -24,6 +24,8 @@ namespace SoftGym.Data.Models
             this.ClientAppointments = new HashSet<Appointment>();
             this.TrainerAppointments = new HashSet<Appointment>();
             this.RestDays = new HashSet<DayOfWeek>();
+            this.SentMessages = new HashSet<Message>();
+            this.RecievedMessages = new HashSet<Message>();
         }
 
         // Audit info
@@ -72,5 +74,9 @@ namespace SoftGym.Data.Models
         public virtual ICollection<Appointment> TrainerAppointments { get; set; }
 
         public virtual ICollection<Appointment> ClientAppointments { get; set; }
+
+        public virtual ICollection<Message> SentMessages { get; set; }
+
+        public virtual ICollection<Message> RecievedMessages { get; set; }
     }
 }

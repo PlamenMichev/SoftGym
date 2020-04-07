@@ -229,7 +229,7 @@ body {
     margin-bottom: auto;
 }
 
-.card {
+.card-chat {
     height: 500px;
     border-radius: 15px !important;
     background-color: rgba(0,0,0,0.4) !important;
@@ -427,6 +427,8 @@ body {
     bottom: -15px;
     color: dimgray;
     font-size: 10px;
+    width: 87px;
+    text-align: right;
 }
 
 .msg_head {
