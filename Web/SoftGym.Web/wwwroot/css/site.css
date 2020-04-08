@@ -419,6 +419,8 @@ body {
     bottom: -15px;
     color: dimgray;
     font-size: 10px;
+    width: 90px;
+    text-align: right;
 }
 
 .msg_time_send {
@@ -427,7 +429,7 @@ body {
     bottom: -15px;
     color: dimgray;
     font-size: 10px;
-    width: 87px;
+    width: 90px;
     text-align: right;
 }
 

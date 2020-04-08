@@ -33,24 +33,6 @@
                             </div>
                         </div>
                         <div class="card-body msg_card_body">
-                            <div class="d-flex justify-content-start mb-4">
-                                <div class="img_cont_msg">
-                                    <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
-                                </div>
-                                <div class="msg_cotainer">
-                                    Hi, how are you samim?
-                                    <span class="msg_time">8:40 AM, Today</span>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-end mb-4">
-                                <div class="msg_cotainer_send">
-                                    Hi Khalid i am good tnx how about you?
-                                    <span class="msg_time_send">8:55 AM, Today</span>
-                                </div>
-                                <div class="img_cont_msg">
-                                    <img src="https://thumbor.forbes.com/thumbor/fit-in/416x416/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5d2388f14c687b00085c0f91%2F0x0.jpg%3Fbackground%3D000000%26cropX1%3D0%26cropX2%3D1559%26cropY1%3D130%26cropY2%3D1690" class="rounded-circle user_img_msg">
-                                </div>
-                            </div>
                         </div>
                         <div class="card-footer">
                             <div class="input-group">
@@ -92,6 +74,12 @@
 </div>
 @section Scripts {
     <script>
+    @{var user = await this.userManager.GetUserAsync(this.User);}
+    @{ApplicationUser otherChatUser = this.userManager
+                .Users
+                .FirstOrDefault(x => x.Id == "e6aa5334-a60c-4a0c-8f8f-02d5a22a5219"
+            ); }
+
         var pictureElement = $("#userImage");
         var nameElement = $("#userName");
         var idElement = $("#userId");
@@ -113,6 +101,7 @@
                     pictureElement.attr('src', data.profilePictureUrl);
                     nameElement.text(data.firstName + " " + data.lastName);
                     idElement.attr('value', data.id);
+                    getChat("@user.Id", data.id);
                 }
             });
             }
@@ -130,6 +119,7 @@
                     pictureElement.attr('src', data.profilePictureUrl);
                     nameElement.text(data.firstName + " " + data.lastName);
                     idElement.attr('value', data.id);
+                    getChat("@user.Id", data.id);
                 }
             });
         }
@@ -139,9 +129,9 @@
                 UserId: idElement.val(),
                 Message: messageInput
             });
+
         var token = $("#deleteForm input[name=__RequestVerificationToken").val();
 
-             console.log(inputModel);
              $.ajax({
                  type: "POST",
                  url: "/api/Messages",
@@ -150,23 +140,80 @@
                  data: inputModel,
                  dataType: "json",
                 success: function (data) {
-                    console.log("kef");
+                }
+            });
+        }
+
+        function getChat(senderIdValue, recieverIdValue) {
+            let inputModel = JSON.stringify({
+                senderId: senderIdValue,
+                recieverId: recieverIdValue
+            });
+            $("div.card-body").empty();
+             var token = $("#deleteForm input[name=__RequestVerificationToken").val();
+
+             $.ajax({
+                 type: "GET",
+                 url: "/api/Messages",
+                 headers: { "X-CSRF-TOKEN": token },
+                 data: {
+                senderId: senderIdValue,
+                recieverId: recieverIdValue
+            },
+                 success: function (data) {
+                     for (var i = 0; i < data.messages.length; i++) {
+                         let message = data.messages[i];
+                         let currentDate = new Date(message.createdOn);
+                         if (message.senderId == "@user.Id") {
+                             let messageElement = `
+                            <div class="d-flex justify-content-end mb-4">
+                                <div class="msg_cotainer_send">
+                                    <div class="">
+                                        ${message.content}
+                                    </div>
+                                    <span class="msg_time_send mt-2">
+                            ${currentDate.getHours().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
+:${currentDate.getMinutes().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })},
+${currentDate.toLocaleDateString('en-us', { weekday: "long" })}</span>
+                                </div>
+                                <div class="img_cont_msg">
+                                    <img src="${message.senderProfilePictureUrl}" class="rounded-circle user_img_msg">
+                                </div>
+                            </div>`
+                             $("div.card-body").append(messageElement);
+                             $('div.card-body').scrollTop($('div.card-body')[0].scrollHeight - $('div.card-body')[0].clientHeight);
+                         } else {
+                             let messageElement = `
+                            <div class="d-flex justify-content-start mb-4">
+                                <div class="img_cont_msg">
+                                    <img src="${message.senderProfilePictureUrl}" class="rounded-circle user_img_msg">
+                                </div>
+                                <div class="msg_cotainer">
+                                        <div>
+                                        ${message.content}
+                                        </div>
+                                    <span class="msg_time mt-2">
+${currentDate.getHours().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
+:${currentDate.getMinutes().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })},
+${currentDate.toLocaleDateString('en-us', { weekday: "long" })}</span>
+                                </div>
+                            </div>`
+                             $("div.card-body").append(messageElement);
+                             $('div.card-body').scrollTop($('div.card-body')[0].scrollHeight - $('div.card-body')[0].clientHeight);
+                         }
+                     }
                 }
             });
         }
 
 
-    @{var user = await this.userManager.GetUserAsync(this.User);}
-    @{ApplicationUser otherChatUser = this.userManager
-                .Users
-                .FirstOrDefault(x => x.Id == "e6aa5334-a60c-4a0c-8f8f-02d5a22a5219"
-            ); }
         var connection =
             new signalR.HubConnectionBuilder()
                 .withUrl("/chat")
                 .build();
 
         connection.on("RecieveMessage", function (message) {
+            var date = new Date();
             var messageElement = `
                             <div class="d-flex justify-content-start mb-4">
                                 <div class="img_cont_msg">
@@ -176,7 +223,10 @@
                                         <div>
                                         ${message}
                                         </div>
-                                    <span class="msg_time mt-2">8:40 AM, Today</span>
+                                    <span class="msg_time mt-2">
+${date.getHours().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
+:${date.getMinutes().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })},
+${date.toLocaleDateString('en-us', { weekday: "long" })}</span>
                                 </div>
                             </div>`
             $("div.card-body").append(messageElement);
@@ -184,13 +234,17 @@
         });
 
         connection.on("SendMessage", function (message) {
+            var date = new Date();
             var messageElement = `
                             <div class="d-flex justify-content-end mb-4">
                                 <div class="msg_cotainer_send">
                                     <div class="">
                                         ${message}
                                     </div>
-                                    <span class="msg_time_send mt-2">8:55 AM, Today</span>
+                                    <span class="msg_time_send mt-2">
+${date.getHours().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
+:${date.getMinutes().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })},
+${date.toLocaleDateString('en-us', { weekday: "long" })}</span>
                                 </div>
                                 <div class="img_cont_msg">
                                     <img src="@user.ProfilePictureUrl" class="rounded-circle user_img_msg">

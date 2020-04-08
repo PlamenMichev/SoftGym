@@ -53,6 +53,7 @@
             return await this.messagesRepository
                 .All()
                 .Where(x => x.SenderId == senderId && x.RecieverId == recieverId)
+                .OrderBy(x => x.CreatedOn)
                 .To<T>()
                 .ToListAsync();
         }

@@ -34,5 +34,14 @@
 
             return this.Json(model);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Get(string recieverId, string senderId)
+        {
+            var model = new ChatViewModel();
+            model.Messages = await this.messagesService.GetMessagesAsync<MessageViewModel>(senderId, recieverId);
+
+            return this.Json(model);
+        }
     }
 }
