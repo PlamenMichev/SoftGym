@@ -11,7 +11,7 @@
     @foreach (var notification in Model.Notifications.OrderByDescending(x => x.CreatedOn))
     {
         var timeSince = DateTime.UtcNow.Subtract(notification.CreatedOn).TotalMinutes;
-
+        
         <div class="bg-primary mt-3">
             <div class="toast-header">
                 <svg class="bd-placeholder-img rounded mr-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg"

@@ -163,7 +163,9 @@
                  success: function (data) {
                      for (var i = 0; i < data.messages.length; i++) {
                          let message = data.messages[i];
-                         let currentDate = new Date(message.createdOn);
+                         var today = new Date();
+                         let date = new Date(message.createdOn);
+                         let currentDate = new Date(date + "UTC");
                          if (message.senderId == "@user.Id") {
                              let messageElement = `
                             <div class="d-flex justify-content-end mb-4">
@@ -173,8 +175,8 @@
                                     </div>
                                     <span class="msg_time_send mt-2">
                             ${currentDate.getHours().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
-:${currentDate.getMinutes().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })},
-${currentDate.toLocaleDateString('en-us', { weekday: "long" })}</span>
+                           :${currentDate.getMinutes().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
+                           ${date.getDate() != today.getDate() ? "," + currentDate.toLocaleDateString('en-us', { weekday: "long" }) : ""}</span >
                                 </div>
                                 <div class="img_cont_msg">
                                     <img src="${message.senderProfilePictureUrl}" class="rounded-circle user_img_msg">
@@ -193,9 +195,9 @@ ${currentDate.toLocaleDateString('en-us', { weekday: "long" })}</span>
                                         ${message.content}
                                         </div>
                                     <span class="msg_time mt-2">
-${currentDate.getHours().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
-:${currentDate.getMinutes().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })},
-${currentDate.toLocaleDateString('en-us', { weekday: "long" })}</span>
+                            ${currentDate.getHours().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
+                           :${currentDate.getMinutes().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
+                            ${date.getDate() != today.getDate() ? "," + currentDate.toLocaleDateString('en-us', { weekday: "long" }) : ""}</span>
                                 </div>
                             </div>`
                              $("div.card-body").append(messageElement);
