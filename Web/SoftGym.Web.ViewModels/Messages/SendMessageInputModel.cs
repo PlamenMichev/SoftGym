@@ -9,5 +9,7 @@
 
         [Required]
         public string UserId { get; set; }
+
+        public string CallerId { get; set; }
     }
 }

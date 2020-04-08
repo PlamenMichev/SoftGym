@@ -75,10 +75,6 @@
 @section Scripts {
     <script>
     @{var user = await this.userManager.GetUserAsync(this.User);}
-    @{ApplicationUser otherChatUser = this.userManager
-                .Users
-                .FirstOrDefault(x => x.Id == "e6aa5334-a60c-4a0c-8f8f-02d5a22a5219"
-            ); }
 
         var pictureElement = $("#userImage");
         var nameElement = $("#userName");
@@ -214,12 +210,12 @@
                 .withUrl("/chat")
                 .build();
 
-        connection.on("RecieveMessage", function (message) {
+        connection.on("RecieveMessage", function (message, profilePictureUrl) {
             var date = new Date();
             var messageElement = `
                             <div class="d-flex justify-content-start mb-4">
                                 <div class="img_cont_msg">
-                                    <img src="@user.ProfilePictureUrl" class="rounded-circle user_img_msg">
+                                    <img src="${profilePictureUrl}" class="rounded-circle user_img_msg">
                                 </div>
                                 <div class="msg_cotainer">
                                         <div>
@@ -227,8 +223,7 @@
                                         </div>
                                     <span class="msg_time mt-2">
 ${date.getHours().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
-:${date.getMinutes().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })},
-${date.toLocaleDateString('en-us', { weekday: "long" })}</span>
+:${date.getMinutes().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}</span>
                                 </div>
                             </div>`
             $("div.card-body").append(messageElement);
@@ -245,8 +240,7 @@ ${date.toLocaleDateString('en-us', { weekday: "long" })}</span>
                                     </div>
                                     <span class="msg_time_send mt-2">
 ${date.getHours().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
-:${date.getMinutes().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })},
-${date.toLocaleDateString('en-us', { weekday: "long" })}</span>
+:${date.getMinutes().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}</span>
                                 </div>
                                 <div class="img_cont_msg">
                                     <img src="@user.ProfilePictureUrl" class="rounded-circle user_img_msg">
@@ -260,9 +254,11 @@ ${date.toLocaleDateString('en-us', { weekday: "long" })}</span>
         $(".send_btn").click(function () {
             var message = $("textarea").val();
             var userId = $("#userId").val();
+            var callerId = "@user.Id";
             var model = {
                 message: message,
-                userId: userId
+                userId: userId,
+                callerId: callerId
             }
             connection.invoke("Send", model);
             $("textarea").val("");
