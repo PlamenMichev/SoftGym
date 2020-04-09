@@ -5,5 +5,7 @@
     public class MyTrainersViewModel
     {
         public IEnumerable<MyTrainerViewModel> Trainers { get; set; }
+
+        public IEnumerable<MyClientViewModel> Clients { get; set; }
     }
 }

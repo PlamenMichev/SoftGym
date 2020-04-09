@@ -100,6 +100,15 @@
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<T>> GetClientsForTrainer<T>(string trainerId)
+        {
+            return await this.trainersRepository
+                .All()
+                .Where(x => x.Trainers.Any(x => x.TrainerId == trainerId))
+                .To<T>()
+                .ToListAsync();
+        }
+
         public async Task<T> GetTrainerAsync<T>(string trainerId)
         {
             return await this.trainersRepository

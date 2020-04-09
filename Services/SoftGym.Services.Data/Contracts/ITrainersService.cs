@@ -16,5 +16,7 @@
         public Task<ClientTrainer> AddClientToTrainer(string clientId, string trainerId);
 
         public Task<ClientTrainer> RemoveClientFromTrainer(string clientId, string trainerId);
+
+        public Task<IEnumerable<T>> GetClientsForTrainer<T>(string trainerId);
     }
 }

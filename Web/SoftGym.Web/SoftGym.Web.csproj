@@ -46,4 +46,8 @@
     <ProjectReference Include="..\SoftGym.Web.Infrastructure\SoftGym.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\SoftGym.Web.ViewModels\SoftGym.Web.ViewModels.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Trainers\Views\Clients\" />
+  </ItemGroup>
 </Project>

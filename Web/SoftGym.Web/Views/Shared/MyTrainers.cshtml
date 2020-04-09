@@ -3,6 +3,7 @@
 @using SoftGym.Web.ViewModels.Trainers
 @using SoftGym.Data.Models
 @using Microsoft.AspNetCore.Identity
+@using SoftGym.Common
 @{
     this.ViewData["Title"] = "My Trainers";
 }
@@ -52,22 +53,45 @@
     </div>
     <div class="col-md-8">
         <ul class="list-group">
-            @foreach (var trainer in Model.Trainers)
+            @if (this.User.IsInRole(GlobalConstants.TrainerRoleName))
             {
-                <div class="row mb-3">
-                    <li class="list-group-item col-md-8">
-                        <a onclick="changeUserData('@trainer.Id')" href="#">
-                            @trainer.FirstName @trainer.LastName - @trainer.ClientsCount clients
-                        </a>
-                    </li>
-                    <div class="col-md-4 row">
-                        <form asp-action="RemoveTrainer" asp-controller="Trainers" method="post" class="col-md-4" id="deleteForm">
-                            <input type="text" name="Id" value="@trainer.Id" hidden />
-                            <button type="submit" class="btn" style="cursor: pointer" title="Remove From My Trainers"><i class="fas fa-user-times"></i></button>
-                        </form>
-                        <button data-toggle="modal" data-target="#a@(trainer.Id)a" class="p-2 float-right btn btn-primary col-md-8" style="cursor: pointer">Contacts</button>
+                @foreach (var client in Model.Clients)
+                {
+                    <div class="row mb-3">
+                        <li class="list-group-item col-md-8">
+                            <a onclick="changeUserData('@client.Id')" href="#">
+                                @client.FirstName @client.LastName
+                            </a>
+                        </li>
+                        <div class="col-md-4 row">
+                            <form asp-action="RemoveTrainer" asp-controller="Trainers" method="post" class="col-md-4" id="deleteForm">
+                                <input type="text" name="Id" value="@client.Id" hidden />
+                                <button type="submit" class="btn" style="cursor: pointer" title="Remove From My Trainers"><i class="fas fa-user-times"></i></button>
+                            </form>
+                            <button data-toggle="modal" data-target="#a@(client.Id)a" class="p-2 float-right btn btn-primary col-md-8" style="cursor: pointer">Contacts</button>
+                        </div>
                     </div>
-                </div>
+                }
+            }
+            else
+            {
+                @foreach (var trainer in Model.Trainers)
+                {
+                    <div class="row mb-3">
+                        <li class="list-group-item col-md-8">
+                            <a onclick="changeUserData('@trainer.Id')" href="#">
+                                @trainer.FirstName @trainer.LastName - @trainer.ClientsCount clients
+                            </a>
+                        </li>
+                        <div class="col-md-4 row">
+                            <form asp-action="RemoveTrainer" asp-controller="Trainers" method="post" class="col-md-4" id="deleteForm">
+                                <input type="text" name="Id" value="@trainer.Id" hidden />
+                                <button type="submit" class="btn" style="cursor: pointer" title="Remove From My Trainers"><i class="fas fa-user-times"></i></button>
+                            </form>
+                            <button data-toggle="modal" data-target="#a@(trainer.Id)a" class="p-2 float-right btn btn-primary col-md-8" style="cursor: pointer">Contacts</button>
+                        </div>
+                    </div>
+                }
             }
         </ul>
     </div>
@@ -80,26 +104,39 @@
         var nameElement = $("#userName");
         var idElement = $("#userId");
         $(window).load(function () {
-            @if (!Model.Trainers.Any()) {
-                @: return;
+            @if (Model.Trainers != null)
+            {
+                @if (!Model.Trainers.Any()) {
+                    @: return;
+                }
             }
-            var otherUserId = "@Model?.Trainers.Select(x => x.Id).FirstOrDefault()";
+
+            var otherUserId;
+            @if (this.User.IsInRole(GlobalConstants.TrainerRoleName)) {
+                @: otherUserId = "@Model?.Clients.Select(x => x.Id).FirstOrDefault()";
+            }
+            else
+            {
+
+                @: otherUserId = "@Model?.Trainers.Select(x => x.Id).FirstOrDefault()";
+            }
+
             if (otherUserId) {
                 $("#userId").attr('value', otherUserId);
                 $.ajax({
-            type: "GET",
+                type: "GET",
             url: "/Users/GetChatData",
             data:
-            {
-                id: otherUserId
+                    {
+                    id: otherUserId
             },
                 success: function (data) {
-                    pictureElement.attr('src', data.profilePictureUrl);
-                    nameElement.text(data.firstName + " " + data.lastName);
-                    idElement.attr('value', data.id);
-                    getChat("@user.Id", data.id);
-                }
-            });
+                        pictureElement.attr('src', data.profilePictureUrl);
+                        nameElement.text(data.firstName + " " + data.lastName);
+                        idElement.attr('value', data.id);
+                        getChat("@user.Id", data.id);
+                    }
+                });
             }
         });
 
@@ -141,10 +178,7 @@
         }
 
         function getChat(senderIdValue, recieverIdValue) {
-            let inputModel = JSON.stringify({
-                senderId: senderIdValue,
-                recieverId: recieverIdValue
-            });
+            console.log(senderIdValue, recieverIdValue);
             $("div.card-body").empty();
              var token = $("#deleteForm input[name=__RequestVerificationToken").val();
 
@@ -157,6 +191,7 @@
                 recieverId: recieverIdValue
             },
                  success: function (data) {
+                     console.log(data);
                      for (var i = 0; i < data.messages.length; i++) {
                          let message = data.messages[i];
                          var today = new Date();
@@ -255,6 +290,7 @@ ${date.getHours().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping
             var message = $("textarea").val();
             var userId = $("#userId").val();
             var callerId = "@user.Id";
+
             var model = {
                 message: message,
                 userId: userId,
@@ -268,16 +304,20 @@ ${date.getHours().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping
         connection.start();
     </script>
 }
-@foreach (var trainer in Model.Trainers)
-{
-    var viewModel = new TrainerViewModel()
-    {
-        Id = trainer.Id,
-        FirstName = trainer.FirstName,
-        LastName = trainer.LastName,
-        PhoneNumber = trainer.PhoneNumber,
-        Email = trainer.Email,
-    };
 
-    <partial name="_DetailsPartial" , model="@viewModel" />
+@if (Model.Trainers != null)
+{
+    @foreach (var trainer in Model.Trainers)
+    {
+        var viewModel = new TrainerViewModel()
+        {
+            Id = trainer.Id,
+            FirstName = trainer.FirstName,
+            LastName = trainer.LastName,
+            PhoneNumber = trainer.PhoneNumber,
+            Email = trainer.Email,
+        };
+
+        <partial name="_DetailsPartial" , model="@viewModel" />
+    }
 }
