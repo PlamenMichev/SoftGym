@@ -33,7 +33,10 @@
                         </div>
                         <h5 class="card-title">@meal.Name</h5>
                         <a href="/Trainers/Meals/Details/@meal.Id" class="btn btn-success">Details</a>
-                        <a href="/Trainers/Meals/Delete/@meal.Id" class="btn btn-danger" title="Delete"><i class="fas fa-trash-alt"></i></a>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#b@(meal.Id)b">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                        <partial name="_WarningDeletePartial" model="@meal" />
                         <a href="/Trainers/Meals/Edit/@meal.Id" class="btn btn-primary custom-blue" title="Edit"><i class="fas fa-edit"></i></a>
                     </div>
                 </div>

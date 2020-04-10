@@ -129,7 +129,9 @@
                 </div>
             </div>
             <div class="col-md-2">
-                <vc:latest-facilities></vc:latest-facilities>
+                <cache expires-after="@TimeSpan.FromMinutes(5)">
+                    <vc:latest-facilities></vc:latest-facilities>
+                </cache>
             </div>
         </div>
 

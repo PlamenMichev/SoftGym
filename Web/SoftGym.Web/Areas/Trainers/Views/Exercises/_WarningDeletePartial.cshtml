@@ -1,4 +1,4 @@
-﻿@model SoftGym.Web.ViewModels.Administration.Facilities.FacilityListItemViewModel
+﻿@model SoftGym.Web.ViewModels.Trainers.Exercises.ExerciseViewModel
 
 <!-- Modal -->
 <div class="modal fade" id="b@(Model.Id)b" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -12,13 +12,13 @@
                 </button>
             </div>
             <div class="modal-body">
-                <span>Are you sure that you want to delete "@Model.Name" facility forever?
+                <span>Are you sure that you want to delete "@Model.Name" exercise forever?
                 After deleting it here you will not be able to restore it again!</span>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <form asp-controller="Facilities" asp-action="HardDelete" asp-area="Administration" asp-route-facilityId="@Model.Id" method="post">
-                    <button type="submit" class="btn btn-danger">
+                <form asp-controller="Exercises" asp-action="Delete" asp-area="Trainers" asp-route-id="@Model.Id" method="post">
+                    <button class="btn btn-danger">
                         <i class="fas fa-trash-alt"></i>
                     </button>
                 </form>

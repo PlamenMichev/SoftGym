@@ -112,6 +112,7 @@
             return this.Redirect("/Administration/Facilities/Deleted");
         }
 
+        [HttpPost]
         public async Task<IActionResult> HardDelete(int facilityId)
         {
             await this.facilitiesService.HardDeleteFacility(facilityId);

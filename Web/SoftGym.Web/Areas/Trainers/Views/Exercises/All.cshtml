@@ -38,9 +38,16 @@
                 <li class="list-group-item">
                     <a href="/Trainers/Exercises/Details/@exercise.Id">@exercise.Name - @exercise.Type (@exercise.Difficulty)</a>
                     <a href="/Trainers/Exercises/Edit/@exercise.Id" class="btn btn-primary custom-blue float-right" title="Edit"><i class="fas fa-edit"></i></a>
-                    <a href="/Trainers/Exercises/Delete/@exercise.Id" class="btn btn-danger float-lg-right mx-3" title="Delete"><i class="fas fa-trash-alt"></i></a>
+                    <button type="button" class="btn btn-danger float-lg-right mx-3" title="Delete" data-toggle="modal" data-target="#b@(exercise.Id)b">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
                 </li>
             }
         </ul>
     </div>
 </div>
+
+@foreach (var exercise in Model.Exercises)
+{
+    <partial name="_WarningDeletePartial" model="@exercise" />
+}

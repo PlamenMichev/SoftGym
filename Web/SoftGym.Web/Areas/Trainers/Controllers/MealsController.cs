@@ -57,6 +57,7 @@
             return this.Redirect($"/Trainers/Meals/Details/{meal.Id}");
         }
 
+        [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
             await this.mealsService.Delete(id);
