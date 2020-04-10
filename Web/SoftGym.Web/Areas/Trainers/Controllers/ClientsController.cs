@@ -27,5 +27,14 @@
 
             return this.View("MyTrainers", viewModel);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveClient(string clientId)
+        {
+            var trainerId = this.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            await this.trainersService.RemoveClientFromTrainer(clientId, trainerId);
+            return this.Redirect("/Trainers/Clients/MyClients");
+        }
     }
 }

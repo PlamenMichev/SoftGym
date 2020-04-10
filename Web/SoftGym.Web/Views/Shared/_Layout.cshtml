@@ -73,12 +73,14 @@
                                             <li class="has-children active">
                                                 <a asp-action="All" asp-controller="Facilities" asp-area="">Facilities</a>
                                                 <ul class="dropdown arrow-top">
-                                                    <li><a asp-action="Equipments" asp-controller="Facilities" asp-area="">Equipments</a></li>
-                                                    <li><a asp-action="Rooms" asp-controller="Facilities" asp-area="">Rooms</a></li>
-                                                    <li><a asp-action="Spa" asp-controller="Facilities" asp-area="">Boxing</a></li>
+                                                    <li><a asp-action="All" asp-controller="Facilities" asp-area="" asp-route-type="Equipment">Equipments</a></li>
+                                                    <li><a asp-action="All" asp-controller="Facilities" asp-area="" asp-route-type="Room">Rooms</a></li>
+                                                    <li><a asp-action="All" asp-controller="Facilities" asp-area="" asp-route-type="Spa">Spa</a></li>
                                                 </ul>
                                             </li>
-                                            @if (!this.SignInManager.IsSignedIn(this.User))
+                                            @if (!this.SignInManager.IsSignedIn(this.User) || 
+                                                this.User.IsInRole(GlobalConstants.TrainerRoleName) ||
+                                                this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                                             {
                                                 <li class="active"><a asp-action="All" asp-controller="Trainers" asp-area="">Trainers</a></li>
                                             }

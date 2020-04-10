@@ -43,6 +43,7 @@
         public async Task<IActionResult> RemoveTrainer(string id)
         {
             var clientId = this.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
             await this.trainersService.RemoveClientFromTrainer(clientId, id);
             return this.Redirect("/Trainers/MyTrainers");
         }

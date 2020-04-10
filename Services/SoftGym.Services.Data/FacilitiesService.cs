@@ -112,6 +112,7 @@
             {
                 return await this.facilityRepository
                                 .All()
+                                .OrderByDescending(x => x.CreatedOn)
                                 .Where(x => x.Type == type)
                                 .Skip((page - 1) * count)
                                 .Take(count)

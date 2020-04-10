@@ -13,7 +13,7 @@
     public class CloudinaryService : ICloudinaryService
     {
         private readonly Cloudinary cloudinary;
-        private readonly string defaultProfilePicUrl = @"https://res.cloudinary.com/dzivpr6fj/image/upload/v1580902697/ClubestPics/24029_llq8xg.png";
+        private readonly string defaultProfilePicUrl = @"https://res.cloudinary.com/dzivpr6fj/image/upload/v1586495920/ClubestPics/default-profile-picture-clipart-8_mwungz.jpg";
 
         public CloudinaryService(Cloudinary cloudinary)
         {

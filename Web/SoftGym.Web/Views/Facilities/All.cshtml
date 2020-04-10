@@ -8,7 +8,7 @@
 <h1 class="text-center">Our Facilities</h1>
 <hr />
 <h2 class="text-center">
-    
+
     @if (this.Context.Request.QueryString.ToString().Contains("Equipment"))
     {
         @:All Equipments
@@ -77,21 +77,30 @@
 </ul>
 
 <div class="row px-5">
-    @foreach (var facility in Model.Facilities)
+    @if (Model.Facilities.Any())
     {
-        <div class="card col-md-4 col-lg-4 col-xs-4" id="@facility.Id">
-            <div class="card-body h-100">
-                <div class="card-img-top height-20rem">
-                    <img class="img-fluid mx-auto d-block" src="@facility.PictureUrl" alt="@facility.Name">
+        @foreach (var facility in Model.Facilities)
+        {
+            <div class="card col-md-4 col-lg-4 col-xs-4" id="@facility.Id">
+                <div class="card-body h-100">
+                    <div class="card-img-top height-20rem">
+                        <img class="img-fluid mx-auto d-block" src="@facility.PictureUrl" alt="@facility.Name">
+                    </div>
+                    <h4 class="card-title"><a>@facility.Name</a></h4>
+                    <h6>Type: @facility.Type</h6>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#a@(facility.Id)a">
+                        Details
+                    </button>
+                    <partial name="../../Areas/Administration/Views/Facilities/_DetailsPartial.cshtml" model="@facility" />
                 </div>
-                <h4 class="card-title"><a>@facility.Name</a></h4>
-                <h6>Type: @facility.Type</h6>
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#a@(facility.Id)a">
-                    Details
-                </button>
-                <partial name="../../Areas/Administration/Views/Facilities/_DetailsPartial.cshtml" model="@facility" />
             </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-info col-md-12 text-center" role="alert">
+            No Facilities Found.
         </div>
     }
 </div>
@@ -99,8 +108,8 @@
 <nav class="mt-2">
     <ul class="pagination justify-content-center">
         @{FacilityType? currentType = this.Context.Request.Query.ContainsKey("type") == true
-                    ? (FacilityType?)Enum.Parse(typeof(FacilityType), this.Context.Request.Query["type"].ToString())
-                    : null;}
+                      ? (FacilityType?)Enum.Parse(typeof(FacilityType), this.Context.Request.Query["type"].ToString())
+                      : null;}
         @if (Model.CurrentPage == 1)
         {
             <li class="page-item disabled">
