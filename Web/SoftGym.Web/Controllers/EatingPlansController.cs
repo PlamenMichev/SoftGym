@@ -96,6 +96,7 @@
             return this.View(viewModel);
         }
 
+        [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
             await this.eatingPlansService.DeletePlanAsync(id);

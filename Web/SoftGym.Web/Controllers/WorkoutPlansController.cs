@@ -65,12 +65,14 @@
             viewModel.ActivePlan =
                 viewModel
                 .ActivePlan
-                .Where(x => x.ExpireDate.Subtract(DateTime.UtcNow).Hours > 0);
+                .Where(x => x.ExpireDate.Subtract(DateTime.UtcNow).Hours > 0)
+                .ToList();
 
             viewModel.InactivePlans =
                 viewModel
                 .InactivePlans
-                .Where(x => x.ExpireDate.Subtract(DateTime.UtcNow).Hours < 0);
+                .Where(x => x.ExpireDate.Subtract(DateTime.UtcNow).Hours < 0)
+                .ToList();
 
             return this.View(viewModel);
         }
@@ -81,6 +83,7 @@
             return this.View(viewModel);
         }
 
+        [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
             await this.workoutPlansService.DeleteAsync(id);

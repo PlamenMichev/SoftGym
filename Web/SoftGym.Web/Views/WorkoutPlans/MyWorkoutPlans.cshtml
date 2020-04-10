@@ -23,9 +23,9 @@
                         <a href="/WorkoutPlans/Details/@plan.Id" class="text-black">
                             Workout Plan from @plan.CreatedOn.ToString("dd/MM/yyyy") to @plan.ExpireDate.ToString("dd/MM/yyyy")
                         </a>
-                        <a href="/WorkoutPlans/Delete/@plan.Id" class="ml-5 btn btn-danger" title="Delete">
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#b@(plan.Id)b">
                             <i class="fas fa-trash-alt"></i>
-                        </a>
+                        </button>
                         <a href="/Exports/ExportToWord/@plan.Id" class="ml-5 btn btn-primary custom-blue" title="Export to Word">
                             <i class="fas fa-file-word"></i>
                         </a>
@@ -51,7 +51,7 @@
         <div class="heading-with-border text-center">
             <h2 class="heading text-uppercase">Inactive Plans</h2>
         </div>
-        @if (Model.ActivePlan.Any())
+        @if (Model.InactivePlans.Any())
         {
             <ul class="list-unstyled list-group">
                 @foreach (var plan in Model.InactivePlans)
@@ -60,9 +60,9 @@
                         <a href="/WorkoutPlans/Details/@plan.Id" class="text-black">
                             Workout Plan from @plan.CreatedOn.ToString("dd/MM/yyyy") to @plan.ExpireDate.ToString("dd/MM/yyyy")
                         </a>
-                        <a href="/WorkoutPlans/Delete/@plan.Id" class="ml-5 btn btn-danger" title="Delete">
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#b@(plan.Id)b">
                             <i class="fas fa-trash-alt"></i>
-                        </a>
+                        </button>
                         <a href="/Exports/ExportToWord/@plan.Id" class="ml-5 btn btn-primary custom-blue" title="Export to Word">
                             <i class="fas fa-file-word"></i>
                         </a>
@@ -82,3 +82,12 @@
     </div>
 </div>
 
+@foreach (var plan in Model.InactivePlans)
+{
+    <partial name="_WarningDeletePartial" model="@plan" />
+}
+
+@foreach (var plan in Model.ActivePlan)
+{
+    <partial name="_WarningDeletePartial" model="@plan" />
+}

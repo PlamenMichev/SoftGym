@@ -23,9 +23,9 @@
                         <a href="/EatingPlans/Details/@plan.Id" class="text-black">
                             Eating Plan from @plan.CreatedOn.ToString("dd/MM/yyyy") to @plan.ExpireDate.ToString("dd/MM/yyyy")
                         </a>
-                        <a href="/EatingPlans/Delete/@plan.Id" class="ml-5 btn btn-danger" title="Delete">
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#b@(plan.Id)b">
                             <i class="fas fa-trash-alt"></i>
-                        </a>
+                        </button>
                     </li>
                 }
             </ul>
@@ -58,9 +58,9 @@
                         <a href="/EatingPlans/Details/@plan.Id" class="text-black">
                             Eating Plan from @plan.CreatedOn.ToString("dd/MM/yyyy") to @plan.ExpireDate.ToString("dd/MM/yyyy")
                         </a>
-                        <a href="/EatingPlans/Delete/@plan.Id" class="ml-5 btn btn-danger" title="Delete">
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#b@(plan.Id)b">
                             <i class="fas fa-trash-alt"></i>
-                        </a>
+                        </button>
                     </li>
                 }
             </ul>
@@ -76,3 +76,14 @@
     </div>
 </div>
 
+
+@foreach (var plan in Model.InactivePlans)
+{
+    <partial name="_WarningDeletePartial" model="@plan" />
+}
+
+
+@foreach (var plan in Model.ActivePlans)
+{
+    <partial name="_WarningDeletePartial" model="@plan" />
+}
