@@ -1,4 +1,6 @@
 ﻿@model SoftGym.Web.ViewModels.Administration.Dashboard.IndexViewModel
+
+@using SoftGym.Common
 @{
     this.ViewData["Title"] = "Admin dashboard";
 }
@@ -16,28 +18,34 @@
         </h1>
         <p class="lead d-none d-sm-block">Check and control all things in the gym</p>
         <div class="row mb-3">
-            <a asp-action="MyClients" asp-controller="Clients" asp-area="Trainers" title="All Users" class="col-xl-3 col-sm-6 py-2">
-                <div class="card bg-success text-white h-100">
-                    <div class="card-body bg-success">
-                        <div class="rotate">
-                            <i class="fa fa-user fa-4x"></i>
+            @if (!this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+            {
+                <a asp-action="MyClients" asp-controller="Clients" asp-area="Trainers" title="All Users" class="col-xl-3 col-sm-6 py-2">
+                    <div class="card bg-success text-white h-100">
+                        <div class="card-body bg-success">
+                            <div class="rotate">
+                                <i class="fa fa-user fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase">Clients</h6>
+                            <h1 class="display-4">@Model.UsersCount</h1>
                         </div>
-                        <h6 class="text-uppercase">Clients</h6>
-                        <h1 class="display-4">@Model.UsersCount</h1>
                     </div>
-                </div>
-            </a>
-            <div class="col-xl-3 col-sm-6 py-2">
-                <div class="card text-white bg-danger h-100">
-                    <div class="card-body bg-danger">
-                        <div class="rotate">
-                            <i class="fas fa-bicycle fa-4x"></i>
+                </a>
+            }
+            @if (!this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+            {
+                <a asp-action="Index" asp-controller="Appointments" asp-area="Trainers" title="All Users" class="col-xl-3 col-sm-6 py-2">
+                    <div class="card bg-success text-white h-100">
+                        <div class="card-body bg-secondary">
+                            <div class="rotate">
+                                <i class="fas fa-calendar-alt fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase">Appointmets</h6>
+                            <h1 class="display-4">@Model.AppointmentsCount</h1>
                         </div>
-                        <h6 class="text-uppercase">Facilities</h6>
-                        <h1 class="display-4">@Model.FacilitiesCount</h1>
                     </div>
-                </div>
-            </div>
+                </a>
+            }
             <a asp-action="All" asp-controller="Exercises" asp-area="Trainers" title="All Exercises" class="col-xl-3 col-sm-6 py-2">
                 <div class="card text-white bg-info h-100">
                     <div class="card-body bg-info">
@@ -60,59 +68,6 @@
                     </div>
                 </div>
             </a>
-        </div>
-        <div class="row justify-content-center m-2">
-            <div>
-                <a asp-controller="Appointments" asp-action="Add" class="btn custom-blue text-white">New Appointment</a>
-            </div>
-        </div>
-
-        <div class="row justify-content-center m-2">
-            <h2>My Appointments</h2>
-            <hr />
-            <div id="calender"></div>
-            <script>
-                $(document).ready(function () {
-                    var events = [];
-
-                    $.ajax({
-                        type: "GET",
-                        url: "/Trainers/Appointments/GetAppointments",
-                        success: function (data) {
-                            $.each(data, function (i, v) {
-                                events.push({
-                                    title: v.clientFirstName + " " + v.clientLastName,
-                                    start: moment(v.startTime),
-                                    end: v.endTime != null ? moment(v.endTime) : null,
-                                    color: v.type == 1 ? "#FF6347" : v.type == 2 ? "#00BFFF" : "#ADFF2F"
-                                });
-                            })
-                            console.log(events);
-                            GenerateCalender(events);
-                        },
-                        error: function (error) {
-                            alert('failed');
-                        }
-                    })
-
-                    function GenerateCalender(events) {
-                        $('#calender').fullCalendar('destroy');
-                        $('#calender').fullCalendar({
-                            contentHeight: 400,
-                            defaultDate: new Date(),
-                            timeFormat: 'h(:mm)a',
-                            header: {
-                                left: 'prev,next today',
-                                center: 'title',
-                                right: 'month,basicWeek,basicDay,agenda'
-                            },
-                            eventLimit: true,
-                            eventColor: '#378006',
-                            events: events,
-                        })
-                    }
-                })
-            </script>
         </div>
     </div>
 </div>

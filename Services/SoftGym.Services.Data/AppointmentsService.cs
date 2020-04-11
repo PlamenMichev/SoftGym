@@ -86,6 +86,14 @@
                 .ToListAsync();
         }
 
+        public async Task<int> GetAppointmentsCountForTrainer(string trainerId)
+        {
+            return await this.appointmentsRepository
+                .All()
+                .Where(x => x.TrainerId == trainerId)
+                .CountAsync();
+        }
+
         public bool IsEndTimeSoonerThanStartTime(DateTime startTime, DateTime endTime)
         {
             var result = endTime.Subtract(startTime).TotalMinutes;

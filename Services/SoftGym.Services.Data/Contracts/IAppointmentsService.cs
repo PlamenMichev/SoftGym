@@ -14,5 +14,7 @@
         public bool IsEndTimeSoonerThanStartTime(DateTime startTime, DateTime endTime);
 
         public Task<IEnumerable<T>> GetAllAppointmentsForTrainer<T>(string trainerId);
+
+        public Task<int> GetAppointmentsCountForTrainer(string trainerId);
     }
 }

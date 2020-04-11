@@ -13,17 +13,20 @@
         private readonly IFacilitiesService facilitiesService;
         private readonly IExercisesService exercisesService;
         private readonly IMealsService mealsService;
+        private readonly IAppointmentsService appointmentsService;
 
         public DashboardController(
             IUsersService usersService,
             IFacilitiesService facilitiesService,
             IExercisesService exercisesService,
-            IMealsService mealsService)
+            IMealsService mealsService,
+            IAppointmentsService appointmentsService)
         {
             this.usersService = usersService;
             this.facilitiesService = facilitiesService;
             this.exercisesService = exercisesService;
             this.mealsService = mealsService;
+            this.appointmentsService = appointmentsService;
         }
 
         public async Task<IActionResult> Index()
@@ -35,6 +38,7 @@
                 FacilitiesCount = await this.facilitiesService.GetFacilitiesCountAsync(),
                 ExercisesCount = await this.exercisesService.GetExercisesCountAsync(),
                 MealsCount = await this.mealsService.GetMealsCountAsync(),
+                AppointmentsCount = await this.appointmentsService.GetAppointmentsCountForTrainer(trainerId),
             };
 
             return this.View(viewModel);

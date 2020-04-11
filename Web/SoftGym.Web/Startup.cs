@@ -1,8 +1,10 @@
 ﻿namespace SoftGym.Web
 {
+    using System;
     using System.Reflection;
 
     using CloudinaryDotNet;
+    using Hangfire;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -18,11 +20,13 @@
     using SoftGym.Data.Models;
     using SoftGym.Data.Repositories;
     using SoftGym.Data.Seeding;
+    using SoftGym.Services.CronJobs;
     using SoftGym.Services.Data;
     using SoftGym.Services.Data.Contracts;
     using SoftGym.Services.Mapping;
     using SoftGym.Services.Messaging;
     using SoftGym.Web.Hubs;
+    using SoftGym.Web.Infrastructure.Filters.Hangfire;
     using SoftGym.Web.ViewModels;
 
     public class Startup
@@ -87,6 +91,12 @@
             var sendGrid = new SendGridClient(this.configuration["SendGrid:ApiKey"]);
             services.AddSingleton(sendGrid);
 
+            // Add Hangfire
+            services.AddHangfire(config =>
+            {
+                config.UseSqlServerStorage(this.configuration.GetConnectionString("DefaultConnection"));
+            });
+
             // Data repositories
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
@@ -114,7 +124,7 @@
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IRecurringJobManager recurringJobManager)
         {
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
@@ -129,6 +139,7 @@
                 }
 
                 new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+                this.SeedHangfireJobs(recurringJobManager, dbContext);
             }
 
             if (env.IsDevelopment())
@@ -152,6 +163,12 @@
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseHangfireDashboard("/hangfire", new DashboardOptions
+            {
+                Authorization = new[] { new HangfireAuthorizationFilter() },
+            });
+            app.UseHangfireServer();
+
             app.UseEndpoints(
                 endpoints =>
                 {
@@ -161,6 +178,11 @@
                     endpoints.MapRazorPages();
                     endpoints.MapControllers();
                 });
+        }
+
+        private void SeedHangfireJobs(IRecurringJobManager recurringJobManager, ApplicationDbContext dbContext)
+        {
+            recurringJobManager.AddOrUpdate<DeletePastAppointments>("DeletePastAppointments", x => x.Work(), Cron.Daily);
         }
     }
 }

@@ -9,5 +9,7 @@
         public int ExercisesCount { get; set; }
 
         public int MealsCount { get; set; }
+
+        public int AppointmentsCount { get; set; }
     }
 }

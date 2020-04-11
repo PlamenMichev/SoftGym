@@ -26,6 +26,11 @@
             this.usersService = usersService;
         }
 
+        public IActionResult Index()
+        {
+            return this.View();
+        }
+
         public async Task<IActionResult> Add()
         {
             var trainer = await this.userManager.GetUserAsync(this.User);
