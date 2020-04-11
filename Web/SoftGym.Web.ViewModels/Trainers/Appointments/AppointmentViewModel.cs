@@ -17,5 +17,7 @@
         public DateTime EndTime { get; set; }
 
         public AppointmentType Type { get; set; }
+
+        public string Notes { get; set; }
     }
 }

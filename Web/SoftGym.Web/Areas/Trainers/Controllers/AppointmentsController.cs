@@ -67,7 +67,17 @@
 
             if (this.appointmentsService.IsEndTimeSoonerThanStartTime(inputModel.StartTime.Value, inputModel.EndTime.Value))
             {
-                this.ModelState.AddModelError("StartTime", "End time should be later than start time");
+                this.ModelState.AddModelError("StartTime", "End time should be later than start time!");
+
+                inputModel.ClientsOptions = await this.usersService
+                .GetAllUsersAsync<ClientOptionsViewModel>(inputModel.TrainerId);
+
+                return this.View(inputModel);
+            }
+
+            if (this.appointmentsService.IsStartTimePast(inputModel.StartTime.Value))
+            {
+                this.ModelState.AddModelError("StartTime", "Appointment cannot be in the past!");
 
                 inputModel.ClientsOptions = await this.usersService
                 .GetAllUsersAsync<ClientOptionsViewModel>(inputModel.TrainerId);

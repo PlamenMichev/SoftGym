@@ -52,6 +52,7 @@
                 StartTime = inputModel.StartTime.Value,
                 EndTime = inputModel.EndTime.Value,
                 Type = inputModel.Type,
+                Notes = inputModel.Notes,
             };
 
             trainer.TrainerAppointments.Add(appointment);
@@ -96,8 +97,12 @@
 
         public bool IsEndTimeSoonerThanStartTime(DateTime startTime, DateTime endTime)
         {
-            var result = endTime.Subtract(startTime).TotalMinutes;
             return endTime.Subtract(startTime).TotalMinutes <= 0;
+        }
+
+        public bool IsStartTimePast(DateTime startTime)
+        {
+            return DateTime.Now.Subtract(startTime).TotalMinutes >= 0;
         }
     }
 }

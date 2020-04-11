@@ -75,6 +75,16 @@
                     </div>
                 </div>
 
+                <div class="mb-2 text-center justify-content-center row">
+                    <div class="form-group col-md-6">
+                        <div class="form-group shadow-textarea">
+                            <label asp-for="Notes" class="float-left">Notes(Optional):</label>
+                            <textarea asp-for="Notes" class="form-control z-depth-1" rows="3" placeholder="Notes..."></textarea>
+                            <span asp-validation-for="Notes" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
                 <input asp-for="TrainerId" value="@Model.TrainerId" hidden/>
 
                 <div class="text-center">

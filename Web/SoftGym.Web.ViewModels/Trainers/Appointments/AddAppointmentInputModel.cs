@@ -23,5 +23,7 @@
         public AppointmentType Type { get; set; }
 
         public IEnumerable<ClientOptionsViewModel> ClientsOptions { get; set; }
+
+        public string Notes { get; set; }
     }
 }

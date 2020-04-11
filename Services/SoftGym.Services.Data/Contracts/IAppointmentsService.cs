@@ -16,5 +16,7 @@
         public Task<IEnumerable<T>> GetAllAppointmentsForTrainer<T>(string trainerId);
 
         public Task<int> GetAppointmentsCountForTrainer(string trainerId);
+
+        public bool IsStartTimePast(DateTime startTime);
     }
 }

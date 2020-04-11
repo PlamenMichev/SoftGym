@@ -1,6 +1,7 @@
 ﻿namespace SoftGym.Data.Models
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
 
     using SoftGym.Data.Common.Models;
     using SoftGym.Data.Models.Enums;
@@ -20,5 +21,8 @@
         public DateTime EndTime { get; set; }
 
         public AppointmentType Type { get; set; }
+
+        [MaxLength(300)]
+        public string Notes { get; set; }
     }
 }
