@@ -20,9 +20,12 @@
 
         public async Task Send(SendMessageInputModel inputModel)
         {
-            if (string.IsNullOrEmpty(inputModel.Message) ||
-                string.IsNullOrWhiteSpace(inputModel.Message) ||
-                string.IsNullOrEmpty(inputModel.UserId))
+            var sanitizer = new HtmlSanitizer();
+            var message = sanitizer.Sanitize(inputModel.Message);
+
+            if (string.IsNullOrEmpty(message) ||
+                string.IsNullOrWhiteSpace(message) ||
+                string.IsNullOrEmpty(message))
             {
                 return;
             }
@@ -32,8 +35,6 @@
                 .First(x => x.Id == inputModel.CallerId)
                 .ProfilePictureUrl;
 
-            var sanitizer = new HtmlSanitizer();
-            var message = sanitizer.Sanitize(inputModel.Message);
             await this.Clients
                 .User(inputModel.UserId)
                 .SendAsync("RecieveMessage", message, caller);

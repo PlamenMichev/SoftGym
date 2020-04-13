@@ -24,7 +24,7 @@
 <hr />
 
 @if ((this.Model.Trainers == null || this.Model.Trainers.Any() == false) &&
-   (this.Model.Clients == null || this.Model.Clients.Any() == false))
+ (this.Model.Clients == null || this.Model.Clients.Any() == false))
 {
 
     <div class="alert alert-info col-md-12 text-center" role="alert">
@@ -329,6 +329,14 @@ ${date.getHours().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping
             $("textarea").val("");
             $("textarea").focus();
         });
+
+            document.getElementsByTagName("textarea")[0]
+                .addEventListener("keydown", function (event) {
+                    if (event.keyCode === 13 && $("textarea").val().trim().length > 0) {
+                        event.preventDefault();
+                        $(".send_btn").click();
+                    }
+                });
 
         connection.start();
         </script>

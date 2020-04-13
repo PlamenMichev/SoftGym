@@ -3,25 +3,28 @@
 @{
     ViewData["Title"] = Model.FirstName + " " + Model.LastName;
 }
-    <div class="modal fade" id="a@(Model.Id)a" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title text-center" id="myModalLabel">Contacts for @Model.FirstName @Model.LastName</h4>
-                </div>
-                <div class="modal-body">
-                    <center>
-                        <span><strong>Contacts: </strong></span>
-                        <p class="label label-info">Email: @Model.Email</p>
+<div class="modal fade" id="a@(Model.Id)a" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title text-center" id="myModalLabel">Contacts for @Model.FirstName @Model.LastName</h4>
+            </div>
+            <div class="modal-body">
+                <center>
+                    <span><strong>Contacts: </strong></span>
+                    <p class="label label-info">Email: @Model.Email</p>
+                    @if (this.Model.PhoneNumber != null)
+                    {
                         <p class="label label-info">Phone Number: @Model.PhoneNumber</p>
-                    </center>
-                </div>
-                <div class="modal-footer">
-                    <center>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </center>
-                </div>
+                    }
+                </center>
+            </div>
+            <div class="modal-footer">
+                <center>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </center>
             </div>
         </div>
     </div>
+</div>

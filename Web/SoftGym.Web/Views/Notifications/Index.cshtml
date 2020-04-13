@@ -6,12 +6,12 @@
 
 <h1 class="text-center">Notifications</h1>
 <hr />
-@if (Model.Notifications.Any())
+@if (Model.Notifications == null || Model.Notifications.Any())
 {
     @foreach (var notification in Model.Notifications.OrderByDescending(x => x.CreatedOn))
     {
         var timeSince = DateTime.UtcNow.Subtract(notification.CreatedOn).TotalMinutes;
-        
+
         <div class="bg-primary mt-3">
             <div class="toast-header">
                 <svg class="bd-placeholder-img rounded mr-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg"
@@ -81,17 +81,21 @@ else
 }
 
 <script>
-    window.onload = function (event) {
-        event.preventDefault();
-        var token = $("#deleteForm input[name=__RequestVerificationToken").val();
-        $.ajax({
-            type: "POST",
-            url: "/Notifications/SeeAll",
-            headers: { "X-CSRF-TOKEN": token },
-            data:
-            {
-                UserId: "@Model.Notifications?.Select(x => x.UserId).First()"
-            }
-        });
+    @if (Model.Notifications.Any())
+    {
+        @: window.onload = function (event) {
+        @: event.preventDefault();
+        @: var token = $("#deleteForm input[name=__RequestVerificationToken").val();
+        @: $.ajax({
+        @:     type: "POST",
+        @:     url: "/Notifications/SeeAll",
+        @:     headers: { "X-CSRF-TOKEN": token },
+        @:     data:
+        @:     {
+        @:         UserId: "@Model.Notifications?.Select(x => x.UserId).First()"
+        @:     }
+        @: });
     };
+    }
+    
 </script>

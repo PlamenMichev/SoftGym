@@ -279,7 +279,7 @@
                     {
                         days.Add(Day.Monday);
                         days.Add(Day.Tuesday);
-                        days.Add(Day.Thurstday);
+                        days.Add(Day.Thursday);
                         days.Add(Day.Friday);
                         break;
                     }
@@ -289,7 +289,7 @@
                         days.Add(Day.Monday);
                         days.Add(Day.Tuesday);
                         days.Add(Day.Wednesday);
-                        days.Add(Day.Thurstday);
+                        days.Add(Day.Thursday);
                         days.Add(Day.Friday);
                         break;
                     }
@@ -299,7 +299,7 @@
                         days.Add(Day.Monday);
                         days.Add(Day.Tuesday);
                         days.Add(Day.Wednesday);
-                        days.Add(Day.Thurstday);
+                        days.Add(Day.Thursday);
                         days.Add(Day.Friday);
                         days.Add(Day.Saturday);
                         break;
@@ -310,7 +310,7 @@
                         days.Add(Day.Monday);
                         days.Add(Day.Tuesday);
                         days.Add(Day.Wednesday);
-                        days.Add(Day.Thurstday);
+                        days.Add(Day.Thursday);
                         days.Add(Day.Friday);
                         days.Add(Day.Saturday);
                         days.Add(Day.Sunday);

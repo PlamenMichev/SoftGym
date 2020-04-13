@@ -393,6 +393,7 @@ body {
     }
 
 .msg_cotainer {
+    word-break: break-word;
     margin-top: auto;
     margin-bottom: auto;
     margin-left: 10px;
@@ -403,6 +404,7 @@ body {
 }
 
 .msg_cotainer_send {
+    word-break: break-word;
     margin-top: auto;
     color: white;
     margin-bottom: auto;

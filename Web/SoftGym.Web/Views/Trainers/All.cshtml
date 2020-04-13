@@ -6,6 +6,7 @@
 
 @using SoftGym.Data.Models
 @using Microsoft.AspNetCore.Identity
+@using SoftGym.Common
 
 @inject UserManager<ApplicationUser> userManager
 
@@ -30,7 +31,7 @@
                                 <a data-toggle="modal" data-target="#a@(trainer.Id)a" class="p-2" style="cursor: pointer"><i class="fas fa-phone"></i></a>
                                 <a data-toggle="modal" data-target="#a@(trainer.Id)a" class="p-2" style="cursor: pointer"><i class="fas fa-envelope-square"></i></a>
                                 @{string userId = this.userManager.GetUserId(this.User); }
-                                @if (this.User.Identity.IsAuthenticated)
+                                @if (this.User.Identity.IsAuthenticated && !this.User.IsInRole(GlobalConstants.TrainerRoleName))
                                 {
                                     @if (trainer.ClientIds.Contains(userId))
                                     {

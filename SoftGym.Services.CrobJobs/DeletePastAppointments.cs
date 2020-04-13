@@ -18,10 +18,14 @@
 
         public async Task Work()
         {
-            var expiredAppointments = await this.appointmentsRepository
+            var allAppointments = await this.appointmentsRepository
                 .All()
-                .Where(x => x.StartTime.Subtract(DateTime.UtcNow).Days < 0)
                 .ToListAsync();
+
+           var expiredAppointments =
+                allAppointments
+                .Where(x => x.StartTime.Subtract(DateTime.UtcNow).Days < 0)
+                .ToList();
 
             foreach (var appointment in expiredAppointments)
             {

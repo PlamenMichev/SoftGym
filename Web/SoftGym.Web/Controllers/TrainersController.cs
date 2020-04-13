@@ -5,6 +5,7 @@
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using SoftGym.Common;
     using SoftGym.Services.Data.Contracts;
     using SoftGym.Services.Messaging;
     using SoftGym.Web.ViewModels.Trainers;
@@ -35,6 +36,7 @@
         {
             var clientId = this.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             await this.trainersService.AddClientToTrainer(clientId, id);
+
             return this.Redirect("/Trainers/MyTrainers");
         }
 
@@ -45,6 +47,7 @@
             var clientId = this.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             await this.trainersService.RemoveClientFromTrainer(clientId, id);
+
             return this.Redirect("/Trainers/MyTrainers");
         }
 
