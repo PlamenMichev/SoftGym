@@ -10,6 +10,7 @@
     using SoftGym.Data.Models;
     using SoftGym.Data.Repositories;
     using SoftGym.Services.Data.Contracts;
+    using SoftGym.Services.Mapping;
     using SoftGym.Web.ViewModels.Users;
     using Xunit;
 
@@ -118,6 +119,93 @@
             var service = new CardsService(repository, this.qrcodeService.Object, this.notificationsService.Object);
 
             await Assert.ThrowsAnyAsync<NullReferenceException>(async () => await service.AddVisitsToUser(userId, 12));
+        }
+
+        [Fact]
+        public async Task RemoveVisitsShouldRemoveExactlyOneVisit()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase("TestDb").Options;
+            var db = new ApplicationDbContext(options);
+            var repository = new EfDeletableEntityRepository<Card>(db);
+            var user = new ApplicationUser();
+            var newCard = new Card()
+            {
+                User = user,
+                UserId = user.Id,
+                Visits = 20,
+            };
+            await repository.AddAsync(newCard);
+            await repository.SaveChangesAsync();
+
+            var service = new CardsService(repository, this.qrcodeService.Object, this.notificationsService.Object);
+            var result = await service.RemoveVisitFromCard(newCard.Id);
+
+            Assert.Equal(19, result.Visits);
+        }
+
+        [Theory]
+        [InlineData("random id")]
+        [InlineData(null)]
+        [InlineData("")]
+        public async Task RemoveVisitsShouldReturnNull(string cardId)
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase("TestDb").Options;
+            var db = new ApplicationDbContext(options);
+            var repository = new EfDeletableEntityRepository<Card>(db);
+
+            var service = new CardsService(repository, this.qrcodeService.Object, this.notificationsService.Object);
+            var result = await service.RemoveVisitFromCard(cardId);
+
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public async Task GetCardViewModelAsyncShouldReturnCorrectModel()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase("TestDb").Options;
+            var db = new ApplicationDbContext(options);
+            var repository = new EfDeletableEntityRepository<Card>(db);
+            var user = new ApplicationUser();
+            await repository.AddAsync(new Card()
+            {
+                User = user,
+                UserId = user.Id,
+            });
+            await repository.SaveChangesAsync();
+            var service = new CardsService(repository, this.qrcodeService.Object, this.notificationsService.Object);
+
+            AutoMapperConfig.RegisterMappings(typeof(TestModel).Assembly);
+            var result = await service.GetCardViewModelAsync<TestModel>(user.Id);
+
+            Assert.Equal(user.CardId, result.Id);
+            Assert.Equal(0, result.Visits);
+        }
+
+        [Theory]
+        [InlineData("plamen")]
+        [InlineData(null)]
+        public async Task GetCardViewModelAsyncShouldReturnNull(string userId)
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase("TestDb").Options;
+            var db = new ApplicationDbContext(options);
+            var repository = new EfDeletableEntityRepository<Card>(db);
+            var service = new CardsService(repository, this.qrcodeService.Object, this.notificationsService.Object);
+
+            AutoMapperConfig.RegisterMappings(typeof(TestModel).Assembly);
+            var result = await service.GetCardViewModelAsync<TestModel>(userId);
+
+            Assert.Null(result);
+        }
+
+        public class TestModel : IMapFrom<Card>
+        {
+            public string Id { get; set; }
+
+            public int Visits { get; set; }
         }
     }
 }

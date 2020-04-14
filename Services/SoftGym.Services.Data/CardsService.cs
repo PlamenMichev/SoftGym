@@ -102,12 +102,15 @@
                 .All()
                 .FirstOrDefaultAsync(x => x.Id == cardId);
 
-            card.Visits -= 1;
-            await this.cardRepository.SaveChangesAsync();
-            await this.notificationsService.CreateNotificationAsync(
-                $"One visit was removed from your card.",
-                $"/Users/MyCard",
-                card.UserId);
+            if (card != null)
+            {
+                card.Visits -= 1;
+                await this.cardRepository.SaveChangesAsync();
+                await this.notificationsService.CreateNotificationAsync(
+                    $"One visit was removed from your card.",
+                    $"/Users/MyCard",
+                    card.UserId);
+            }
 
             return card;
         }

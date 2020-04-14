@@ -136,7 +136,7 @@
         {
             return await this.userRepository
                 .All()
-                .FirstAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<T> GetUserByIdAsync<T>(string id)
