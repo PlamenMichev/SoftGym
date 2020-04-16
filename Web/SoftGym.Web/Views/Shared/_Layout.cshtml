@@ -78,9 +78,9 @@
                                                     <li><a asp-action="All" asp-controller="Facilities" asp-area="" asp-route-type="Spa">Spa</a></li>
                                                 </ul>
                                             </li>
-                                            @if (!this.SignInManager.IsSignedIn(this.User) || 
-                                                this.User.IsInRole(GlobalConstants.TrainerRoleName) ||
-                                                this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                                            @if (!this.SignInManager.IsSignedIn(this.User) ||
+                                              this.User.IsInRole(GlobalConstants.TrainerRoleName) ||
+                                              this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                                             {
                                                 <li class="active"><a asp-action="All" asp-controller="Trainers" asp-area="">Trainers</a></li>
                                             }
@@ -104,10 +104,17 @@
                                                 </li>
                                             }
 
+                                            @if ((!this.User.IsInRole(GlobalConstants.AdministratorRoleName) &&
+                                               !this.User.IsInRole(GlobalConstants.TrainerRoleName)) && this.SignInManager.IsSignedIn(this.User))
+                                            {
+
+                                                <li class="active"><a asp-action="MyAppointments" asp-controller="Appointments" asp-area="">
+                                                     Appointments</a></li>
+                                            }
                                             <partial name="_LoginPartial" />
                                             @*
-                                                <li><a href="about.html">About</a></li>
-                                                <li><a href="contact.html">Contact</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
                                             *@
                                         </ul>
                                         <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3 float-right"><a href="#" class="site-menu-toggle js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>

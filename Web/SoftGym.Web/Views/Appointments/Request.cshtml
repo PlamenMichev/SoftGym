@@ -1,0 +1,89 @@
+﻿@model SoftGym.Web.ViewModels.Trainers.Appointments.AddAppointmentInputModel
+
+@using SoftGym.Data.Models.Enums
+@{
+    ViewData["Title"] = "Appointment Request";
+}
+
+<h1></h1>
+
+<h3 class="text-center mt-3">
+    Appointmet Request
+</h3>
+<hr />
+<form asp-controller="Appointments" asp-action="Request" method="post">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label asp-for="StartTime" class="label col-form-label">Start of the appointment</label>
+                    <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                        <input asp-for="StartTime" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" />
+                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+                    <span asp-validation-for="StartTime" class="text-danger"></span>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $(function () {
+                    $('#datetimepicker1').datetimepicker();
+                });
+            </script>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label asp-for="EndTime">End of the appointment</label>
+                    <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                        <input asp-for="EndTime" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" />
+                        <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+                    <span asp-validation-for="EndTime" class="text-danger"></span>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $(function () {
+                    $('#datetimepicker2').datetimepicker();
+                });
+            </script>
+        </div>
+
+        <div class="mb-2 row">
+            <div class="col-md-6">
+                <label asp-for="TrainerId">Client:</label>
+                <select class="form-control" asp-for="TrainerId">
+                    <option value="@null" selected>Select a client</option>
+                    @foreach (var trainer in Model.TrainersOptions)
+                    {
+                        <option value="@trainer.Id">@trainer.FirstName @trainer.LastName</option>
+                    }
+                </select>
+                <span asp-validation-for="ClientId" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="Type">Appointment goal:</label>
+                <select class="form-control" asp-for="Type" asp-items="Html.GetEnumSelectList<AppointmentType>()">
+                </select>
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-2 text-center justify-content-center row">
+            <div class="form-group col-md-6">
+                <div class="form-group shadow-textarea">
+                    <label asp-for="Notes" class="float-left">Notes(Optional):</label>
+                    <textarea asp-for="Notes" class="form-control z-depth-1" rows="3" placeholder="Notes..."></textarea>
+                    <span asp-validation-for="Notes" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <input asp-for="ClientId" value="@Model.ClientId" hidden />
+
+        <div class="text-center">
+            <button class="btn btn-primary pill mb-2">Add new request</button>
+        </div>
+    </div>
+</form>

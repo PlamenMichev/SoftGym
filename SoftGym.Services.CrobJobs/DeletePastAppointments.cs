@@ -31,6 +31,8 @@
             {
                 this.appointmentsRepository.Delete(appointment);
             }
+
+            await this.appointmentsRepository.SaveChangesAsync();
         }
     }
 }

@@ -24,5 +24,7 @@
 
         [MaxLength(300)]
         public string Notes { get; set; }
+
+        public bool IsApproved { get; set; }
     }
 }

@@ -1,0 +1,31 @@
+﻿@model SoftGym.Web.ViewModels.Trainers.Appointments.RequestsViewModel
+
+@{
+    ViewData["Title"] = "Requests";
+}
+
+@using System.Globalization
+@{
+    this.ViewData["Title"] = "Trainers dashboard";
+}
+
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+<hr />
+<div class="row">
+    <div class="col-md-3">
+        <partial name="../../../Administration/Views/Dashboard/_SideNavPartial" />
+    </div>
+    <div class="col main pt-1 mt-3 border">
+        <h3 class="text-center mt-3">
+            Appointment Requests
+        </h3>
+        <hr />
+        <ul class="list-group">
+            @foreach (var request in Model.Requests)
+            {
+                <li class="list-group-item">Request from @request.CreatedOn.Date.Day @request.CreatedOn.ToString("MMM", CultureInfo.CurrentCulture)</li>
+            }
+        </ul>
+
+    </div>
+</div>

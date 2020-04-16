@@ -45,6 +45,19 @@
             return this.View(viewModel);
         }
 
+        public async Task<IActionResult> Requests()
+        {
+            var trainer = await this.userManager.GetUserAsync(this.User);
+            string trainerId = await this.userManager.GetUserIdAsync(trainer);
+            var viewModel = new RequestsViewModel()
+            {
+                Requests = await this.appointmentsService
+                .GetAppointmentRequestsForTrainer<RequestViewModel>(trainerId),
+            };
+
+            return this.View(viewModel);
+        }
+
         public async Task<IActionResult> GetAppointments()
         {
             var trainer = await this.userManager.GetUserAsync(this.User);
@@ -85,10 +98,11 @@
                 return this.View(inputModel);
             }
 
+            inputModel.IsApproved = true;
             var result = await this.appointmentsService.AddAppoinmentAsync(inputModel);
             if (result == null)
             {
-                return this.NotFound();
+                return this.BadRequest();
             }
 
             return this.Redirect("/Trainers/Dashboard/Index");

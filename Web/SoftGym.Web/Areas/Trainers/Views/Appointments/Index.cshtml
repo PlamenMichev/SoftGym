@@ -1,5 +1,4 @@
 ﻿
-@using SoftGym.Data.Models.Enums
 @{ 
     this.ViewData["Title"] = "Scheduler";
 }
@@ -10,10 +9,13 @@
     <div class="col-md-3">
         <partial name="../../../Administration/Views/Dashboard/_SideNavPartial" />
     </div>
-    <div class="col main pt-5 mt-3 border">
+    <div class="col main pt-5 mt-3 border text-center">
         <div class="row justify-content-center m-2">
-            <div>
+            <div class="col-md-6">
                 <a asp-controller="Appointments" asp-action="Add" class="btn custom-blue text-white">New Appointment</a>
+            </div>
+            <div class="col-md-6">
+                <a asp-controller="Appointments" asp-action="Requests" class="btn custom-blue text-white">Appointment Requests</a>
             </div>
         </div>
 

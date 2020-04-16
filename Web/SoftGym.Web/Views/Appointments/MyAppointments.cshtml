@@ -1,0 +1,103 @@
+﻿@{
+    this.ViewData["Title"] = "Scheduler";
+}
+
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+<hr />
+<div class="row justify-content-center">
+    <div class="row m-2 text-center">
+        <div class="col-md-6">
+            <a asp-controller="Appointments" asp-action="Request" class="btn custom-blue text-white">New Appointment</a>
+        </div>
+        <div class="col-md-6">
+            <a asp-controller="Appointments" asp-action="Remove" class="btn custom-blue text-white">Remove Appointment</a>
+        </div>
+    </div>
+
+    @*Description Modal*@
+    <div class="modal" tabindex="-1" role="dialog" id="myModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="eventTitle"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="pDetails">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center m-2">
+        <h2>My Appointments</h2>
+        <hr />
+        <div id="calender"></div>
+        <script>
+            $(document).ready(function () {
+                var events = [];
+                $.ajax({
+                    type: "GET",
+                    url: "/Appointments/GetAppointments",
+                    success: function (data) {
+                        $.each(data, function (i, v) {
+                            events.push({
+                                title: v.trainerFirstName + " " + v.trainerLastName,
+                                start: moment(v.startTime),
+                                end: v.endTime != null ? moment(v.endTime) : null,
+                                description: v.notes,
+                                color: v.type == 1 ? "#FF6347" : v.type == 2 ? "#00BFFF" : "#ADFF2F",
+                                type: v.type,
+                            });
+                        })
+                        GenerateCalender(events);
+                    },
+                    error: function (error) {
+                        alert('failed');
+                    }
+                })
+
+                function GenerateCalender(events) {
+                    $('#calender').fullCalendar('destroy');
+                    $('#calender').fullCalendar({
+                        contentHeight: 400,
+                        defaultDate: new Date(),
+                        timeFormat: 'h(:mm)a',
+                        header: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'month,basicWeek,basicDay,agenda'
+                        },
+                        eventLimit: true,
+                        eventColor: '#378006',
+                        events: events,
+                        eventClick: function (calEvent, jsEvent, view) {
+                            let appointmentType;
+                            switch (calEvent.type) {
+                                case 1: appointmentType = "Consultation"; break;
+                                case 2: appointmentType = "Training"; break;
+                                case 3: appointmentType = "Payment"; break;
+                            }
+                            $('#myModal #eventTitle').text(appointmentType + " with " + calEvent.title);
+                            var $description = $('<div/>');
+                            $description.append($('<p/>').html('<b>Start: </b>' + calEvent.start.format("DD-MMM-YYYY HH:mm a")));
+                            if (calEvent.end != null) {
+                                $description.append($('<p/>').html('<b>End: </b>' + calEvent.end.format("DD-MMM-YYYY HH:mm a")));
+                            }
+                            if (calEvent.description != undefined) {
+                                $description.append($('<p/>').html('<b>Description: </b>' + calEvent.description));
+                            }
+                            $('#myModal #pDetails').empty().html($description);
+
+                            $('#myModal').modal();
+                        }
+                    })
+                }
+            });
+        </script>
+    </div>
+</div>

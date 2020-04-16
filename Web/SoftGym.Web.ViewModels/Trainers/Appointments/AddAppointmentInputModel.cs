@@ -14,6 +14,7 @@
         [Required(ErrorMessage = "Appointment end time is required")]
         public DateTime? EndTime { get; set; }
 
+        [Required(ErrorMessage = "Trainer is required")]
         public string TrainerId { get; set; }
 
         [Required(ErrorMessage = "Client is required")]
@@ -24,6 +25,10 @@
 
         public IEnumerable<ClientOptionsViewModel> ClientsOptions { get; set; }
 
+        public IEnumerable<TrainerOptionsViewModel> TrainersOptions { get; set; }
+
         public string Notes { get; set; }
+
+        public bool IsApproved { get; set; }
     }
 }
