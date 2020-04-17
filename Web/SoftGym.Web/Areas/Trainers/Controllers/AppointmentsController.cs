@@ -107,5 +107,15 @@
 
             return this.Redirect("/Trainers/Dashboard/Index");
         }
+
+        public async Task<IActionResult> Approve(ApproveInputModel inputModel)
+        {
+            var trainer = await this.userManager.GetUserAsync(this.User);
+            string trainerId = await this.userManager.GetUserIdAsync(trainer);
+
+            await this.appointmentsService.ApproveAppointment(inputModel.AppointmentId, trainerId, inputModel.ClientId);
+
+            return this.Redirect("/Trainers/Appointments/");
+        }
     }
 }

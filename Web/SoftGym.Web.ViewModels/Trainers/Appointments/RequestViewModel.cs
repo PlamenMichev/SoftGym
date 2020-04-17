@@ -8,11 +8,19 @@
 
     public class RequestViewModel : IMapFrom<Appointment>
     {
+        public int Id { get; set; }
+
         public string ClientId { get; set; }
 
         public string ClientFirstName { get; set; }
 
         public string ClientLastName { get; set; }
+
+        public string ClientProfilePictureUrl { get; set; }
+
+        public string ClientEmail { get; set; }
+
+        public string ClientPhoneNumber { get; set; }
 
         public DateTime StartTime { get; set; }
 

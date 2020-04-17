@@ -24,5 +24,9 @@
         public Task<IEnumerable<T>> GetAppointmentsForClient<T>(string clientId);
 
         public Task<IEnumerable<T>> GetAppointmentRequestsForTrainer<T>(string trainerId);
+
+        public Task<Appointment> DeleteAppointment(string appointmentAttenderId, string deleterId, int appointmentId, bool isDeleterTrainer);
+
+        public Task<Appointment> ApproveAppointment(int appointmentId, string trainerId, string clientId);
     }
 }

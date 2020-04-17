@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
+    using SoftGym.Common;
     using SoftGym.Services.Data.Contracts;
     using SoftGym.Web.ViewModels.Appointments;
     using SoftGym.Web.ViewModels.Trainers.Appointments;
@@ -87,6 +88,15 @@
 
             var viewModel = await this.appointmentsService.GetAppointmentsForClient<ClientSchedulerViewModel>(userId);
             return this.Json(viewModel);
+        }
+
+        public async Task<IActionResult> Delete(DeleteInputModel inputModel)
+        {
+            var userId = this.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var isDeleterTrainer = this.User.IsInRole(GlobalConstants.TrainerRoleName);
+
+            await this.appointmentsService.DeleteAppointment(inputModel.AttenderId, userId, inputModel.AppointmentId, isDeleterTrainer);
+            return this.Redirect(inputModel.RedirectPath);
         }
     }
 }

@@ -487,3 +487,10 @@ body {
         margin-bottom: 15px !important;
     }
 }
+
+#modalImage {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer
+}

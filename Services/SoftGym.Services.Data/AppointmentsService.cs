@@ -66,14 +66,14 @@
             {
                 await this.notificationsService.CreateNotificationAsync(
                 $"You have new appointment with {trainer.FirstName} {trainer.LastName} for " +
-                $"{appointment.StartTime.Date.ToString("hh:mm")} " +
+                $"{appointment.StartTime.Hour.ToString("d2")}:{appointment.StartTime.Minute.ToString("d2")} " +
                 $"o'clock on {appointment.StartTime.Date.DayOfWeek}",
                 $"/Appointments/MyAppointments",
                 client.Id);
 
                 await this.notificationsService.CreateNotificationAsync(
                     $"You have new appointment with {client.FirstName} {client.LastName} for " +
-                    $"{appointment.StartTime.Date.ToString("hh:mm")} " +
+                    $"{appointment.StartTime.Hour.ToString("d2")}:{appointment.StartTime.Minute.ToString("d2")} " +
                     $"o'clock on {appointment.StartTime.Date.DayOfWeek}",
                     $"/Trainers/Appointments/",
                     trainer.Id);
@@ -83,15 +83,15 @@
                 await this.notificationsService.CreateNotificationAsync(
                 $"You have sent an appointment request for {appointment.Type.ToString()} " +
                 $"with {trainer.FirstName} {trainer.LastName} for " +
-                $"{appointment.StartTime.Date.ToString("hh:mm")} " +
+                $"{appointment.StartTime.Hour.ToString("d2")}:{appointment.StartTime.Minute.ToString("d2")} " +
                 $"o'clock on {appointment.StartTime.Date.DayOfWeek}",
-                $"#",
+                $"/Appointments/MyAppointments",
                 client.Id);
 
                 await this.notificationsService.CreateNotificationAsync(
                 $"You have recieved an appointment request for {appointment.Type.ToString()} " +
                 $"with {trainer.FirstName} {trainer.LastName} for " +
-                $"{appointment.StartTime.Date.ToString("hh:mm")} " +
+                $"{appointment.StartTime.Hour.ToString("d2")}:{appointment.StartTime.Minute.ToString("d2")} " +
                 $"o'clock on {appointment.StartTime.Date.DayOfWeek}",
                 $"/Trainers/Appointments/Requests",
                 trainer.Id);
@@ -156,6 +156,108 @@
                 .Where(x => x.TrainerId == trainerId && x.IsApproved == false)
                 .To<T>()
                 .ToListAsync();
+        }
+
+        public async Task<Appointment> DeleteAppointment(
+            string appointmentAttenderId,
+            string deleterId,
+            int appointmentId,
+            bool isDeleterTrainer)
+        {
+            var deleterName = await this.usersRepository
+                .All()
+                .Where(x => x.Id == deleterId)
+                .Select(x => x.FirstName + " " + x.LastName)
+                .FirstAsync();
+
+            var appointment = await this.appointmentsRepository
+                .All()
+                .FirstAsync(x => x.Id == appointmentId);
+
+            this.appointmentsRepository.Delete(appointment);
+            await this.appointmentsRepository.SaveChangesAsync();
+
+            var currentUserContent = $"You have cancelled {appointment.Type.ToString()} " +
+                    $"on {appointment.StartTime.Day} {appointment.StartTime.ToString("MMMM")}";
+            var content = $"{deleterName} has cancelled {appointment.Type.ToString()} " +
+                    $"on {appointment.StartTime.Day} {appointment.StartTime.ToString("MMMM")}";
+
+            var trainerUrl = "/Trainers/Appointments/Requests";
+            var clientUrl = "/Appointments/MyAppointments";
+
+            if (isDeleterTrainer)
+            {
+                await this.notificationsService
+                                .CreateNotificationAsync(
+                                currentUserContent,
+                                trainerUrl,
+                                deleterId);
+
+                await this.notificationsService
+                    .CreateNotificationAsync(
+                    content,
+                    clientUrl,
+                    appointmentAttenderId);
+            }
+            else
+            {
+                await this.notificationsService
+                                .CreateNotificationAsync(
+                                currentUserContent,
+                                clientUrl,
+                                deleterId);
+
+                await this.notificationsService
+                    .CreateNotificationAsync(
+                    content,
+                    trainerUrl,
+                    appointmentAttenderId);
+            }
+
+            return appointment;
+        }
+
+        public async Task<Appointment> ApproveAppointment(int appointmentId, string trainerId, string clientId)
+        {
+            var appointment = await this.appointmentsRepository
+                .All()
+                .FirstAsync(x => x.Id == appointmentId);
+            appointment.IsApproved = true;
+            await this.appointmentsRepository.SaveChangesAsync();
+
+            var clientFullName = await this.usersRepository
+                .All()
+                .Where(x => x.Id == clientId)
+                .Select(x => x.FirstName + " " + x.LastName)
+                .FirstAsync();
+
+            var trainerFullName = await this.usersRepository
+                .All()
+                .Where(x => x.Id == trainerId)
+                .Select(x => x.FirstName + " " + x.LastName)
+                .FirstAsync();
+
+            // Send Notifications
+            var notificationContentForTrainer = $"You have accepted an appointment request by " +
+                $"{clientFullName} for {appointment.Type.ToString()} on " +
+                $"{appointment.StartTime.Day} {appointment.StartTime.ToString("MMMM")}";
+            var notificationContentForClient = $"{trainerFullName} has accepted an appointment request sent by you" +
+                $"for {appointment.Type.ToString()} on " +
+                $"{appointment.StartTime.Day} {appointment.StartTime.ToString("MMMM")}";
+
+            await this.notificationsService
+                .CreateNotificationAsync(
+                notificationContentForTrainer,
+                "/Trainers/Appointments/",
+                trainerId);
+
+            await this.notificationsService
+                .CreateNotificationAsync(
+                notificationContentForClient,
+                "/Appointments/MyAppointments",
+                clientId);
+
+            return appointment;
         }
     }
 }
