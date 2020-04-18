@@ -239,6 +239,8 @@ body {
     padding: 0.75rem 0 !important;
     overflow-y: auto;
     white-space: nowrap;
+    overflow: hidden;
+    background-color: rgb(242, 58, 46) !important;
 }
 
 .msg_card_body {
@@ -376,8 +378,9 @@ body {
     }
 
     .user_info p {
-        font-size: 10px;
+        font-size: 17px;
         color: rgba(255,255,255,0.6);
+        word-break: break-word;
     }
 
 .video_cam {

@@ -1,0 +1,47 @@
+﻿@model SoftGym.Web.ViewModels.Messages.LatestsChatsViewModel
+@using System.Security.Claims;
+<div class="card my-sm-3 mb-md-0 contacts_card">
+    <div class="contacts_body">
+        <div class="card-header">
+            <h4 style="color:white">Latest chats</h4>
+            <hr />
+
+
+        </div>
+        <ul class="contacts">
+
+            @foreach (var chat in Model.Chats)
+            {
+                if (this.User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value != chat.SenderId)
+                {
+                    <li>
+                        <div class="d-flex bd-highlight">
+                            <div class="img_cont">
+                                <img src="@chat.SenderProfilePicture" class="rounded-circle user_img">
+                            </div>
+                            <div class="user_info">
+                                <span>@chat.SenderFirstName</span>
+                                <p>@chat.Message</p>
+                            </div>
+                        </div>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <div class="d-flex bd-highlight">
+                            <div class="img_cont">
+                                <img src="@chat.RecieverProfilePictureUrl" class="rounded-circle user_img">
+                            </div>
+                            <div class="user_info">
+                                <span>@chat.RecieverFirstName</span>
+                                <p>@chat.Message</p>
+                            </div>
+                        </div>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+    <div class="card-footer"></div>
+</div>

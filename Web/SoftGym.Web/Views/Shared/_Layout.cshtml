@@ -127,28 +127,34 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <div class="container pb-5">
-                    <partial name="_CookieConsentPartial" />
-                    <main role="main" class="pb-3">
-                        @this.RenderBody()
-                    </main>
+            <div class="col-md-2">
+                @if (this.SignInManager.IsSignedIn(this.User))
+                {
+                    <vc:latest-chats></vc:latest-chats>
+                }
+            </div>
+                <div class="col-md-8">
+                    <div class="container pb-5">
+                        <partial name="_CookieConsentPartial" />
+                        <main role="main" class="pb-3">
+                            @this.RenderBody()
+                        </main>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <cache expires-after="@TimeSpan.FromMinutes(5)">
+                        <vc:latest-facilities></vc:latest-facilities>
+                    </cache>
                 </div>
             </div>
-            <div class="col-md-2">
-                <cache expires-after="@TimeSpan.FromMinutes(5)">
-                    <vc:latest-facilities></vc:latest-facilities>
-                </cache>
-            </div>
+
+
+            <footer class="footer">
+                <div class="container">
+                    &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                </div>
+            </footer>
         </div>
-
-
-        <footer class="footer">
-            <div class="container">
-                &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-            </div>
-        </footer>
-    </div>
 
     <script src="~/js/jquery-migrate-3.0.1.min.js"></script>
     <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>

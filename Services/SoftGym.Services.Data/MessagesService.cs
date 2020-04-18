@@ -5,10 +5,12 @@
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
+    using MoreLinq;
     using SoftGym.Data.Common.Repositories;
     using SoftGym.Data.Models;
     using SoftGym.Services.Data.Contracts;
     using SoftGym.Services.Mapping;
+    using SoftGym.Web.ViewModels.Messages;
 
     public class MessagesService : IMessagesService
     {
@@ -46,6 +48,40 @@
 
             this.messagesRepository.Delete(message);
             return message;
+        }
+
+        public async Task<IEnumerable<LatestChatViewModel>> GetLatestChatsAsync(string userId)
+        {
+            var messages = this.messagesRepository
+                .All()
+                .Where(x => x.RecieverId == userId || x.SenderId == userId)
+                .Select(x => new LatestChatViewModel
+                {
+                    Content = x.Content,
+                    RecieverFirstName = x.Reciever.FirstName,
+                    RecieverProfilePictureUrl = x.Reciever.ProfilePictureUrl,
+                    RecieverId = x.Reciever.Id,
+                    SenderId = x.SenderId,
+                    CreatedOn = x.CreatedOn,
+                    SenderProfilePicture = x.Sender.ProfilePictureUrl,
+                    SenderFirstName = x.Sender.FirstName,
+                })
+                .OrderByDescending(x => x.CreatedOn)
+                .DistinctBy(x => x.RecieverId)
+                .Take(5)
+                .ToList();
+
+            var result = new List<LatestChatViewModel>();
+            foreach (var message in messages)
+            {
+                if (this.messagesRepository.AllAsNoTracking()
+                    .Any(y => (y.CreatedOn > message.CreatedOn) && (y.RecieverId == message.RecieverId || y.SenderId == message.RecieverId)) == false)
+                {
+                    result.Add(message);
+                }
+            }
+
+            return result;
         }
 
         public async Task<IEnumerable<T>> GetMessagesAsync<T>(string senderId, string recieverId)
