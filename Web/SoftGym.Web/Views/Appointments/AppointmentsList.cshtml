@@ -1,0 +1,34 @@
+﻿@model SoftGym.Web.ViewModels.Trainers.Appointments.ListAppointmentsViewModel
+
+@{
+    ViewData["Title"] = "My appointments";
+}
+    <h2 class="m-2 text-center">My Appointments</h2>
+    <hr />
+
+    <ol class="list-group my-3">
+        @foreach (var appointment in Model.Appointments.OrderBy(x => x.StartTime))
+        {
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-10">
+                        <h5>
+                            @appointment.Type.ToString() with @appointment.TrainerFirstName @appointment.TrainerLastName
+                            on @appointment.StartTime.DayOfWeek, @appointment.StartTime.Day @appointment.StartTime.ToString("MMMM") at
+                            @appointment.StartTime.Hour.ToString("d2"):@appointment.StartTime.Minute.ToString("d2") o'clock
+                        </h5>
+                    </div>
+                    <div class="col-md-2 text-right">
+                        <form asp-controller="Appointments" asp-action="Delete" asp-area="" method="post">
+                            <input type="text" name="AppointmentId" value="@appointment.Id" hidden />
+                            <input type="text" name="RedirectPath" value="/Appointments/MyAppointments" hidden />
+                            <input type="text" name="AttenderId" value="@appointment.TrainerId" hidden />
+                            <button type="submit" class="btn btn-primary">
+                                Cancel
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </li>
+        }
+    </ol>

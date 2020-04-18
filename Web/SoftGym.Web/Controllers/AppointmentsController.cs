@@ -98,5 +98,16 @@
             await this.appointmentsService.DeleteAppointment(inputModel.AttenderId, userId, inputModel.AppointmentId, isDeleterTrainer);
             return this.Redirect(inputModel.RedirectPath);
         }
+
+        public async Task<IActionResult> AppointmentsList()
+        {
+            var userId = this.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var viewModel = new ListAppointmentsViewModel()
+            {
+                Appointments = await this.appointmentsService.GetAppointmentsForClient<ListAppointmentViewModel>(userId),
+            };
+
+            return this.View(viewModel);
+        }
     }
 }

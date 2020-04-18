@@ -182,7 +182,7 @@
             var content = $"{deleterName} has cancelled {appointment.Type.ToString()} " +
                     $"on {appointment.StartTime.Day} {appointment.StartTime.ToString("MMMM")}";
 
-            var trainerUrl = "/Trainers/Appointments/Requests";
+            var trainerUrl = "/Trainers/Appointments/";
             var clientUrl = "/Appointments/MyAppointments";
 
             if (isDeleterTrainer)
