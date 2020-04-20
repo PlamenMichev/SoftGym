@@ -1,4 +1,4 @@
-﻿namespace SoftGym.Services.Data
+﻿namespace SoftGym.Services
 {
     using System;
     using System.Collections.Generic;
@@ -7,7 +7,7 @@
 
     using Microsoft.Extensions.Configuration;
     using PayPal.Api;
-    using SoftGym.Services.Data.Contracts;
+    using SoftGym.Services.Contracts;
 
     public class PaypalService : IPaypalService
     {

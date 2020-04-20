@@ -1,4 +1,4 @@
-﻿namespace SoftGym.Services.Data
+﻿namespace SoftGym.Services
 {
     using System.IO;
     using System.Linq;
@@ -8,7 +8,7 @@
     using CloudinaryDotNet.Actions;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Configuration;
-    using SoftGym.Services.Data.Contracts;
+    using SoftGym.Services.Contracts;
 
     public class CloudinaryService : ICloudinaryService
     {

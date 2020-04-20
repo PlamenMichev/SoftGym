@@ -5,6 +5,7 @@
 
     using Microsoft.AspNetCore.Mvc;
     using SoftGym.Data.Models.Enums;
+    using SoftGym.Services.Contracts;
     using SoftGym.Services.Data.Contracts;
     using SoftGym.Web.ViewModels.Administration.Facilities;
 

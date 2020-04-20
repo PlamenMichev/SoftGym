@@ -20,6 +20,8 @@
     using SoftGym.Data.Models;
     using SoftGym.Data.Repositories;
     using SoftGym.Data.Seeding;
+    using SoftGym.Services;
+    using SoftGym.Services.Contracts;
     using SoftGym.Services.CronJobs;
     using SoftGym.Services.Data;
     using SoftGym.Services.Data.Contracts;

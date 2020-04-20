@@ -1,4 +1,4 @@
-﻿namespace SoftGym.Services.Data.Contracts
+﻿namespace SoftGym.Services.Contracts
 {
     using System.Threading.Tasks;
 

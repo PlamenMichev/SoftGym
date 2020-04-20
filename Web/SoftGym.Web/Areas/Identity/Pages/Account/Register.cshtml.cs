@@ -17,6 +17,7 @@
     using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Extensions.Logging;
     using SoftGym.Data.Models;
+    using SoftGym.Services.Contracts;
     using SoftGym.Services.Data.Contracts;
 
     [AllowAnonymous]

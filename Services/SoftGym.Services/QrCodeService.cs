@@ -1,4 +1,4 @@
-﻿namespace SoftGym.Services.Data
+﻿namespace SoftGym.Services
 {
     using System.Drawing;
     using System.Drawing.Imaging;
@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
 
     using QRCoder;
-    using SoftGym.Services.Data.Contracts;
+    using SoftGym.Services.Contracts;
 
     public class QrCodeService : IQrCodeService
     {

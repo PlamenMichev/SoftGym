@@ -32,6 +32,7 @@
     <ProjectReference Include="..\..\SoftGym.Common\SoftGym.Common.csproj" />
     <ProjectReference Include="..\..\Web\SoftGym.Web.ViewModels\SoftGym.Web.ViewModels.csproj" />
     <ProjectReference Include="..\SoftGym.Services.Mapping\SoftGym.Services.Mapping.csproj" />
+    <ProjectReference Include="..\SoftGym.Services\SoftGym.Services.csproj" />
   </ItemGroup>
 
 </Project>

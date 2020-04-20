@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
+    using SoftGym.Services.Contracts;
     using SoftGym.Services.Data.Contracts;
 
     public class PaypalController : BaseController

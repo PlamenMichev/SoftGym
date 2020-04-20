@@ -9,6 +9,7 @@
     using SoftGym.Data.Common.Repositories;
     using SoftGym.Data.Models;
     using SoftGym.Data.Repositories;
+    using SoftGym.Services.Contracts;
     using SoftGym.Services.Data.Contracts;
     using SoftGym.Services.Mapping;
     using SoftGym.Web.ViewModels.Users;

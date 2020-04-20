@@ -6,6 +6,7 @@
     using Microsoft.EntityFrameworkCore;
     using SoftGym.Data.Common.Repositories;
     using SoftGym.Data.Models;
+    using SoftGym.Services.Contracts;
     using SoftGym.Services.Data.Contracts;
     using SoftGym.Services.Mapping;
 
