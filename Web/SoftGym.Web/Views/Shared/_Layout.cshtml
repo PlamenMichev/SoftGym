@@ -128,7 +128,7 @@
         </div>
         <div class="row">
             <div class="col-md-2">
-                @if (this.SignInManager.IsSignedIn(this.User))
+                @if (this.SignInManager.IsSignedIn(this.User) && !this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                 {
                     <vc:latest-chats></vc:latest-chats>
                 }

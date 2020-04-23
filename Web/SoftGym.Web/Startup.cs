@@ -135,10 +135,7 @@
             {
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-                if (env.IsDevelopment())
-                {
-                    dbContext.Database.Migrate();
-                }
+                dbContext.Database.Migrate();
 
                 new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
                 this.SeedHangfireJobs(recurringJobManager, dbContext);
@@ -165,12 +162,6 @@
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseHangfireDashboard("/hangfire", new DashboardOptions
-            {
-                Authorization = new[] { new HangfireAuthorizationFilter() },
-            });
-            app.UseHangfireServer();
-
             app.UseEndpoints(
                 endpoints =>
                 {
@@ -180,6 +171,12 @@
                     endpoints.MapRazorPages();
                     endpoints.MapControllers();
                 });
+
+            app.UseHangfireDashboard("/hangfire", new DashboardOptions
+            {
+                Authorization = new[] { new HangfireAuthorizationFilter() },
+            });
+            app.UseHangfireServer();
         }
 
         private void SeedHangfireJobs(IRecurringJobManager recurringJobManager, ApplicationDbContext dbContext)
