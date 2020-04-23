@@ -26,6 +26,7 @@
             this.cardRepository = new Mock<IDeletableEntityRepository<Card>>();
             this.qrcodeService = new Mock<IQrCodeService>();
             this.notificationsService = new Mock<INotificationsService>();
+            new MapperInitializationProfile();
         }
 
         [Theory]
@@ -47,7 +48,7 @@
         public async Task GenerateCardShouldReturnNewCard()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase("CardsDb").Options;
+                .UseInMemoryDatabase(Guid.NewGuid().ToString()).Options;
             var db = new ApplicationDbContext(options);
             var repository = new EfDeletableEntityRepository<Card>(db);
 
@@ -62,7 +63,7 @@
         public async Task GenerateCardShouldHavePropertiesAfterCreation()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase("CardsDb").Options;
+                .UseInMemoryDatabase(Guid.NewGuid().ToString()).Options;
             var db = new ApplicationDbContext(options);
             var repository = new EfDeletableEntityRepository<Card>(db);
 
@@ -79,7 +80,7 @@
         public async Task AddVisitsToUserShouldWorkCorrectly()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase("CardsDb").Options;
+                .UseInMemoryDatabase(Guid.NewGuid().ToString()).Options;
             var db = new ApplicationDbContext(options);
             var repository = new EfDeletableEntityRepository<Card>(db);
             var user = new ApplicationUser();
@@ -106,7 +107,7 @@
         public async Task AddVisitsToUserShouldThrow(string userId)
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase("CardsDb").Options;
+                .UseInMemoryDatabase(Guid.NewGuid().ToString()).Options;
             var db = new ApplicationDbContext(options);
             var repository = new EfDeletableEntityRepository<Card>(db);
             var user = new ApplicationUser();
@@ -126,7 +127,7 @@
         public async Task RemoveVisitsShouldRemoveExactlyOneVisit()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase("TestDb").Options;
+                .UseInMemoryDatabase(Guid.NewGuid().ToString()).Options;
             var db = new ApplicationDbContext(options);
             var repository = new EfDeletableEntityRepository<Card>(db);
             var user = new ApplicationUser();
@@ -152,7 +153,7 @@
         public async Task RemoveVisitsShouldReturnNull(string cardId)
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase("TestDb").Options;
+                .UseInMemoryDatabase(Guid.NewGuid().ToString()).Options;
             var db = new ApplicationDbContext(options);
             var repository = new EfDeletableEntityRepository<Card>(db);
 
@@ -166,7 +167,7 @@
         public async Task GetCardViewModelAsyncShouldReturnCorrectModel()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase("TestDb").Options;
+                .UseInMemoryDatabase(Guid.NewGuid().ToString()).Options;
             var db = new ApplicationDbContext(options);
             var repository = new EfDeletableEntityRepository<Card>(db);
             var user = new ApplicationUser();
@@ -178,8 +179,7 @@
             await repository.SaveChangesAsync();
             var service = new CardsService(repository, this.qrcodeService.Object, this.notificationsService.Object);
 
-            AutoMapperConfig.RegisterMappings(typeof(TestModel).Assembly);
-            var result = await service.GetCardViewModelAsync<TestModel>(user.Id);
+            var result = await service.GetCardViewModelAsync<TestCardModel>(user.Id);
 
             Assert.Equal(user.CardId, result.Id);
             Assert.Equal(0, result.Visits);
@@ -191,18 +191,17 @@
         public async Task GetCardViewModelAsyncShouldReturnNull(string userId)
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase("TestDb").Options;
+                .UseInMemoryDatabase(Guid.NewGuid().ToString()).Options;
             var db = new ApplicationDbContext(options);
             var repository = new EfDeletableEntityRepository<Card>(db);
             var service = new CardsService(repository, this.qrcodeService.Object, this.notificationsService.Object);
 
-            AutoMapperConfig.RegisterMappings(typeof(TestModel).Assembly);
-            var result = await service.GetCardViewModelAsync<TestModel>(userId);
+            var result = await service.GetCardViewModelAsync<TestCardModel>(userId);
 
             Assert.Null(result);
         }
 
-        public class TestModel : IMapFrom<Card>
+        public class TestCardModel : IMapFrom<Card>
         {
             public string Id { get; set; }
 

@@ -146,7 +146,7 @@
 
         public bool IsStartTimePast(DateTime startTime)
         {
-            return DateTime.Now.Subtract(startTime).TotalMinutes >= 0;
+            return DateTime.UtcNow.Subtract(startTime).TotalMinutes >= 0;
         }
 
         public async Task<IEnumerable<T>> GetAppointmentRequestsForTrainer<T>(string trainerId)

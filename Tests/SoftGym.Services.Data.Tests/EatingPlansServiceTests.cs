@@ -43,6 +43,7 @@
             this.mealsRepository = new Mock<IDeletableEntityRepository<Meal>>();
             this.usersService =
                 new Mock<IUsersService>();
+            new MapperInitializationProfile();
         }
 
         public async Task<EatingPlansService> Before()
@@ -432,7 +433,6 @@
             await eatingPlansRepositoryInMemory.AddAsync(plan);
             await eatingPlansRepositoryInMemory.SaveChangesAsync();
 
-            AutoMapperConfig.RegisterMappings(typeof(TestModel).Assembly);
             var result = await service.GetPlanAsync<TestModel>(plan.Id);
 
             Assert.Equal(user.EatingPlans.First().Id, result.Id);
