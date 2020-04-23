@@ -24,7 +24,7 @@
             var viewModel = new LatestsChatsViewModel()
             {
                 Chats = this.messagesService
-                .GetLatestChatsAsync(userId).GetAwaiter().GetResult(),
+                .GetLatestChatsAsync(userId),
             };
 
             return this.View(viewModel);

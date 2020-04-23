@@ -14,6 +14,6 @@
 
         public Task<IEnumerable<T>> GetMessagesAsync<T>(string senderId, string recieverId);
 
-        public Task<IEnumerable<LatestChatViewModel>> GetLatestChatsAsync(string userId);
+        public IEnumerable<LatestChatViewModel> GetLatestChatsAsync(string userId);
     }
 }

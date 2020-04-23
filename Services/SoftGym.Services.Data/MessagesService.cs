@@ -50,7 +50,7 @@
             return message;
         }
 
-        public async Task<IEnumerable<LatestChatViewModel>> GetLatestChatsAsync(string userId)
+        public IEnumerable<LatestChatViewModel> GetLatestChatsAsync(string userId)
         {
             var messages = this.messagesRepository
                 .All()

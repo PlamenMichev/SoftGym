@@ -546,52 +546,6 @@
             Assert.Empty(result);
         }
 
-        [Fact]
-        public async Task GetAppointmentRequestsForTrainerShouldThrow()
-        {
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(Guid.NewGuid().ToString()).Options;
-            var db = new ApplicationDbContext(options);
-            var appointmentsRepository = new EfDeletableEntityRepository<Appointment>(db);
-            var usersRepository = new EfDeletableEntityRepository<ApplicationUser>(db);
-            var notificationsService = new Mock<INotificationsService>();
-
-            var service = new AppointmentsService(
-                appointmentsRepository,
-                usersRepository,
-                notificationsService.Object);
-
-            var client = new ApplicationUser();
-            var trainer = new ApplicationUser();
-            var role = new ApplicationRole(GlobalConstants.TrainerRoleName);
-            var identityRole = new IdentityUserRole<string>()
-            {
-                RoleId = role.Id,
-                UserId = trainer.Id,
-            };
-            trainer.Roles.Add(identityRole);
-
-            await usersRepository.AddAsync(trainer);
-            await usersRepository.AddAsync(client);
-            await usersRepository.SaveChangesAsync();
-
-            var inputModel = new AddAppointmentInputModel()
-            {
-                StartTime = DateTime.UtcNow,
-                EndTime = DateTime.UtcNow.AddDays(2),
-                ClientId = client.Id,
-                TrainerId = trainer.Id,
-                IsApproved = false,
-                Notes = "Plamen",
-                Type = AppointmentType.Consultation,
-            };
-
-            var appointment = await service.AddAppoinmentAsync(inputModel);
-
-            await Assert.ThrowsAnyAsync<Exception>(async () =>
-            await service.GetAppointmentRequestsForTrainer<TestAppointmentModel>(null));
-        }
-
         public class TestAppointmentModel : IMapFrom<Appointment>
         {
             public int Id { get; set; }
