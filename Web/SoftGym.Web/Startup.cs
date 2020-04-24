@@ -44,6 +44,12 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationDbContext>(
+                options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
+                    .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+
             // Add Hangfire
             services.AddHangfire(config =>
             {
@@ -59,12 +65,6 @@
                     DisableGlobalLocks = true,
                 });
             });
-
-            services.AddDbContext<ApplicationDbContext>(
-                options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
-                    .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
             // Add Facebook auth
             services.AddAuthentication()
@@ -176,6 +176,12 @@
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseHangfireDashboard("/hangfire", new DashboardOptions
+            {
+                Authorization = new[] { new HangfireAuthorizationFilter() },
+            });
+            app.UseHangfireServer();
+
             app.UseEndpoints(
                 endpoints =>
                 {
@@ -185,12 +191,6 @@
                     endpoints.MapRazorPages();
                     endpoints.MapControllers();
                 });
-
-            app.UseHangfireDashboard("/hangfire", new DashboardOptions
-            {
-                Authorization = new[] { new HangfireAuthorizationFilter() },
-            });
-            app.UseHangfireServer();
         }
 
         private void SeedHangfireJobs(IRecurringJobManager recurringJobManager, ApplicationDbContext dbContext)

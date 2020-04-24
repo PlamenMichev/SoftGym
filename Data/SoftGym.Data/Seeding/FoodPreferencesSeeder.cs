@@ -1,11 +1,11 @@
 ﻿namespace SoftGym.Data.Seeding
 {
-    using SoftGym.Data.Models;
-
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
+    using SoftGym.Data.Models;
 
     public class FoodPreferencesSeeder : ISeeder
     {
