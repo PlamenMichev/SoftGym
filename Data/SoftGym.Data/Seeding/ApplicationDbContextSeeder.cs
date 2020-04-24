@@ -30,6 +30,9 @@
                               new SettingsSeeder(),
                               new FoodPreferencesSeeder(),
                               new UsersToRolesSeeder(),
+                              new FacilitiesSeeder(),
+                              new ExercisesSeeder(),
+                              new MealsSeeder(),
                           };
 
             foreach (var seeder in seeders)

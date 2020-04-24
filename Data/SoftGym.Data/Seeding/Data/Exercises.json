@@ -1,0 +1,260 @@
+[
+  {
+    "Name": "Leg Press",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587651146/mgljrhscetcde2yfny3o.mp4",
+    "Type": 6,
+    "Difficulty": 3
+  },
+  {
+    "Name": "Dips",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587650688/kyy9ocvmpmpvqnhup0na.mp4",
+    "Type": 1,
+    "Difficulty": 2
+  },
+  {
+    "Name": "Leg Extensions",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587651080/atsryikvu2ajcevi85k5.mp4",
+    "Type": 6,
+    "Difficulty": 2
+  },
+  {
+    "Name": "Back Squats",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587651011/h8xoni8ku384ac6py7vl.mp4",
+    "Type": 6,
+    "Difficulty": 3
+  },
+  {
+    "Name": "Dumbbell Press",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587651293/ehm1rptos0wwfdcfb0c1.mp4",
+    "Type": 3,
+    "Difficulty": 3
+  },
+  {
+    "Name": "Cross Trainer",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587650475/h6e3g2fletpmustwn6av.mp4",
+    "Type": 8,
+    "Difficulty": 1
+  },
+  {
+    "Name": "Push-Ups",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587650895/plrrsffvodv0aowgjxid.mp4",
+    "Type": 1,
+    "Difficulty": 2
+  },
+  {
+    "Name": "V-Crunches",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587649906/zejc9vd9nbbls7iziv02.mp4",
+    "Type": 7,
+    "Difficulty": 3
+  },
+  {
+    "Name": "Biceps Bar Curls",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587650303/r42mxsprb7fyrdwkrwov.mp4",
+    "Type": 4,
+    "Difficulty": 2
+  },
+  {
+    "Name": "Incline Dumbbell Chest Press",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587650804/n3hqvgpy6rzmr17nyq1q.mp4",
+    "Type": 1,
+    "Difficulty": 3
+  },
+  {
+    "Name": "Lunges",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587651167/pjdrhepmq9uqhjeua9ck.mp4",
+    "Type": 6,
+    "Difficulty": 2
+  },
+  {
+    "Name": "Skipping Rope",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587650589/h3jgfxyda5vksfijauds.mp4",
+    "Type": 8,
+    "Difficulty": 2
+  },
+  {
+    "Name": "Bicycle",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587650441/ts1lkhgx34uqeosn01an.mp4",
+    "Type": 8,
+    "Difficulty": 2
+  },
+  {
+    "Name": "Barbell Bench Press",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587650665/j5p9fiowuvgeppufkeu6.mp4",
+    "Type": 1,
+    "Difficulty": 3
+  },
+  {
+    "Name": "Wide Lat Pulldown",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587650206/k9qjasndlebj8cpqnwrb.mp4",
+    "Type": 2,
+    "Difficulty": 3
+  },
+  {
+    "Name": "Barbell Rows",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587650033/uffzgehzctgifzwpgbkj.mp4",
+    "Type": 2,
+    "Difficulty": 2
+  },
+  {
+    "Name": "Running",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587650540/hnxdps6s7mxxegfrekgi.mp4",
+    "Type": 8,
+    "Difficulty": 3
+  },
+  {
+    "Name": "Low Cable Rows",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587650100/bbhov7y8djg7l2daxdkn.mp4",
+    "Type": 2,
+    "Difficulty": 1
+  },
+  {
+    "Name": "Face Pull",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587650063/nygtsagwzmhltkta6q7x.mp4",
+    "Type": 2,
+    "Difficulty": 1
+  },
+  {
+    "Name": "Sumo Squats",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587651191/rir2o7cvsvltkqhrlztz.mp4",
+    "Type": 6,
+    "Difficulty": 2
+  },
+  {
+    "Name": "Calves",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587651038/jcgrdqrnadoezx6gquna.mp4",
+    "Type": 6,
+    "Difficulty": 1
+  },
+  {
+    "Name": "Close Grip Bench Press",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587651453/nxay71wal7zdef9rdg7y.mp4",
+    "Type": 5,
+    "Difficulty": 1
+  },
+  {
+    "Name": "Chin Ups",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587650326/thpxwrqa67hvvvfsknaa.mp4",
+    "Type": 4,
+    "Difficulty": 3
+  },
+  {
+    "Name": "Side Bends",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587649967/hptalyi6hmxqu2vgdei1.mp4",
+    "Type": 7,
+    "Difficulty": 2
+  },
+  {
+    "Name": "Machine Bench Press",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587650876/p53gbogzq2jsfvdg7bp2.mp4",
+    "Type": 1,
+    "Difficulty": 2
+  },
+  {
+    "Name": "Hammer Curls",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587650347/kfghfrlohchgbulmqeft.mp4",
+    "Type": 4,
+    "Difficulty": 2
+  },
+  {
+    "Name": "Plank",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587649883/clwsierkwnessxezcxiw.mp4",
+    "Type": 7,
+    "Difficulty": 2
+  },
+  {
+    "Name": "Upright Rows",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587651374/tow9zpet0xainpclllri.mp4",
+    "Type": 3,
+    "Difficulty": 1
+  },
+  {
+    "Name": "Triceps Pressdown",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587651508/rxy7fvsdgvggdjs4p2mt.mp4",
+    "Type": 5,
+    "Difficulty": 1
+  },
+  {
+    "Name": "Straight Arm Pulldowns",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587650176/ylwk9pkb36xiidp9xkm2.mp4",
+    "Type": 2,
+    "Difficulty": 2
+  },
+  {
+    "Name": "Pull-Ups",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587650147/hpqky7x2zyidoha61zdv.mp4",
+    "Type": 2,
+    "Difficulty": 3
+  },
+  {
+    "Name": "Low to High Cable Flyes",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587650830/qf6rg8io1l7u3wx0e999.mp4",
+    "Type": 1,
+    "Difficulty": 2
+  },
+  {
+    "Name": "High to Low Cable Flyes",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587650740/lajqquu2os1pxd4fzibd.mp4",
+    "Type": 1,
+    "Difficulty": 1
+  },
+  {
+    "Name": "Leg Curls",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587651060/kkbtbpjbs6cnlkpqlvxa.mp4",
+    "Type": 6,
+    "Difficulty": 2
+  },
+  {
+    "Name": "Front Raises",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587651319/xusqzxilifigq8v3qlrl.mp4",
+    "Type": 3,
+    "Difficulty": 2
+  },
+  {
+    "Name": "Crunches",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587649852/xmkyihucd7yvlir6kaxe.mp4",
+    "Type": 7,
+    "Difficulty": 1
+  },
+  {
+    "Name": "Shoulder Press",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587651345/e1odmjqhrx0whjwt41mo.mp4",
+    "Type": 3,
+    "Difficulty": 3
+  },
+  {
+    "Name": "Dumbbell Overhead Extentions",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587651478/mbpfmy5uy5vy4sue5c87.mp4",
+    "Type": 5,
+    "Difficulty": 2
+  },
+  {
+    "Name": "One Arm Dumbbell Rows",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587650122/jqtgf6zfqqj0rlp9xpqf.mp4",
+    "Type": 2,
+    "Difficulty": 2
+  },
+  {
+    "Name": "Dumbbell Flyes",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587650703/p4jdnjtvdev35xb9jptp.mp4",
+    "Type": 1,
+    "Difficulty": 1
+  },
+  {
+    "Name": "Dumbbell Lateral Raises",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587651266/qjoxlx1zuaujrzuywf49.mp4",
+    "Type": 3,
+    "Difficulty": 1
+  },
+  {
+    "Name": "Biceps Curls",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587650272/hjxml1yjbk5l0fgj4dnl.mp4",
+    "Type": 4,
+    "Difficulty": 1
+  },
+  {
+    "Name": "Triceps Extension Lying",
+    "VideoUrl": "http://res.cloudinary.com/dzivpr6fj/video/upload/v1587651548/myqzexqh4tarsg17ruym.mp4",
+    "Type": 5,
+    "Difficulty": 1
+  }
+]

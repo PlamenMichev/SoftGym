@@ -5,6 +5,7 @@
 
     using CloudinaryDotNet;
     using Hangfire;
+    using Hangfire.SqlServer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -43,11 +44,27 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add Hangfire
+            services.AddHangfire(config =>
+            {
+                config.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSqlServerStorage(
+                this.configuration.GetConnectionString("DefaultConnection"),
+                new SqlServerStorageOptions
+                {
+                    PrepareSchemaIfNecessary = true,
+                    QueuePollInterval = TimeSpan.Zero,
+                    UseRecommendedIsolationLevel = true,
+                    UsePageLocksOnDequeue = true,
+                    DisableGlobalLocks = true,
+                });
+            });
+
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
-                .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+                    .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
             // Add Facebook auth
             services.AddAuthentication()
@@ -93,12 +110,6 @@
             var sendGrid = new SendGridClient(this.configuration["SendGrid:ApiKey"]);
             services.AddSingleton(sendGrid);
 
-            // Add Hangfire
-            services.AddHangfire(config =>
-            {
-                config.UseSqlServerStorage(this.configuration.GetConnectionString("DefaultConnection"));
-            });
-
             // Data repositories
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
@@ -135,7 +146,10 @@
             {
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-                dbContext.Database.Migrate();
+                if (env.IsDevelopment())
+                {
+                    dbContext.Database.Migrate();
+                }
 
                 new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
                 this.SeedHangfireJobs(recurringJobManager, dbContext);

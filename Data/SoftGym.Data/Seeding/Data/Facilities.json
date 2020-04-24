@@ -1,0 +1,62 @@
+[
+  {
+    "Name": "Treadmill",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587648585/urjxxdhlbl978zi4tzp5.jpg",
+    "Type": 1,
+    "Description": "We have 4 Treadmills in our gym and they have a lot of settings. They are really easy to be used both by beginners and advanced."
+  },
+  {
+    "Name": "Upper Chest Machine",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587648877/lugjukmo1dbbpdcdf0oh.jpg",
+    "Type": 1,
+    "Description": "We have two upper chest machines which can be loaded with a lot of heavy weights. "
+  },
+  {
+    "Name": "Down Chest Machine",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587649059/jumrdok5cubzipeqigwp.jpg",
+    "Type": 1,
+    "Description": "We have two machines for the down side of the chest. They are really easy to use and it can be load with a lot of heavy weight."
+  },
+  {
+    "Name": "Bench Press",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587649116/r6ro94z6fi95dvswfjsy.jpg",
+    "Type": 1,
+    "Description": "We have 4 bench presses and a lot of weights to be put on them. There are 10 bars you can use"
+  },
+  {
+    "Name": "Leg Press",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587649217/eoviy4ql2qzwv835n6wc.jpg",
+    "Type": 1,
+    "Description": "We have 2 leg presses that can be loaded with a lot of heavy weights. It is really easy to be used by beginners and advanced."
+  },
+  {
+    "Name": "Cross Trainer",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587649353/pnkh0cg8dxush19cgtay.jpg",
+    "Type": 1,
+    "Description": "We have 4 cross trainers. It can be used simultaniouly by 4 people a lot of settings and easy for use."
+  },
+  {
+    "Name": "Bicycle",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587649421/hwzszqwptlc364nanbe3.jpg",
+    "Type": 1,
+    "Description": "We have 4 bicycles in our gym. It has eassy settings and burns a lot of calories."
+  },
+  {
+    "Name": "Gladiators",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587649491/hwqorxtfh5fzerqgg3jq.jpg",
+    "Type": 1,
+    "Description": "We have two gladiators. They are really powerfull and many people can use it. It is for strong people."
+  },
+  {
+    "Name": "Karate Room",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587649600/ymgu1brt5aksegz3ezje.jpg",
+    "Type": 2,
+    "Description": "Our karate room has many bags and two rings. It is wide and you can do many exercises."
+  },
+  {
+    "Name": "Boxing Room",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587649690/u6rfviuv8mgwmdmvncww.jpg",
+    "Type": 2,
+    "Description": "Our boxing room is really big and has five rings with twenty bags. You can use it freely."
+  }
+]

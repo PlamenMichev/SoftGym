@@ -33,6 +33,8 @@
 
         public DbSet<EatingPlan> EatingPlans { get; set; }
 
+        public DbSet<Exercise> Exercises { get; set; }
+
         public DbSet<Meal> Meals { get; set; }
 
         public DbSet<MealPlan> MealsPlans { get; set; }

@@ -1,0 +1,466 @@
+[
+  {
+    "Name": "Catfish",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587664076/ji7pwlinsxsv8fudufyq.png",
+    "Type": 3,
+    "CaloriesPer100Grams": 100.0,
+    "MealsPreferences": [
+      {
+        "MealId": "0dce5c28-696a-4ac3-a4e7-e31633106a9c",
+        "PreferenceId": 1,
+        "Meal": null,
+        "Preference": null
+      }
+    ]
+  },
+  {
+    "Name": "Grilled Cheese",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587664131/qgvdu7nwlpgjbzs4w2ht.jpg",
+    "Type": 3,
+    "CaloriesPer100Grams": 350.0,
+    "MealsPreferences": [
+      {
+        "MealId": "1b6a5db0-577b-4ae5-a169-da3590b6ef4f",
+        "PreferenceId": 1,
+        "Meal": null,
+        "Preference": null
+      }
+    ]
+  },
+  {
+    "Name": "Green Salad",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587664272/l3iyzqvq6xy3oqjewajb.jpg",
+    "Type": 4,
+    "CaloriesPer100Grams": 50.0,
+    "MealsPreferences": []
+  },
+  {
+    "Name": "Pancakes",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587663678/cfsnztz1iggkhw1vzl1n.jpg",
+    "Type": 1,
+    "CaloriesPer100Grams": 230.0,
+    "MealsPreferences": [
+      {
+        "MealId": "3adb932b-ea7f-4c80-b0db-3447cbdb2ad6",
+        "PreferenceId": 1,
+        "Meal": null,
+        "Preference": null
+      },
+      {
+        "MealId": "3adb932b-ea7f-4c80-b0db-3447cbdb2ad6",
+        "PreferenceId": 3,
+        "Meal": null,
+        "Preference": null
+      },
+      {
+        "MealId": "3adb932b-ea7f-4c80-b0db-3447cbdb2ad6",
+        "PreferenceId": 4,
+        "Meal": null,
+        "Preference": null
+      }
+    ]
+  },
+  {
+    "Name": "Shkembe Soup",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587664102/ewfoeby1frvoyiv0v6mv.jpg",
+    "Type": 3,
+    "CaloriesPer100Grams": 70.0,
+    "MealsPreferences": [
+      {
+        "MealId": "3c61b94d-1dc4-4e6d-98af-6321b9250f6f",
+        "PreferenceId": 1,
+        "Meal": null,
+        "Preference": null
+      },
+      {
+        "MealId": "3c61b94d-1dc4-4e6d-98af-6321b9250f6f",
+        "PreferenceId": 2,
+        "Meal": null,
+        "Preference": null
+      },
+      {
+        "MealId": "3c61b94d-1dc4-4e6d-98af-6321b9250f6f",
+        "PreferenceId": 4,
+        "Meal": null,
+        "Preference": null
+      }
+    ]
+  },
+  {
+    "Name": "Chicken Soup",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587663933/fcf80pgrjgplob3jbi6w.jpg",
+    "Type": 2,
+    "CaloriesPer100Grams": 50.0,
+    "MealsPreferences": [
+      {
+        "MealId": "3d1b4551-655d-4d38-91cb-67ea1226e94d",
+        "PreferenceId": 2,
+        "Meal": null,
+        "Preference": null
+      }
+    ]
+  },
+  {
+    "Name": "Omelette",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587663898/lsj4b3hszkwk7fceom0d.jpg",
+    "Type": 2,
+    "CaloriesPer100Grams": 150.0,
+    "MealsPreferences": [
+      {
+        "MealId": "4f435ff7-4575-4961-b477-14f66a4aa935",
+        "PreferenceId": 1,
+        "Meal": null,
+        "Preference": null
+      },
+      {
+        "MealId": "4f435ff7-4575-4961-b477-14f66a4aa935",
+        "PreferenceId": 3,
+        "Meal": null,
+        "Preference": null
+      },
+      {
+        "MealId": "4f435ff7-4575-4961-b477-14f66a4aa935",
+        "PreferenceId": 4,
+        "Meal": null,
+        "Preference": null
+      }
+    ]
+  },
+  {
+    "Name": "Pasta",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587663840/pgnz6r0yfhkjsti1hqqy.jpg",
+    "Type": 2,
+    "CaloriesPer100Grams": 130.0,
+    "MealsPreferences": [
+      {
+        "MealId": "5176e741-03e9-469e-ae97-6759d2434e6e",
+        "PreferenceId": 3,
+        "Meal": null,
+        "Preference": null
+      },
+      {
+        "MealId": "5176e741-03e9-469e-ae97-6759d2434e6e",
+        "PreferenceId": 7,
+        "Meal": null,
+        "Preference": null
+      }
+    ]
+  },
+  {
+    "Name": "Chicken Rice",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587664041/qjsqgcdbkbik7cn6olyb.jpg",
+    "Type": 3,
+    "CaloriesPer100Grams": 200.0,
+    "MealsPreferences": [
+      {
+        "MealId": "61ace2dc-1624-410b-a32f-df9e1fb729f0",
+        "PreferenceId": 1,
+        "Meal": null,
+        "Preference": null
+      },
+      {
+        "MealId": "61ace2dc-1624-410b-a32f-df9e1fb729f0",
+        "PreferenceId": 2,
+        "Meal": null,
+        "Preference": null
+      }
+    ]
+  },
+  {
+    "Name": "Protein Bar",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587664329/rigskf6quu82lnrds6j9.png",
+    "Type": 4,
+    "CaloriesPer100Grams": 400.0,
+    "MealsPreferences": [
+      {
+        "MealId": "61ca7a40-c6a3-4d9e-8e64-194d35ee6da3",
+        "PreferenceId": 1,
+        "Meal": null,
+        "Preference": null
+      },
+      {
+        "MealId": "61ca7a40-c6a3-4d9e-8e64-194d35ee6da3",
+        "PreferenceId": 3,
+        "Meal": null,
+        "Preference": null
+      },
+      {
+        "MealId": "61ca7a40-c6a3-4d9e-8e64-194d35ee6da3",
+        "PreferenceId": 4,
+        "Meal": null,
+        "Preference": null
+      }
+    ]
+  },
+  {
+    "Name": "Banana",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587664195/emt7b8ssln4ksstnfygg.jpg",
+    "Type": 4,
+    "CaloriesPer100Grams": 90.0,
+    "MealsPreferences": []
+  },
+  {
+    "Name": "Fruit Salad",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587663637/j2owoyqvqnf9tfyrpstk.jpg",
+    "Type": 1,
+    "CaloriesPer100Grams": 50.0,
+    "MealsPreferences": []
+  },
+  {
+    "Name": "Scrambled Eggs",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587664011/qfebjr4vf4inufiglnnd.jpg",
+    "Type": 3,
+    "CaloriesPer100Grams": 150.0,
+    "MealsPreferences": [
+      {
+        "MealId": "77a17920-63ad-4f4e-bea2-38c0a8906d2a",
+        "PreferenceId": 1,
+        "Meal": null,
+        "Preference": null
+      },
+      {
+        "MealId": "77a17920-63ad-4f4e-bea2-38c0a8906d2a",
+        "PreferenceId": 3,
+        "Meal": null,
+        "Preference": null
+      }
+    ]
+  },
+  {
+    "Name": "Protein Shake",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587664305/ch9qpmwuscqi5jwfkplm.jpg",
+    "Type": 4,
+    "CaloriesPer100Grams": 370.0,
+    "MealsPreferences": [
+      {
+        "MealId": "905a071f-2fb4-4f7c-a21b-2353f2dc9b19",
+        "PreferenceId": 1,
+        "Meal": null,
+        "Preference": null
+      },
+      {
+        "MealId": "905a071f-2fb4-4f7c-a21b-2353f2dc9b19",
+        "PreferenceId": 3,
+        "Meal": null,
+        "Preference": null
+      },
+      {
+        "MealId": "905a071f-2fb4-4f7c-a21b-2353f2dc9b19",
+        "PreferenceId": 4,
+        "Meal": null,
+        "Preference": null
+      }
+    ]
+  },
+  {
+    "Name": "Muesli",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587663800/sqj8yvdg6yxjyjaelrvz.jpg",
+    "Type": 1,
+    "CaloriesPer100Grams": 300.0,
+    "MealsPreferences": [
+      {
+        "MealId": "9125f59d-9dd0-41de-9b6f-407b26061cf8",
+        "PreferenceId": 1,
+        "Meal": null,
+        "Preference": null
+      },
+      {
+        "MealId": "9125f59d-9dd0-41de-9b6f-407b26061cf8",
+        "PreferenceId": 3,
+        "Meal": null,
+        "Preference": null
+      },
+      {
+        "MealId": "9125f59d-9dd0-41de-9b6f-407b26061cf8",
+        "PreferenceId": 4,
+        "Meal": null,
+        "Preference": null
+      },
+      {
+        "MealId": "9125f59d-9dd0-41de-9b6f-407b26061cf8",
+        "PreferenceId": 7,
+        "Meal": null,
+        "Preference": null
+      }
+    ]
+  },
+  {
+    "Name": "Sandwich with Ham",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587663731/d5hhv2pbwtjexf8x4wrq.jpg",
+    "Type": 1,
+    "CaloriesPer100Grams": 230.0,
+    "MealsPreferences": [
+      {
+        "MealId": "b6bdf45a-2215-4162-b92c-74185f6c51f1",
+        "PreferenceId": 1,
+        "Meal": null,
+        "Preference": null
+      },
+      {
+        "MealId": "b6bdf45a-2215-4162-b92c-74185f6c51f1",
+        "PreferenceId": 2,
+        "Meal": null,
+        "Preference": null
+      }
+    ]
+  },
+  {
+    "Name": "Croissant",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587663753/oxlfvpau4p7jab1c6ve8.jpg",
+    "Type": 1,
+    "CaloriesPer100Grams": 400.0,
+    "MealsPreferences": [
+      {
+        "MealId": "bc13ee23-881a-42c5-99b8-9e4fe472ac7f",
+        "PreferenceId": 1,
+        "Meal": null,
+        "Preference": null
+      },
+      {
+        "MealId": "bc13ee23-881a-42c5-99b8-9e4fe472ac7f",
+        "PreferenceId": 3,
+        "Meal": null,
+        "Preference": null
+      },
+      {
+        "MealId": "bc13ee23-881a-42c5-99b8-9e4fe472ac7f",
+        "PreferenceId": 4,
+        "Meal": null,
+        "Preference": null
+      }
+    ]
+  },
+  {
+    "Name": "Crackers",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587664245/sy6pf7vytnhnkyrrf7ms.jpg",
+    "Type": 4,
+    "CaloriesPer100Grams": 500.0,
+    "MealsPreferences": [
+      {
+        "MealId": "bd33a2c7-25ab-4d90-b13b-e4cf4787ad47",
+        "PreferenceId": 1,
+        "Meal": null,
+        "Preference": null
+      },
+      {
+        "MealId": "bd33a2c7-25ab-4d90-b13b-e4cf4787ad47",
+        "PreferenceId": 2,
+        "Meal": null,
+        "Preference": null
+      },
+      {
+        "MealId": "bd33a2c7-25ab-4d90-b13b-e4cf4787ad47",
+        "PreferenceId": 3,
+        "Meal": null,
+        "Preference": null
+      },
+      {
+        "MealId": "bd33a2c7-25ab-4d90-b13b-e4cf4787ad47",
+        "PreferenceId": 7,
+        "Meal": null,
+        "Preference": null
+      }
+    ]
+  },
+  {
+    "Name": "Snack",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587664213/mmvfwty99tfj7uoifh6d.jpg",
+    "Type": 4,
+    "CaloriesPer100Grams": 50.0,
+    "MealsPreferences": []
+  },
+  {
+    "Name": "Walnuts",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587664176/ib1aobbmzp7wkhwvnivz.jpg",
+    "Type": 4,
+    "CaloriesPer100Grams": 600.0,
+    "MealsPreferences": [
+      {
+        "MealId": "e2b4b449-ee25-4b15-8fb9-c25e623af693",
+        "PreferenceId": 5,
+        "Meal": null,
+        "Preference": null
+      }
+    ]
+  },
+  {
+    "Name": "Yogurt",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587663773/rtagzdknf2keqrhdunab.jpg",
+    "Type": 1,
+    "CaloriesPer100Grams": 60.0,
+    "MealsPreferences": [
+      {
+        "MealId": "e3c69fdf-f3cb-4623-a088-52bdf7d2ceb9",
+        "PreferenceId": 1,
+        "Meal": null,
+        "Preference": null
+      },
+      {
+        "MealId": "e3c69fdf-f3cb-4623-a088-52bdf7d2ceb9",
+        "PreferenceId": 4,
+        "Meal": null,
+        "Preference": null
+      }
+    ]
+  },
+  {
+    "Name": "Bass Fish",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587663964/pfrxq358nqmobftueuah.jpg",
+    "Type": 2,
+    "CaloriesPer100Grams": 110.0,
+    "MealsPreferences": [
+      {
+        "MealId": "eb59b6c2-2d80-4b27-90b5-f838c31a12f8",
+        "PreferenceId": 1,
+        "Meal": null,
+        "Preference": null
+      },
+      {
+        "MealId": "eb59b6c2-2d80-4b27-90b5-f838c31a12f8",
+        "PreferenceId": 2,
+        "Meal": null,
+        "Preference": null
+      }
+    ]
+  },
+  {
+    "Name": "Grilled Chicken",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587663863/vt9v7kfv8rwdcs3naiu3.jpg",
+    "Type": 2,
+    "CaloriesPer100Grams": 230.0,
+    "MealsPreferences": [
+      {
+        "MealId": "f9bc349b-6a58-4732-9095-e4968b956411",
+        "PreferenceId": 2,
+        "Meal": null,
+        "Preference": null
+      }
+    ]
+  },
+  {
+    "Name": "Macaroni",
+    "PictureUrl": "http://res.cloudinary.com/dzivpr6fj/image/upload/v1587663990/wwfccmzqj7yda9jrzfej.jpg",
+    "Type": 3,
+    "CaloriesPer100Grams": 130.0,
+    "MealsPreferences": [
+      {
+        "MealId": "ff5d40be-6137-456e-8dfd-bad7f59c6b5d",
+        "PreferenceId": 3,
+        "Meal": null,
+        "Preference": null
+      },
+      {
+        "MealId": "ff5d40be-6137-456e-8dfd-bad7f59c6b5d",
+        "PreferenceId": 4,
+        "Meal": null,
+        "Preference": null
+      },
+      {
+        "MealId": "ff5d40be-6137-456e-8dfd-bad7f59c6b5d",
+        "PreferenceId": 7,
+        "Meal": null,
+        "Preference": null
+      }
+    ]
+  }
+]
