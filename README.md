@@ -24,6 +24,29 @@
 <li>Moq</li>
 </ul>
 
+<h3>Interface</h3>
+<hr/>
+
+<h5>Facilities View</h5>
+<img src="https://github.com/PlamenMichev/SoftGym/blob/master/images/Facilities.PNG?raw=true"/>
+
+<h5>Chat View</h5>
+<img src="https://github.com/PlamenMichev/SoftGym/blob/master/images/Chat.PNG?raw=true"/>
+
+<h5>Eating Plan View</h5>
+<img src="https://github.com/PlamenMichev/SoftGym/blob/master/images/EatingPlan.PNG?raw=true"/>
+
+<h5>Notifications View</h5>
+<img src="https://github.com/PlamenMichev/SoftGym/blob/master/images/Notification.PNG?raw=true"/>
+
+<h5>Trainer Sheduler View</h5>
+<img src="https://github.com/PlamenMichev/SoftGym/blob/master/images/TrainerScheduler.PNG?raw=true"/>
+
+<h5>Fitness Card View</h5>
+<img src="https://github.com/PlamenMichev/SoftGym/blob/master/images/UserCard.PNG?raw=true"/>
+
+<h5>Workout Plan View</h5>
+<img src="https://github.com/PlamenMichev/SoftGym/blob/master/images/WorkoutPlan.PNG?raw=true"/>
 
 License
 This project is licensed under the MIT License - see the LICENSE.md file for details
