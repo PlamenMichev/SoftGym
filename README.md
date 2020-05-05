@@ -1,5 +1,4 @@
 <h1>SoftGym</h1>
-<hr/>
 <h6>SoftGym is project that can be used to represent a particular gym and to make communication between customers and employees easier.</h6>
 
 <h3>Description</h3>
